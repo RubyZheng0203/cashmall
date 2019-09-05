@@ -1,0 +1,78 @@
+<tagLib name="htmlA" />
+<div class="so_main">
+
+	<div class="page_tit">线下还款处理</div>
+	<div class="form2">
+		<form method="post" action="__URL__/doEdit" onsubmit="return subcheck();">
+			<input type="hidden" name="id" value="{$id}" />
+			<input type="hidden" name="is_status" value="{$status}" />
+			<div id="tab_1">
+				<dl class="lineD">
+					<dt>处理结果：</dt>
+					<dd id = "status2">
+						<htmlA:radio id="status" default="2|不通过"/>
+					</dd>
+					<dd id = "status1">
+						<htmlA:radio id="status" default="1|通过,2|不通过"/>
+					</dd>
+				</dl>
+				<dl class="lineD" id='repayment'>
+					<dt>选择还款时间：</dt>
+					<dd>
+						<htmlA:timer id="repayment_time" tip=''
+									 arg="{maxDate:'#F{$dp.$D(\\\\'end_time\\\\')||\\\\'2020-10-01\\\\'}',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true}"
+									 class="Wdate" value="{$search.repayment_time|mydate='Y-m-d H:i:s',###}"/>
+					</dd>
+				</dl>
+				<dl class="lineD"><dt>原因：</dt><dd><textarea name="reason"  id="reason" /></textarea></dd></dl>
+			</div>
+			<div class="page_btm">
+				<input type="submit" class="btn_b" value="确定" />
+			</div>
+		</form>
+	</div>
+
+</div>
+<script type="text/javascript">
+	$(function () {
+		if({$status} == 1){
+			$("#status1").hide();
+			$("#status2").show();
+			$("#repayment").hide();
+			alert('该笔银行卡续期成功，审核拒绝');
+		}else{
+			$("#status1").show();
+			$("#status2").hide();
+			$('input[name="status"]').click(function () {
+				var status = $('input[name="status"]:checked ').val();
+				if (status == 2) {
+					$("#repayment").hide();
+				}
+				if (status == 1) {
+					$("#repayment").show();
+				}
+			})
+		}
+	})
+	var cansub = true;
+	function subcheck(){
+		if(!cansub){
+			alert("请不要重复提交，如网速慢，请等待！");
+			return false;
+		}
+
+		if($("input[name='status']:checked").val()!=1 && $("input[name='status']:checked").val()!=2){
+			ui.error("请选择充值结果");
+			return false;
+		}else{
+			if($("input[name='status']:checked").val() == 2){
+				if($('#reason').val() == '' || $('#reason').val() ==null){
+					ui.error("请填写不通过原因！");
+					return false;
+				}
+			}
+		}
+		cansub = false;
+		return true;
+	}
+</script>

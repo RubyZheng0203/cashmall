@@ -1,0 +1,78 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+	var isSearchHidden = 1;
+	var searchName = "搜索/筛选";
+	var editUrl = '__URL__/linedownapply';
+	var editTitle = "线下申请";
+</script>
+<div class="so_main">
+	<div class="page_tit">待还款</div>
+	<!--搜索/筛选会员-->
+	<include file="searchre" />
+	<!--搜索/筛选会员-->
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />
+		<htmlA:commonBtn type="href"  action="__URL__/repaymentExport?{$query}" value="将当前条件下数据导出为Excel"/>
+	</div>
+	<div class="list">
+		<table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			    <th style="width:30px;">
+			        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+			        <label for="checkbox"></label>
+			    </th>
+			    <th class="line_l">会员ID</th>
+			    <th class="line_l">借款申请ID</th>
+			    <th class="line_l">账单ID</th>
+				<th class="line_l">借款人手机</th>
+			    <th class="line_l">真实姓名</th>
+				<th class="line_l">借款金额（元）</th>
+				<th class="line_l">借款利息（元）</th>
+				<th class="line_l">借款期限</th>
+				<th class="line_l">应还金额（元）</th>
+				<th class="line_l">应还日期</th>
+				<th class="line_l">当期期数</th>
+				<th class="line_l">总期数</th>
+				<th class="line_l">操作</th>
+			</tr>
+			<volist id="vo" name="list">
+       		<tr overstyle='on' id="list_{$vo.id}">
+		        <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+		        <td><htmlA:user id="vo.uid" uname="vo.uid" /></td>
+		        <td>{$vo.borrow_id}</td>
+		        <td>{$vo.id}</td>
+		        <td><htmlA:user id="vo.uid" uname="vo.iphone" /></td>
+		        <td>{$vo.real_name|default="&nbsp;"}</td>
+				<td>{$vo.capital}</td>
+				<td>{$vo.interest}</td>
+				<td>{$vo.duration}{$vo.type}</td>
+				<td>{$vo.totalmoney}</td>
+		        <td><if condition="$vo.deadline neq 0">{$vo.deadline|date="Y-m-d H:i",###}</if></td>
+		        <td>{$vo.sort_order}</td>
+		        <td>{$vo.total}</td>
+        		<td>
+					<a href="__URL__/dee?id={$vo.id}&type=1">[扣款]</a>
+					<a href="javascript:void(0);" onclick="edit1('?id={$vo.id}',{$vo.can_status})">[线下申请]</a>
+        		</td>
+       		</tr>
+			</volist>
+		</table>
+	</div>
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+  		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />
+	</div>
+</div>
+<include file="Public:_footer" />
+<script type="text/javascript">
+	function edit1(url_arg,status){
+		if(status == 0){
+			alert('请不要重复提交申请');
+			return false;
+		}
+		ui.box.load(editUrl+url_arg, {title:editTitle});
+	}
+	</script>

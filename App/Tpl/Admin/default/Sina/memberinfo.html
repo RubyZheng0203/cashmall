@@ -1,0 +1,25 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<div class="so_main">
+
+<div class="page_tit">新浪用户信息</div>
+<div class="form2" style="height:600px;">
+	<form method="post" action="__URL__/callsina?act=1" target="membersina">
+	<table style="width:100%;height:600px;">
+	<tr><td style="width:100px;">用户ID：</td><td><htmlA:input id="uid" value="" />&nbsp;<input type="submit" class="btn_b" value="查询" style="margin-right:20px;" /></td></tr>
+	<tr><td colspan=2>
+	<iframe src="__URL__/callsina?act=1" style="width:100%;height:600px;" id="membersina" name="membersina"></iframe>
+	</td></tr>
+	</table>
+	</form>
+</div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+	
+});
+</script>
+
+<include file="Public:_footer" />

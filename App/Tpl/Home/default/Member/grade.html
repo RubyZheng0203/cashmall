@@ -1,0 +1,101 @@
+<include file="Pub:headerNew"/>
+<style>
+.cash_view{
+	background:none;
+}
+table{
+	width:5.8rem;
+	margin:0 auto;
+	border-radius:12px;
+	text-align:center;
+	background:#2aa1ff;
+	color:#fff;
+	border-top:1px solid #72c6ff;
+	border-left:1px solid #72c6ff;
+	font-size:0.28rem;
+}
+td{
+	line-height:0.78rem;
+	border-right:1px solid #72c6ff;
+	border-bottom:1px solid #72c6ff;
+	padding:0;
+}
+table tr:first-child td:first-child {
+    border-top-left-radius: 12px;
+}
+table tr:first-child td:last-child {
+    border-top-right-radius: 12px;
+}
+table tr:last-child td:first-child {
+    border-bottom-left-radius: 12px;
+}
+table tr:last-child td:last-child {
+    border-bottom-right-radius: 12px;
+}
+.grade-txt{
+	width:5.8rem;
+	margin:0.5rem auto 0.3rem;
+}
+.grade-txt p{
+	font-size:0.28rem;
+	padding-left:0.1rem;
+	line-height:0.45rem;
+	margin:0;
+	display:table;
+}
+.grade-txt p span{
+	display:block;
+	float:left;
+}
+.grade-tit{
+	line-height:0.27rem;
+	background: url(/style/cash/images/borrow_grade_bg.png) no-repeat left center;
+	background-size: 0.04rem 0.27rem;
+	color:#616161;
+}
+.grade-con{
+	color:#a5a5a5;
+}
+</style>
+<body>
+	<div class="cash_view">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="cash_borrow" style="margin-top:0.3rem;">
+			<table cellspacing="0" cellpadding="5">
+				<tr>
+					<td>等级</td>
+					<td>产品额度</td>
+				</tr>
+				<tr>
+					<td>初级</td>
+					<td>银卡借款</td>
+				</tr>
+				<tr>
+					<td>中级</td>
+					<td>银卡或金卡借款</td>
+				</tr>
+				<tr>
+					<td>高级</td>
+					<td>银卡和金卡借款</td>
+				</tr>
+			</table>
+			<div class="grade-txt">
+				<p class="grade-tit">说明：</p>
+				<p class="grade-con">初级：银卡借款</p>
+				<p class="grade-con">中级：银卡或者金卡借款，任选一种</p>
+				<p class="grade-con"><span>高级：</span><span style="width:4.8rem;">银卡和金卡借款都可以申请，需待第一笔申请放款后，再申请第二笔</span></p>
+			</div>
+			<div class="grade-txt" style="margin:0 auto;">
+				<p class="grade-tit">如何提升级别：</p>
+				<p class="grade-con">保持良好的还款习惯，自动提升等级</p>
+			</div>
+		</div>
+		<!-- 网页底部 -->
+		<include file="Pub:footerNew"/>
+	</div>
+</body>
+<script>
+	document.title = "等级说明";
+</script>
+</html>

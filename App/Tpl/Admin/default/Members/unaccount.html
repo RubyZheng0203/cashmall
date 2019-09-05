@@ -1,0 +1,68 @@
+<include file="Public:_header" />
+<tagLib name="htmlA" />
+<style type="text/css">
+.sel_fs{width:110px}
+</style>
+<link href="__ROOT__/Style/Swfupload/swfupload.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/handlers.js"></script>
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/swfupload.js"></script>
+
+<div class="so_main">
+
+<div class="page_tit">解绑手机认证会员</div>
+
+<div class="form2">
+
+	
+	<div id="tab_5" >
+        <dl class="lineD"><dt>会员编号：</dt><dd><htmlA:input id="account" value="" /></dd></dl>
+        
+        <div class="page_btm">
+        	<input type="button" onclick="doChangeAccount(1)" id="select-change-account-submit" value="解绑认证" />&nbsp;
+        	<input type="button" onclick="doChangeAccount(0)" id="select-change-account-submit" value="绑定认证" />
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+function doChangeAccount(unbind)
+{
+	var newAccount = $("#account").val();
+	if (newAccount == "") {
+		alert("请输入会员编号");
+		return false;
+	}
+	if(unbind==1){
+		if (confirm("确认解绑该会员的手机认证吗？")) {
+			
+			$.ajax({
+				url:'/admin/members/unBindingAccount',
+				type:'post',
+				data:'uid='+newAccount+"&unbind="+unbind,
+				success:function(response){
+					var response=$.parseJSON(response);
+					alert(response.message);
+				}
+			})
+		}
+	}else{
+		if (confirm("确认绑定该会员的手机认证吗？")) {
+			$.ajax({
+				url:'__URL__/unBindingAccount',
+				type:'post',
+				data:'uid='+newAccount+"&unbind="+unbind,
+				success:function(response){
+					var response=$.parseJSON(response);
+					alert(response.message);
+				}
+			})
+		}
+	}
+	
+}
+
+
+
+</script>
+</div>
+<include file="Public:_footer" />

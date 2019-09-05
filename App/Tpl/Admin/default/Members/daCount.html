@@ -1,0 +1,30 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+	var isSearchHidden = 1;
+	var searchName = "搜索/筛选会员";
+</script>
+<div class="so_main">
+	<div class="page_tit">会员统计</div>
+
+	<div class="-list">
+		<table id="area_list" width="100%" border="1" cellspacing="1" cellpadding="10" style="border-collapse: collapse;" class="new_table2">
+			<tr>
+			    <th>当日注册人数</th>
+				<th>7天日均注册人数</th>
+			    <th>30天日均注册人数</th>
+				<th>7天累计注册人数</th>
+				<th>30天累计注册人数</th>
+			</tr>
+       		<tr>
+		        <td>{$count}</td>
+		        <td>{$avg7}</td>
+				<td>{$avg30}</td>
+				<td>{$count7}</td>
+				<td>{$count30}</td>
+       		</tr>
+		</table>
+	</div>
+</div>
+<include file="Public:_footer" />

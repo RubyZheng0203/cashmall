@@ -1,0 +1,137 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+	var isSearchHidden = 1;
+	var searchName = "搜索/筛选";
+</script>
+<div class="so_main">
+	<div class="page_tit">可上标的续期</div>
+	<!--搜索/筛选-->
+	<include file="searchr" />
+	<!--搜索/筛选-->
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />
+		<htmlA:commonBtn type="jsfun" action="checkid();" value="批量上标" style="search_action" />
+		<htmlA:input id="borrow_rate" value=""  tip="  批量上标的年化利率%"/>
+	</div>
+	<div class="list">
+		<table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			    <th style="width:30px;">
+			        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+			        <label for="checkbox"></label>
+			    </th>
+			    <th class="line_l">借款申请ID</th>
+				<th class="line_l">借款人编号</th>
+				<th class="line_l">借款人手机号</th>
+				<th class="line_l">借款人姓名</th>
+				<th class="line_l">借款金额（元）</th>
+				<th class="line_l">借款利息（元）</th>
+				<th class="line_l">年化率（%）</th>
+				<th class="line_l">申请日期</th>
+				<th class="line_l">借款期限</th>
+			</tr>
+			<volist id="vo" name="list"> 
+	       		<tr overstyle='on' id="list_{$vo.id}">
+			        <td><input type="checkbox" value="{$vo.id}" id="checkbox_{$vo.id}" name="checkbox"  onclick="checkon(this)"></td>
+			        <td>{$vo.id}</td>
+			        <td><htmlA:user id="vo.uid" uname="vo.uid" /></td>
+			        <td>{$vo.iphone}</td>
+			        <td>{$vo.real_name}</td>
+					<td>{$vo.money}</td>
+					<td>{$vo.interest}</td>
+					<td>{$vo.rate}</td>
+					<td>{$vo.add_time|date="Y-m-d H:i",###}</td>
+					<td>{$vo.duration}{$vo.type}</td>
+	       		</tr>
+	       		<input type="hidden" value="{$vo.duration}" id="duration_{$vo.id}" name="duration_{$vo.id}">
+	       		<input type="hidden" value="{$vo.rate}" id="rate_{$vo.id}" name="rate_{$vo.id}">
+			</volist>
+		</table>
+	</div>
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+  		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />
+	</div>
+</div>
+<script type="text/javascript">
+	function showurl(url,Title){
+		ui.box.load(url, {title:Title});
+	}
+	
+	function checkid(){
+		var id          = document.getElementsByName('checkbox');
+		var borrow_rate = $("#borrow_rate").val();
+		var id_str      ='';
+		var count       = 0;
+		var duration    = 0;
+		var rate        = 0
+		for(var i = 0; i < id.length; i++){
+	        if(id[i].checked){
+	        	var ids 		= $("#checkbox_"+id[i].value).val();
+	        	var durations 	= $("#duration_"+id[i].value).val();
+	        	var rates 		= $("#rate_"+id[i].value).val();
+	        	if(id_str == ''){
+	        		id_str = ids;
+	        	}else{
+	        		id_str = id_str+","+ids;
+	        	}
+	        	count++;
+	      
+	        	if(duration==0){
+	        		duration = durations;
+	        	}else{
+	        		if(duration!=durations){
+	        			ui.error("批量上传的标的借款期限必须一致！");
+	        			return false;
+	        		}
+	        	}
+	        	if(borrow_rate==""){
+		        	if(rate==0){
+		        		rate = rates;
+		        	}else{
+		        		if(rate!=rates){
+		        			ui.error("批量上传的标的年化利率必须一致！");
+		        			return false;
+		        		}
+		        	}
+	        	}else{
+	        		if(borrow_rate < 1){
+	        			ui.error("填写的年化利率小于1！");
+	        			return false;
+	        		}
+	        	}
+	        	
+	        }
+		}
+		if(count==0){
+			ui.error("请选择需要上传的标");
+			return false;
+		}
+		if(count>20){
+			ui.error("最多只能批量上传20个标");
+			return false;
+		}
+		
+		
+		 $.ajax({
+				url: "__URL__/upBatchBid/",
+				data: {"id":id_str,"rate":borrow_rate},
+				type: "post",
+				dataType: "json",
+				success: function (d, s, r) {
+					if(d){
+						if(d.status==1){
+							 alert(d.message);
+						}else{
+							location.href="__URL__/renewal";
+						}
+					}
+				}
+			});
+		
+	}
+</script>
+<include file="Public:_footer" />

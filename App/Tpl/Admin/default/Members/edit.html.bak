@@ -1,0 +1,291 @@
+<include file="Public:_header" />
+<tagLib name="htmlA" />
+<style type="text/css">
+.sel_fs{width:110px}
+</style>
+<!--调试内容开始-->
+<!--<pre><php>var_dump($_SERVER);</php></pre>-->
+<!--调试内容结束-->
+<link href="__ROOT__/Style/Swfupload/swfupload.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/handlers.js"></script>
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/swfupload.js"></script>
+<script>
+    $(function(){
+        //swf上传图片
+        var swfu = new SWFUpload(
+                {
+                    // Backend Settings
+                    upload_url: "/UploadFile/uploadcorp",
+                    post_params: {"PHPSESSID": "<php> echo session_id(); </php>", "dopost" : "", "uid": "<php>echo $uid;</php>"},
+
+                    // File Upload Settings
+                    file_size_limit : "2000 MB",	// 2MB
+                    file_types : "*.zip",
+                    file_types_description : "选择 ZIP 格式文件",
+                    file_upload_limit : "0",
+
+                    file_queue_error_handler : fileQueueError,
+                    file_dialog_complete_handler : fileDialogComplete,
+                    upload_progress_handler : uploadProgressme,
+                    upload_error_handler : uploadError,
+                    upload_success_handler : uploadSuccess,
+                    upload_complete_handler : uploadComplete,
+
+                    button_image_url : "../images/SmallSpyGlassWithTransperancy_17x18.png",
+                    button_placeholder_id : "spanButtonPlaceholder",
+                    button_width: 250,
+                    button_height: 18,
+                    button_text : '<span class="button">选择文件 <span class="buttonSmall">(支持多选)</span></span>',
+                    button_text_style : '.button { font-family: "宋体", sans-serif; font-size: 12px; } .buttonSmall { font-size: 10pt; }',
+                    button_text_top_padding: 0,
+                    button_text_left_padding: 18,
+                    button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+                    button_cursor: SWFUpload.CURSOR.HAND,
+
+                    // Flash Settings
+                    flash_url : "__ROOT__/Style/Swfupload/swfupload.swf",
+
+                    custom_settings : {
+                        upload_target : "divFileProgressContainer"
+                    },
+
+                    // Debug Settings
+                    debug: false
+                });
+        //swf上传图片
+    });
+
+    function uploadProgressme(file, bytesLoaded) {
+        try {
+            var percent = Math.ceil((bytesLoaded / file.size) * 100);
+            var progress = new FileProgress(file,  this.customSettings.upload_target);
+            progress.setProgress(percent);
+            if (percent === 100) {
+            } else {
+                progress.setStatus("上传中...");
+                progress.toggleCancel(true, this);
+            }
+        } catch (ex) {
+            this.debug(ex);
+        }
+    }
+
+    var corpFile = "<php>echo $corp['fileName'];</php>";
+    function uploadSuccess(file, serverData) {
+        try {
+            var obj = jQuery.parseJSON(serverData);
+            var progress = new FileProgress(file,  this.customSettings.upload_target);
+            if ( obj.status != 1 ) {
+                progress.setStatus("有错误！");
+                progress.toggleCancel(false);
+                alert(obj.message);
+                return false;
+            }
+
+            corpFile = obj.file;
+        } catch (ex) {
+            this.debug(ex);
+        }
+    }
+
+    function uploadComplete(file) {
+        try {
+            /*  I want the next upload to continue automatically so I'll call startUpload here */
+            if (this.getStats().files_queued > 0) {
+                this.startUpload();
+            } else {
+                var progress = new FileProgress(file,  this.customSettings.upload_target);
+                progress.setComplete();
+                progress.setStatus("所有文件上传完成...");
+                progress.toggleCancel(false);
+            }
+        } catch (ex) {
+            this.debug(ex);
+        }
+    }
+</script>
+<div class="so_main">
+
+<div class="page_tit">修改会员</div>
+<div class="page_tab"><span data="tab_1" class="active">基本信息</span><span data="tab_2">基本资料</span><span data="tab_3">银行卡信息</span><span data="tab_4">企业会员</span></div>
+<div class="form2">
+	<form method="post" action="__URL__/doEdit" onsubmit="return subcheck();">
+	<input type="hidden" name="id" value="{$vo.id}" />
+	<input type="hidden" name="uid" value="{$vo.id}" />
+	
+	<div id="tab_1">
+	<dl class="lineD"><dt>是否内部发标人员：</dt><dd><htmlA:radio id="is_vip" default="0|否,1|是" value="key|vo.is_vip" tip="内部发标人员可以拥有直接发布借款标的特权，无需等待各项认证通过才能发标，仅用于平台内部人员"/></dd></dl>
+	<dl class="lineD"><dt>是否直投或定存宝会员：</dt><dd><htmlA:radio id="is_transfer" default="0|否,1|是,2|登录次数超限，已冻结"  value="key|vo.is_transfer" tip="选择是才可以以此会员身份在后台发布直投或者定存宝"/></dd></dl>
+	<dl class="lineD"><dt>是否冻结：</dt><dd><htmlA:radio id="is_ban" default="0|否,1|是" value="key|vo.is_ban" tip="冻结后会员不能登陆，须联系客服处理"/></dd></dl>
+	<dl class="lineD"><dt>是否允许发布借款：</dt><dd><htmlA:radio id="is_borrow" default="0|否,1|是" value="key|vo.is_borrow" tip="会员只有被允许发布借款时，才可以发标"/></dd></dl>
+	<dl class="lineD"><dt>客户类型：</dt><dd><htmlA:radio id="user_type" datakey="utype" value="key|vo.user_type"/></dd></dl>
+	<dl class="lineD"><dt>客服ID：</dt><dd><htmlA:input id="customer_id"  value="{$vo.customer_id}"/></dd></dl>
+	<dl class="lineD"><dt>新密码：</dt><dd><htmlA:input id="user_pass" tip="如不修改则留空"/></dd></dl>
+	<dl class="lineD"><dt>确认新密码：</dt><dd><htmlA:input id="re_user_pass" tip="如不修改则留空" /></dd></dl>
+	<dl class="lineD"><dt>新支付密码：</dt><dd><htmlA:input id="pin_pass" tip="如不修改则留空"/></dd></dl>
+	<dl class="lineD"><dt>确认支付密码：</dt><dd><htmlA:input id="re_pin_pass" tip="如不修改则留空" /></dd></dl>
+        <!--银行卡信息-->
+        <div class="page_btm">
+            <input type="submit" class="btn_b" value="确定" />
+        </div>
+	</div><!--tab1-->
+
+	<div id="tab_2" style="display:none">
+	<dl class="lineD"><dt>会员名：</dt><dd><htmlA:input id="user_name"  value="{$vo.user_name }"/></dd></dl>
+	<dl class="lineD"><dt>真实姓名：</dt><dd><htmlA:input id="real_name"  value="{$vo.real_name}"/></dd></dl>
+	<dl class="lineD"><dt>身份证号：</dt><dd><htmlA:input id="idcard"  value="{$vo.idcard}"/></dd></dl>
+	<dl class="lineD"><dt>手机号码：</dt><dd><htmlA:input id="cell_phone"  value="{$vo.cell_phone}"/></dd></dl>
+	<dl class="lineD"><dt>会员邮箱：</dt><dd><htmlA:input id="user_email" value="{$vo.user_email}" /></dd></dl>
+	<dl class="lineD"><dt>地址：</dt><dd><htmlA:input id="address" value="{$area[$city[0]['province_now']]}(省){$area[$city[0]['city_now']]}(市){$area[$city[0]['area_now']]}(县)" /></dd></dl>
+	<dl class="lineD"><dt>年龄：</dt><dd><htmlA:input id="age"  value="{$vo.age}"/></dd></dl>
+	<dl class="lineD"><dt>职业：</dt><dd><htmlA:input id="zy" value="{$vo.zy}" /></dd></dl>
+	<!--//////////////////////////////////////////////-->
+	<dl class="lineD"><dt>身份证正面图片：</dt><dd><div style="text-align:left; clear:both; overflow:hidden; width:290px; height:100px"><div id="imgDiv"></div><if condition="$vo.card_img eq ''">无缩略图<else/><img src="__ROOT__/{$vo.card_img}" width="100" height="100" /></if></div>
+	</dd></dl>
+	<dl class="lineD"><dt>身份证反面图片：</dt><dd><div style="text-align:left; clear:both; overflow:hidden; width:290px; height:100px"><div id="imgDiv"></div><if condition="$vo.card_back_img eq ''">无缩略图<else/><img src="__ROOT__/{$vo.card_back_img}" width="100" height="100" /></if></div>
+	</dd></dl>
+<!--//////////////////////////////////////////////-->
+        <!--银行卡信息-->
+        <div class="page_btm">
+            <input type="submit" class="btn_b" value="确定" />
+        </div>
+	</div><!--tab1-->
+	
+	<!--银行卡信息-->
+	<div id="tab_3"  style="display:none">
+	<dl class="lineD"><dt>银行账号：</dt><dd><htmlA:input id="bank_num"  value="{$vo.bank_num}"/></dd></dl>
+	<dl class="lineD"><dt>银行名称：</dt><dd><htmlA:select id="bank_name" value="key|vo.bank_name" datakey='bank_list' class="selectStyle" addstr='style="width: 110px;"' tip="*"/></dd></dl>
+	<dl class="lineD"><dt>开户银行所在省份：</dt><dd>
+	<htmlA:input id="bank_province"  value="{$vo.bank_province}" tip="如:山东省"/>		
+	</dd></dl>
+	<dl class="lineD"><dt>开户银行所在市：</dt><dd>
+	<htmlA:input id="bank_city"  value="{$vo.bank_city}" tip="如:济南市"/>
+	</dd></dl>
+	<dl class="lineD"><dt>开户行支行名称：</dt><dd><htmlA:input id="bank_address" value="{$vo.bank_address}" tip="如:高新区支行" /></dd></dl>
+
+        <!--银行卡信息-->
+        <div class="page_btm">
+            <input type="submit" class="btn_b" value="确定" />
+        </div>
+	</div>
+
+
+    <div id="tab_4"  style="display:none">
+        <dl class="lineD"><dt>公司名称：</dt><dd><htmlA:input id="corp_company_name"  value="{$corp.company_name}"/></dd></dl>
+        <dl class="lineD"><dt>企业网址：</dt><dd><htmlA:input id="corp_website"  value="{$corp.website}"/></dd></dl>
+        <dl class="lineD"><dt>企业地址：</dt><dd><htmlA:input id="corp_address"  value="{$corp.address}"/></dd></dl>
+        <dl class="lineD"><dt>执照号：</dt><dd><htmlA:input id="corp_license_no"  value="{$corp.license_no}"/></dd></dl>
+        <dl class="lineD"><dt>营业执照所在地：</dt><dd><htmlA:input id="corp_license_address"  value="{$corp.license_address}"/></dd></dl>
+        <dl class="lineD">
+            <dt>执照过期日（营业期限）：</dt>
+            <dd>
+                <htmlA:timer id="corp_license_expire_date" tip='执照过期日（营业期限）' arg="{dateFmt:'yyyyMMdd',alwaysUseStartDate:true}"  class="Wdate" value="{$corp.license_expire_date|mydate='Ymd',###}"/>
+            </dd>
+        </dl>
+        <dl class="lineD"><dt>营业范围：</dt><dd><htmlA:input id="corp_business_scope"  value="{$corp.business_scope}"/></dd></dl>
+        <dl class="lineD"><dt>联系电话：</dt><dd><htmlA:input id="corp_telephone"  value="{$corp.telephone}"/></dd></dl>
+        <dl class="lineD"><dt>联系Email：</dt><dd><htmlA:input id="corp_email"  value="{$corp.email}"/></dd></dl>
+        <dl class="lineD"><dt>组织机构代码：</dt><dd><htmlA:input id="corp_organization_no"  value="{$corp.organization_no}"/></dd></dl>
+        <dl class="lineD"><dt>企业法人：</dt><dd><htmlA:input id="corp_legal_person"  value="{$corp.legal_person}"/></dd></dl>
+        <dl class="lineD"><dt>法人身份证号码：</dt><dd><htmlA:input id="corp_cert_no"  value="{$corp.cert_no}"/></dd></dl>
+        <dl class="lineD"><dt>法人手机号码：</dt><dd><htmlA:input id="corp_legal_person_phone"  value="{$corp.legal_person_phone}"/></dd></dl>
+        <dl class="lineD">
+            <dt>银行编号：</dt>
+            <dd>
+                <htmlA:select id="corp_bank_code" value="key|corp.bank_code" datakey='bank_id_list' class="selectStyle" addstr='style="width: 110px;"' tip="*"/>
+            </dd>
+        </dl>
+        <dl class="lineD"><dt>银行卡号：</dt><dd><htmlA:input id="corp_bank_account_no"  value="{$corp.bank_account_no}"/></dd></dl>
+        <dl class="lineD"><dt>开户行省份：</dt><dd><htmlA:input id="corp_province"  value="{$corp.province}"/></dd></dl>
+        <dl class="lineD"><dt>开户行城市：</dt><dd><htmlA:input id="corp_city"  value="{$corp.city}"/></dd></dl>
+        <dl class="lineD"><dt>支行名称：</dt><dd><htmlA:input id="corp_bank_branch"  value="{$corp.bank_branch}"/></dd></dl>
+        <dl class="lineD"><dt>审核文件上传：</dt>
+        <dd><span id="spanButtonPlaceholder"></span><br><span id="divFileProgressContainer"></span></dd>
+        </dl>
+        <dl class="lineD"><dt>企业简介：</dt><dd><htmlA:text id="corp_summary"  value="{$corp.summary}"/></dd></dl>
+
+        <!--银行卡信息-->
+        <div class="page_btm">
+            <php>if($corp["corp_status"] == 1):</php>
+            <input type="button" disabled="disabled" id="approval_corp" value="已申请，请勿重复提交" />
+            <php>elseif($corp["corp_status"] == 2):</php>
+            <input type="button" disabled="disabled" id="approval_corp" value="已审核" />
+            <php>else:</php>
+            <input type="button" id="approval_corp" class="btn_b" onclick="javascript:aooroval()" value="申请审核" />
+            <php>endif;</php>
+            <php>if($corp["corp_status"] == 3):</php>
+			萨阿阿
+            <php>endif;</php>
+        </div>
+
+    </div>
+
+	</form>
+</div>
+<script type="text/javascript">
+function validCorp()
+{
+    return true;
+}
+
+function aooroval()
+{
+    $("#approval_corp").hide();
+    if ( !validCorp() ) {
+        $("#approval_corp").show();
+        return false;
+    }
+
+    var data = {
+        company_name : $("#corp_company_name").val(),
+        website : $("#corp_website").val(),
+        address : $("#corp_address").val(),
+        license_no : $("#corp_license_no").val(),
+        license_address : $("#corp_license_address").val(),
+        license_expire_date : $("#corp_license_expire_date").val(),
+        business_scope : $("#corp_business_scope").val(),
+        telephone : $("#corp_telephone").val(),
+        email : $("#corp_email").val(),
+        organization_no : $("#corp_organization_no").val(),
+        legal_person : $("#corp_legal_person").val(),
+        cert_no : $("#corp_cert_no").val(),
+        legal_person_phone : $("#corp_legal_person_phone").val(),
+        bank_code : $("#corp_bank_code").val(),
+        bank_account_no : $("#corp_bank_account_no").val(),
+        province : $("#corp_province").val(),
+        city : $("#corp_city").val(),
+        bank_branch : $("#corp_bank_branch").val(),
+        spanButtonPlaceholder : corpFile,
+        summary : $("#corp_summary").val(),
+        uid : "<php>echo $uid;</php>"
+    };
+
+    $.post("__URL__/approval", data, function(res){
+        alert(res.message);
+        if ( res.status != 1 ) {
+            $("#approval_corp").show();
+            return false;
+        }
+        location.reload();
+    }, 'json');
+}
+
+function subcheck(){
+	var pass = $("#user_pass").val();
+	var re_pass = $("#re_user_pass").val();
+	if( (pass!=""||re_pass!="") && re_pass!=pass){
+		ui.error("新密码和确认密码不能相同，如不修改则都留空");
+		return false;
+	}
+	var pin = $("#pin_pass").val();
+	var re_pin = $("#re_pin_pass").val();
+	if( (pin!=""||re_pin!="") && re_pin!=pin){
+		ui.error("新支付密码和确认支付密码不相同，如不修改则都留空");
+		return false;
+	}
+	return true;
+}
+
+</script>
+</div>
+<include file="Public:_footer" />

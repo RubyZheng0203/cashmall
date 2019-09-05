@@ -1,0 +1,88 @@
+<include file="Pub:headerNew"/>
+<body>
+	<div class="cash_view">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="member_main">
+			<div class="member_d3">
+				<div class="member_d1">
+					<ul class="member_ul2">
+						<li>
+							<div>申请时间</div>
+							<div>{$borrowInfo['add_time']|date="Y-m-d",###}</div>
+						</li>
+						<li>
+							<div>借款编号</div>
+							<div>{$borrowInfo['id']}</div>
+						</li>
+						<li>
+							<div>借款金额</div>
+							<div>{$borrowInfo['money']}元</div>
+						</li>
+						<li>
+							<div>借款期限</div>
+							<div>{$borrowInfo['duration']}天</div>
+						</li>
+						<li>
+							<div>认证费</div>
+							<div>{$borrowInfo['created_fee']}元</div>
+						</li>
+						<li>
+							<div>贷后管理费</div>
+							<div>{$borrowInfo['audit_fee']}元</div>
+						</li>
+						<li>
+							<div>账户管理费</div>
+							<div>{$borrowInfo['enabled_fee']}元</div>
+						</li>
+						<li>
+							<div>优惠减免</div>
+							<div>
+								<if condition=" $borrowInfo['other'] gt 0 ">{$borrowInfo['other']}元<else/>
+								----
+								</if>
+							</div>
+						</li>
+						<li>
+							<div>支付服务费</div>
+							<div>{$borrowInfo['pay_fee']}元</div>
+						</li>
+						<li>
+							<div>打款日期</div>
+							<div><if condition="empty($borrowInfo['len_time'])">----<else/>{$borrowInfo['len_time']|date="Y-m-d",###}</if></div>
+						</li>
+<!-- 						<li>
+							<div>打款金额</div>
+							<div>480元</div>
+						</li> -->
+						<li>
+							<div>本期利息</div>
+							<div>{$borrowInfo['interest']}</div>
+						</li>
+						<li>
+							<div>到期还款</div>
+							<div>{$borrowInfo['total']}元</div>
+						</li>
+						<li>
+							<div>约定还款日</div>
+							<div><if condition="empty($borrowInfo['deadline'])">----<else/>{$borrowInfo['deadline']|date="Y-m-d",###}</if></div>
+						</li>
+						<li>
+							<div>借款类型</div>
+							<div>普通借款</div>
+						</li>
+						<li>
+							<div style="width:40%;">状态说明</div>
+							<div style="width:60%;">{$borrowInfo['statusMsg']}</div>
+						</li>
+					</ul>
+				</div>
+				<div class="cash_btn" onclick="window.history.back();">我知道了</div>
+			</div>
+		</div>
+		<include file="Pub:footerNew"/>
+	</div>
+</body>
+
+</script>
+</html>

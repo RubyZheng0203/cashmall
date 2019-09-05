@@ -1,0 +1,76 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+	var isSearchHidden = 1;
+	var searchName = "搜索/筛选";
+</script>
+<div class="so_main">
+	<div class="page_tit">汇潮支付收款成功记录</div>
+	<!--搜索/筛选会员-->
+	<include file="searcht" />
+	<!--搜索/筛选会员-->
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />
+	</div>
+	<div class="list">
+		<table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			    <th style="width:30px;">
+			        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+			        <label for="checkbox"></label>
+			    </th>
+			    <th class="line_l">商户单号</th>
+			    <th class="line_l">请求日期</th>
+				<th class="line_l">收款日期</th>
+				<th class="line_l">交易渠道</th>
+				<th class="line_l">交易类型</th>
+				<th class="line_l">收款金额</th>
+				<th class="line_l">收款状态</th>
+				<th class="line_l">退款状态</th>
+			    <th class="line_l">借款申请ID</th>
+			    <th class="line_l">借款人UID</th>
+				<th class="line_l">借款人手机</th>
+			    <th class="line_l">真实姓名</th>
+				<th class="line_l">借款金额（元）</th>
+				<th class="line_l">借款利息（元）</th>
+			</tr>
+			<volist id="vo" name="list">
+       		<tr overstyle='on' id="list_{$vo.id}">
+		        <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+		        <td>{$vo.notify_id}</td>
+		        <td><if condition="$vo.addtime neq 0">{$vo.addtime|date="Y-m-d H:i",###}</if></td>
+		        <td><if condition="$vo.notify_time neq 0">{$vo.notify_time|date="Y-m-d H:i",###}</if></td>
+		        <td><if condition="$vo.type eq 1">微信支付</if>
+		        	<if condition="$vo.type eq 2">支付宝支付</if>
+		        	<if condition="$vo.type eq 3">银联支付</if>
+		        </td>
+		        <td><if condition="$vo.scene eq 1">还款</if>
+		        	<if condition="$vo.scene eq 2">续期</if>
+		        	<if condition="$vo.scene eq 3">授信</if>
+		        </td>
+		        <td>{$vo.pay_amount}</td>
+		        <td><if condition="$vo.status eq 1">处理成功<else/>处理失败</if></td>
+		        <td><if condition="$vo.is_refund eq 1">已退款<else/>-</if></td>
+		        <td>{$vo.borrow_id}</td>
+		        <td><htmlA:user id="vo.uid" uname="vo.uid" /></td>
+		        <td><htmlA:user id="vo.uid" uname="vo.iphone" /></td>
+		        <td>{$vo.real_name|default="&nbsp;"}</td>
+				<td>{$vo.money}</td>
+				<td>{$vo.interest}</td>
+       		</tr>
+			</volist>
+		</table>
+	</div>
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+  		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />
+	</div>
+</div>
+<script type="text/javascript">
+	function showurl(url,Title){
+		ui.box.load(url, {title:Title});
+	}
+</script>
+<include file="Public:_footer" />

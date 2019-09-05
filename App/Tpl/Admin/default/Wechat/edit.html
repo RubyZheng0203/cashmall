@@ -1,0 +1,120 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<div class="so_main">
+	<div class="page_tit">添加微信模板消息</div>
+	<div class="page_tab"><span data="tab_1" class="active">基本信息</span></div>
+	<div class="form2">
+		<form method="post" action="__URL__/doEdit" onsubmit="return subcheck();" enctype="multipart/form-data">
+			<div id="tab_1">
+				<dl class="lineD"><dt>消息模板ID：</dt><dd><htmlA:input id="msgId" name="msg_id" tip="微信模板消息ID" value="{$info.msg_id}"/></dd></dl>
+				<dl class="lineD"><dt>模板头消息：</dt><dd><htmlA:input id="first" name="first"  tip="尊敬的客户，您的借款申请已经通过审核。" value="{$info.first}"/></dd></dl>
+				<dl class="lineD"><dt>消息跳转url：</dt><dd><htmlA:input id="url" name="url"  tip="如www.fumi88.com" value="{$info.url}"/></dd></dl>
+				<dl class="lineD"><dt>第一行内容：</dt><dd><htmlA:input id="keyword1" name="keyword1"  tip="借款金额：1200元（只需设置冒号后的内容）" value="{$info.keyword1}"/></dd></dl>
+				<dl class="lineD"><dt>第二行内容：</dt><dd><htmlA:input  id="keyword2" name="keyword2" tip="借款期限：7天（只需设置冒号后的内容）" value="{$info.keyword2}"/></dd></dl>
+				<dl class="lineD"><dt>第三行内容：</dt><dd><htmlA:input  id="keyword3" name="keyword3" tip="到期还款日期：YYYY-MM-DD（只需设置冒号后的内容）" value="{$info.keyword3}"/></dd></dl>
+				<dl class="lineD"><dt>第四行内容：</dt><dd><htmlA:input  id="keyword4" name="keyword4" tip="身份证：XXXXXXXXXXXXXXXXXX（只需设置冒号后的内容）" value="{$info.keyword4}"/></dd></dl>			
+				<dl class="lineD"><dt>第五行内容：</dt><dd><htmlA:input  id="keyword5" name="keyword5" tip="放款金额：1000元（只需设置冒号后的内容）" value="{$info.keyword5}"/></dd></dl>
+				<dl class="lineD"><dt>模板尾信息：</dt><dd><htmlA:input  id="remark" name="remark" tip="如有疑问，致电客服热线：400-788-5018" value="{$info.remark}"/></dd></dl>				
+				<dl class="lineD"><dt>模板使用场景：</dt>
+					<dd>
+						<htmlA:select id="scene" value="key|info.scene" datakey='scene' class="selectStyle" addstr='style="width: 150px;"' tip="*"/>
+					</dd>
+				</dl>				
+			<div>
+			<input type="hidden" name="id" value="{$_GET['id']}"/>
+			<div class="page_btm">
+			  <input type="submit" class="btn_b" value="确定" />
+			</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	var obj=document.getElementById('scene');
+	var oil={$oilscene};
+	var fumi={$fumiscene};
+	var type={$type};
+	if(type==2){
+		for(var i in fumi){				
+			obj.options.add(new Option(fumi[i],i));
+		}
+	}else{
+		for(var i in oil){				
+			obj.options.add(new Option(oil[i],i));
+		}
+	}
+	
+	$(":radio").click(function(){
+		var type=$(this).val();	 
+		if(type!=1){
+			var fumi={$fumiscene};
+			obj.options.length=0;
+			for(var i in fumi){				
+				obj.options.add(new Option(fumi[i],i));
+			}
+		}else{
+			var oil={$oilscene};
+			obj.options.length=0;
+			for(var i in oil){
+				obj.options.add(new Option(oil[i],i));
+			}
+		}
+	})
+})
+
+	//获取会员用户名
+	getusername();
+	function getusername(){
+		var uid = $("#borrow_uid").val();
+		$(".userinfo").html("加载中...");
+	
+		var datas = {'uid':uid};
+		$.post("__URL__/getusername", datas, uidResponse,'json');
+	}
+	function uidResponse(res){
+		$(".userinfo").html(res.uname);
+	}
+	
+	function setError(tip){
+		$.jBox.tip(tip);
+		return false;
+	}
+	var cansub = true;
+	function subcheck(){
+		if(!cansub){
+			alert("请不要重复提交，如网速慢，请耐心等待！");
+			return false;	
+		}
+		
+		var msgId 			= $('#msgId').val();
+		var first 			= $('#first').val();
+		var keyword1 		= $('#keyword1').val();
+		var keyword2 		= $('#keyword2').val();
+		var remark 			= $('#remark').val();
+	    if(msgId==''||msgId==null){
+			ui.error("请填写微信模板ID");
+			return false;
+		}
+	    if(first==''||first==null){
+			ui.error("请填写模板头内容");
+			return false;
+		}
+	    if(keyword1==''||keyword1==null){
+			ui.error("此处不能为空");
+			return false;
+		}
+	    if(keyword2==''||keyword2==null){
+			ui.error("此处不能为空");
+			return false;
+		}
+	    if(remark==''||remark==null){
+			ui.error("请填写模板尾内容");
+			return false;
+		}
+	    cansub = false;
+		return true;
+	
+	}
+</script>
+<include file="Public:_footer" />

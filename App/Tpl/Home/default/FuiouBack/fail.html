@@ -1,0 +1,118 @@
+<include file="Pub:headerNew"/>
+<style>
+.suc-img{
+	width:1.2rem;
+	display:block;
+	margin:90px auto 16px;
+}
+.suc-con{
+	width:100%;
+	text-align:center;
+	font-size:16px;
+	color:#666;
+	line-height:30px;
+}
+.suc-text{
+	width: 6rem;
+    margin: 0 auto;
+    font-size: 14px;
+    line-height: 22px;
+}
+.suc-btn{
+	display:block;
+	width:6rem;
+	line-height:40px;
+	text-align:center;
+	font-size:16px;
+	color:#fff;
+	background:#2777c8;
+	margin:60px auto 0;
+	border-radius:4px;
+}
+.suc-btn1{
+	border:1px solid #2777c8;
+}
+.suc-btn2{
+	margin-top:20px;
+	background:#fff;
+	border:1px solid #2777c8;
+	color:#666;
+}
+</style>
+<body style="background:#fff;">
+	<div class="cash_view" style="background:#fff;">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="uncheck_main">
+			<img src="/style/cash/img/fail.png" alt="" class="suc-img">
+			<p class="suc-con">
+			<if condition = "$type eq 1">
+				<span>开户失败!</span>
+			<elseif condition = "$type eq 2" />
+				<span>授权失败!</span>
+			<elseif condition = "$type eq 3" />
+				<span>提现失败!</span>
+			<elseif condition = "$type eq 4" />
+				<span>解绑失败!</span>
+			<elseif condition = "$type eq 5" />
+				<span>绑卡失败!</span>
+			</if>
+			</p>
+			<p class="suc-con suc-text" id="Ch"><span>失败原因：{$msg}</span></p>
+			<if condition = "$type eq 1">
+				<div style="display:table;margin:0 auto;">
+					<a href="{$url}" class="suc-btn suc-btn1" id="btn">重新开户</a>
+					<a href="/Borrow/userBaseInfo" class="suc-btn suc-btn2" id="btn">返回上一页</a>
+				</div>
+			<elseif condition = "$type eq 2" />
+				<a href="{$url}" class="suc-btn" id="btn">重新授权</a>
+			<elseif condition = "$type eq 3" />
+				<a href="/Repayment/index" class="suc-btn" id="btn">重新提现</a>
+			<elseif condition = "$type eq 4" />
+				<div style="display:table;margin:0 auto;">
+					<a href="{$url}" class="suc-btn suc-btn1" id="btn">重新解绑</a>
+					<a href="/Member/index" class="suc-btn suc-btn2" id="btn">返回我的账户</a>
+				</div>
+			<elseif condition = "$type eq 5" />
+				<div style="display:table;margin:0 auto;">
+					<a href="{$url}" class="suc-btn suc-btn1" id="btn">重新绑卡</a>
+					<a href="/Member/index" class="suc-btn suc-btn2" id="btn">返回我的账户</a>
+				</div>
+			</if>
+		</div>
+		<if condition = "$type eq 1">
+			<input type="hidden" id="title_name" value="开户失败"/>
+		<elseif condition = "$type eq 2" />
+			<input type="hidden" id="title_name" value="授权失败"/>
+		<elseif condition = "$type eq 3" />
+			<input type="hidden" id="title_name" value="提现失败"/>
+		<elseif condition = "$type eq 4" />
+			<input type="hidden" id="title_name" value="解绑失败"/>
+		<elseif condition = "$type eq 5" />
+			<input type="hidden" id="title_name" value="绑卡失败"/>
+		</if>
+		<!-- 网页底部 -->
+		<include file="Pub:footerNew"/>
+	</div>
+</body>
+</html>
+</body>
+<script>
+$(function(){
+	var title_name = $("#title_name").val();
+	document.title = title_name;
+	
+	//失败原因
+	var url = window.location.href ;
+	var attrURL = url.split("/");
+	var j;
+	for (var i = 0; i < attrURL.length; i++) {
+		if(attrURL[i] == "msg"){
+			j = i + 1;
+			$("#Ch").html(decodeURI(attrURL[j]));
+			return false;
+		}
+	}
+});
+</script>
+</html>

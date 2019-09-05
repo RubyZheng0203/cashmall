@@ -1,0 +1,79 @@
+<tagLib name="htmlA" />
+<div class="so_main">
+	<div class="page_tit">放款调整修改</div>
+	<div class="form2">
+		<form method="post" action="__URL__/doPendingEdit" onsubmit="return subcheck();">
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<div id="tab_1">
+				<dl class="lineD"><dt>放款金额：</dt><dd>{$vo.money} 元 改为：<htmlA:input id="money" value="" tip="" addstr='style="width: 180px;"'/>（元）</dd></dl>
+				<dl class="lineD"><dt>放款期限：</dt><dd>{$vo.duration}{$vo.type}    改为：<htmlA:input id="duration" value="" tip="" addstr='style="width: 50px;"'/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<htmlA:select id="repayment_type" value="key|vo.repayment_type" datakey='type' class="selectStyle" addstr='style="width: 80px;"' tip=""/></dd></dl>
+				<dl class="lineD"><dt>放款利息：</dt><dd>{$vo.interest}元 改为：<htmlA:input id="interest" value="" tip="" addstr='style="width: 180px;"'/>（元）</dd></dl>
+				<dl class="lineD"><dt>借款管理费：</dt><dd>{$vo.borrow_fee}元 改为：<htmlA:input id="borrow_fee" value="" tip="" addstr='style="width: 180px;"'/>（元）</dd></dl>
+				<dl class="lineD"><dt>借款保证金：</dt><dd>{$vo.deposit}元 改为：<htmlA:input id="deposit" value="" tip="" addstr='style="width: 180px;"'/>（元）</dd></dl>
+				<dl class="lineD"><dt>风险保障金：</dt><dd>{$vo.security_fee}元 改为：<htmlA:input id="security_fee" value="" tip="" addstr='style="width: 180px;"'/>（元）</dd></dl>
+				<dl class="lineD"><dt>更改原因：</dt><dd><htmlA:input id="info" value="" tip="*"/></dd></dl>
+			</div>
+			<div class="page_btm">
+				<input type="submit" class="btn_b" value="确定" />
+			</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+var cansub = true;
+function subcheck(){
+	if(!cansub){
+		alert("请不要重复提交，如网速慢，请等待！");
+		return false;	
+	}
+	
+	if($("#money").val()=="" && $("#duration").val()=="" &&  $("#interest").val()=="" && $("#borrow_fee").val()=="" && 
+			$("#deposit").val()=="" && $("#security_fee").val()==""){
+		ui.error("请选择一项金额调整！");
+		return false;
+	}
+	
+	if(isNaN($("#money").val())){
+		ui.error("请输入放款金额的数字！");
+		return false;
+	}
+	
+	if($("#duration").val()==0){
+		ui.error("放款期限不能为0！");
+		return false;
+	}else{
+		if(isNaN($("#duration").val())){
+			ui.error("请输入数字！");
+			return false;
+		}
+		if($("#repayment_type").val()==""){
+			ui.error("请选择放款期限！");
+			return false;
+		}
+	}
+	if(isNaN($("#interest").val())){
+		ui.error("请输入放款利息的数字！");
+		return false;
+	}
+	if(isNaN($("#borrow_fee").val())){
+		ui.error("请输入借款管理费的数字！");
+		return false;
+	}
+	if(isNaN($("#deposit").val())){
+		ui.error("请输入借款保证金的数字！");
+		return false;
+	}
+	if(isNaN($("#security_fee").val())){
+		ui.error("请输入风险保障金的数字！");
+		return false;
+	}
+	
+	if($("#info").val()==""){
+		ui.error("更改原因不允许为空！");
+		return false;
+	}else{
+		cansub = false;
+		return true;
+	}
+}
+</script>

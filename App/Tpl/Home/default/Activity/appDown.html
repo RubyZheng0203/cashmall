@@ -1,0 +1,113 @@
+<include file="Pub:headerNew"/>
+<link rel="stylesheet" href="/Style/cash/css/animate.min.css">
+<script>
+	var a = weixin();
+	if(a){
+		window.location.href = "/activity/index";
+	}
+	function weixin(){
+	    var ua = window.navigator.userAgent.toLowerCase();
+	    if(ua.match(/MicroMessenger/i) != 'micromessenger'){
+	    	
+	    }else{
+	    	return true;
+	    }
+	    
+	}   
+</script>
+<body>
+	<div class="cash_view" style="background:#fff;">
+		<!-- 网页的头部 -->
+		<div class="app">
+			<div class="app_top">
+				<div class="top_logo"><img src="/Style/cash/images/app_img1.png" alt=""></div>
+				<div class="top_img animated bounceIn"><img src="/Style/cash/images/app_img2.png" alt=""></div>
+				<div class="top_text1 animated bounceInLeft" style="margin-top:0.45rem;">手机号+身份证</div>
+				<div class="top_text1 animated bounceInRight">20分钟急速到账</div>
+				<div class="top_text2">--您的<!-- {$id} -->好友邀请您加入现贷猫--</div>
+			</div>
+			<div class="app_bottom clearfix">
+				<div class="bottom_left">
+					<p><img src="/Style/cash/images/app_img9.png" alt=""></p>
+					<p style="font-size:0.28rem;margin-top:0.1rem;">扫码下载<i style="margin-left:0.15rem;"><img style="width:0.28rem;" src="/Style/cash/images/app_img3.png" alt=""></i></p>
+				</div>
+				<div class="bottom_right">
+					<a href="javascript:;" id="d1" download="http://gdown.baidu.com/data/wisegame/2e93d79ace156ce1/xiandaimao_102.apk">
+						<div style="background:#67c97c;margin-top:0.35rem;">
+							<ul class="clearfix">
+								<li><img src="/Style/cash/images/app_img4.png" alt=""></li>
+								<li>
+									<p>Android版</p>
+									<p>立即下载</p>
+								</li>
+							</ul>
+						</div>
+					</a>
+					<a href="javascript:;" id="d2">
+						<div style="background:#949494;">
+							<ul class="clearfix">
+								<li><img src="/Style/cash/images/app_img5.png" alt=""></li>
+								<li>
+									<p>iphone版</p>
+									<p>敬请期待</p>
+								</li>
+							</ul>
+						</div>
+					</a>
+				</div>
+			</div>
+			<!-- <div class="app_kai" style="display:none">
+				<div class="app_bg"></div>
+				<div class="app_content">
+					<img src="/style/cash/images/cash_hand.png" alt="">
+				</div>
+			</div> -->
+		</div>
+		<!-- <style>
+			.app_kai{width: 100%;height: 100%;position: fixed;left: 0;top:0;}
+			.app_bg{width: 100%;height: 100%;position: absolute;left: 0;top:0;background: rgba(0,0,0,0.8);}
+			.app_content{position:relative;z-index:999;margin-left: auto;margin-right: 0.6rem;width: 1.54rem;height: 1.33rem;margin-top: 0.4rem;}
+			.app_content img{width: 100%;}
+		</style>
+ -->		<include file="Pub:footerNew"/>
+	</div>
+</body>
+<script>
+	$(function(){
+		// var a = weixin();
+		// if(a){
+		// 	window.location.href = "/activity/index";
+		// }
+		$("#d1").click(function(){
+			window.location.href = "http://gdown.baidu.com/data/wisegame/2e93d79ace156ce1/xiandaimao_102.apk";	
+		});
+		$("#d2").click(function(){
+			layer.open({
+			    content: "ios版敬请期待"
+			    ,shadeClose: false,skin: 'msg'
+			    ,time: 2 //2秒后自动关闭
+			  });
+		});
+		// function weixin(){
+		//     var ua = window.navigator.userAgent.toLowerCase();
+		//     if(ua.match(/MicroMessenger/i) != 'micromessenger'){
+		    	
+		//     }else{
+		//     	return true;
+		//     }
+		    
+		// }
+		$(".app_bg").click(function(){
+			$(this).parent().hide();
+		});
+
+		/**
+ * @file bos下载中间页引用的js文件. 它描述了下载页的展示内容和跳转逻辑.
+ * @author zhangjialiang (zhangjialiang@baidu.com)
+ */
+
+	});
+	
+</script>
+
+</html>

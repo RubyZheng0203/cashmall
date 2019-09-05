@@ -1,0 +1,225 @@
+<include file="Pub:headerNew"/>
+<body style="background:#fff;">
+<div class="cash_view" style="background:#fff;">
+	<!-- 网页的头部 -->
+	<include file="Pub:footer"/>
+	<div class="off_line">
+		<!-- <div class="offline_title">我们为您提供了以下两种线下还款方式：</div>
+        <div class="offline_content">
+            <div>方法一：支付宝转账</div>
+            <div class="offline_num clearfix">
+                <div>现贷猫官方账户</div>
+                <div>cm@fumi88.com</div>
+            </div>
+        </div> -->
+		<div id="offline_app" style="position:relative">
+			<div class="offline_question" id="question_btn">如何转账？</div>
+			<div class="offline_d1">
+				<div>
+					<p style="margin-top:0;">转账金额</p>
+					<div style="font-weight:800;font-size:0.32rem;margin-top:0rem;">￥{$money|Fmoney=###}<if condition="$coupon gt 0">（包含{$coupon}元优惠券）</if></div>
+				</div> 
+				<div>
+					<!-- <div>
+						<p>支付宝转账</p>
+						<div>现贷猫官方账户：cm@fumi88.com</div>
+					</div> -->
+					<div>
+						<p>微信转账</p>
+						<div>现贷猫官方账号：扫描以下二维码即可支付</div>
+						<img src="/style/cash/img/wechatPay.jpg" alt="" style="display:block;margin:0.3rem auto;width:3.5rem;">
+					</div>
+					<div>
+						<p>银行转账</p>
+						<div>开户名：上海优越商务咨询有限公司</div>
+						<div>开户银行：招商银行上海江苏路支行</div>
+						<div>银行账号：1219 2596 1210 802</div>
+					</div>
+					<div style="color:red;font-size:0.18rem;">*收款账户仅限上述微信及银行账户，不支持其他转账方式，谨防上当受骗。</div>
+				</div>
+			</div>
+			<div class="offline_title2" style="color:#2777c8">请您在转账成功后，填写以下内容</div>
+			<form action="" id="offline_form">
+				<div>
+					<label for="name">真实姓名</label>
+					<input type="text" id="name" name="real_name" value="{$old_info.name}" placeholder="请输入真实姓名"/>
+				</div>
+				<div>
+					<label for="phone">手机号码</label>
+					<input type="tel" id="phone" name="phone" value="{$old_info.mobile}" placeholder="请输入手机号码"/>
+				</div>
+				<div>
+					<label for="aim">转账用途</label>
+					<if condition="$type eq 1"><input type="text"  value="还款" readonly="readonly"/></if>
+					<if condition="$type eq 2"><input type="text"  value="续期" readonly="readonly"/></if>
+
+				</div>
+				<div>
+					<label for="bank_num">转账金额</label>
+					<input type="number" id="money" name="money" value="{$money}" placeholder="请输入转账金额"/>
+				</div>
+				<div>
+					<label for="bank_num">转账账号</label>
+					<input type="text" style="width:70%;" id="bank_num" value="{$old_info.account}" name="bank_card" placeholder="请输入您的微信账号或银行卡号"/>
+				</div>
+			</form>
+			<input type="hidden" id="aim" value="{$type}"/>
+			<input type="hidden" id="detail_id" value="{$detail_id}"/>
+			<input type="hidden" id="ticket_id" value="{$ticket_id}"/>
+			<input type="hidden" id="num" value="{$off}">
+			<input type="hidden" id="xuqi_days" value="{$xuqi_days}"/>
+			<input type="hidden" id="status" value="{$status}">
+			<input type="hidden" id="status_money" value="{$old_info.money}">
+			<div class="offline_btn" id="offline_btn1">我已还款，提交</div>
+		</div>
+		<div class="cash_pop" id="offline_show" style="display:none;">
+			<div class="cash_bg"></div>
+			<div class="sign_pop_content7 animated bounceInUp" style="height:6.5rem;top:40%;">
+				<div class="delay_bank_c1" style="color:red;font-size:0.27rem;text-align:left;">转账时请务必添加备注（姓名+手机号码），不填写不处理！</div>
+				<img src="/style/cash/img/wechatEx.jpg" alt="" style="display:block;margin:0.3rem auto;width:3.8rem;">
+				<div class="pop_sign_btn" style="width:4.5rem;">我知道了</div>
+			</div>
+		</div>
+		<!-- <div id="offline_show" style="display:none">
+			<div class="offline_title2">支付宝转账备注示例</div>
+			<div class="offline_img">
+				<img src="/style/cash/images/offline1.png" alt="图片1">
+			</div>
+			<div class="offline_img2"><img src="/style/cash/images/offline3.png" alt="图片3"></div>
+			<div class="offline_img"><img src="/style/cash/images/offline2.png" alt="图片2"></div>
+			<div class="offline_content">
+                <div>方法二：银行转账</div>
+                <div class="offline_num1 clearfix" style="margin-top:0.6rem;">
+                    <div>开户名：</div>
+                    <div>上海优越商务咨询有限公司 </div>
+                </div>
+                <div class="offline_num1 clearfix">
+                    <div>开户银行：</div>
+                    <div>招商银行上海江苏路支行</div>
+                </div>
+                <div class="offline_num1 clearfix">
+                    <div>账号：</div>
+                    <div>1219 2596 1210 802</div>
+                </div>
+            </div>
+			<div class="offline_title2">银行转账备注示例</div>
+			<div class="offline_img"><img src="/style/cash/images/offline4.png" alt="图片4"></div>
+		</div> -->
+	</div>
+	<include file="Pub:footerNew"/>
+
+</div>
+<script>
+	$(function(){
+
+		//检查用户之前是否有信息
+		var status = $("#status").val();
+		var status_money = $("#status_money").val();
+		if(status == "1"){
+			$(":input").attr("readonly","readonly");
+			$(".offline_btn").hide();
+			$(".offline_title2").html("您的转账信息已经提交，正在审核中...");
+			$("#money").val(status_money);
+		}
+
+		$(".offline_btn").click(function(){
+			 var real_name = $("#name").val();
+			 var phone     = $("#phone").val();
+			 var bank_num  = $("#bank_num").val();
+			 var money     = $("#money").val();
+			 var detail_id = $("#detail_id").val();
+			 var aim       = $("#aim").val();
+			 var ticket_id = $("#ticket_id").val();
+			 var xuqi_days = $("#xuqi_days").val();
+			 var reg       = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
+			 var str       = "";
+			 var reg	      = /^[0-9]+(.[0-9]{1,3})?$/;
+			 var num       = $("#num").val();
+			 var postmoney = {$money};
+			if(num == "1"){
+				str = "还款申请正在处理中，请勿重复提交";
+				layer.open({
+					content: str
+					,skin: 'msg'
+					,time: 2 //2秒后自动关闭
+				});
+			}else if(real_name == ""){
+				str = "请填写真实姓名！"
+				layer.open({
+					content: str
+					,skin: 'msg'
+					,time: 2 //2秒后自动关闭
+				});
+			}else if(!reg.test(phone) || phone.length < 11){
+				str = "手机号码填写不正确！"
+				layer.open({
+					content: str
+					,skin: 'msg'
+					,time: 2 //2秒后自动关闭
+				});
+			}else if(aim == 0){
+				str = "请填写转账用途！"
+				layer.open({
+					content: str
+					,skin: 'msg'
+					,time: 2 //2秒后自动关闭
+				});
+			}else if(bank_num == ""){
+				str = "请填写转账账号！"
+				layer.open({
+					content: str
+					,skin: 'msg'
+					,time: 2 //2秒后自动关闭
+				});
+			}else if(money == "" || reg.test(money) == false){
+				str = "请填写正确金额！"
+				layer.open({
+					content: str
+					,skin: 'msg'
+					,time: 2 //2秒后自动关闭
+				});
+			}else if(money <postmoney){
+				str = "请填写正确金额！"
+				layer.open({
+					content: str
+					,skin: 'msg'
+					,time: 2 //2秒后自动关闭
+				});
+			}else{
+				layer.open({type: 2,shadeClose: false,content:'申请提交中'});
+				$.ajax({
+					url:"/Repayment/addPayApply",
+					type:"post",
+					data: "real_name=" + real_name + "&phone=" + phone + "&bank_num=" + bank_num + "&detail_id=" + detail_id + "&money=" + money + "&aim=" + aim + "&ticket_id=" + ticket_id+"&xuqi_days="+xuqi_days,
+					success:function(response){
+						var response = $.parseJSON(response);
+						layer.closeAll();
+						if(response.status){
+							layer.open({
+								content: response.message
+								,skin: 'msg'
+								,time: 2 //2秒后自动关闭
+							});
+							setTimeout(function(){
+								window.location.href="/repayment/index";
+							},2000)
+						}else{
+							layer.open({
+								content:  response.message
+								,skin: 'msg'
+								,time: 2 //2秒后自动关闭
+							});
+						}
+					}
+				})
+			}
+		});
+		$("#question_btn").click(function(){
+			$("#offline_show").fadeIn();
+			//$('body,html').animate({scrollTop:640},500);
+		});
+
+	})
+</script>
+</body>
+</html>

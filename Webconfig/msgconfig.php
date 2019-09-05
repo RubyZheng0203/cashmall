@@ -1,0 +1,2 @@
+<?php
+return array ( 'sms' => array ( 'onoff' => '1', 'type' => '2', 'user2' => 'DXX-WSS-125-08229', 'pwd2' => '756365', 'user1' => 'dh83241', 'pwd1' => 'w5tAtJbL', 'pass1' => '93c31d2293adab533dc9b34bc0e87e90', 'pass2' => '0B58940362AB2DAF7BB08F8390142598', ), ); ?>

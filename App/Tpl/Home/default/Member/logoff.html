@@ -1,0 +1,133 @@
+<include file="Pub:headerNew"/>
+<body>
+	<div class="cash_view">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="member_main">
+			<div class="off_title">账户注销</div>
+			<div class="off_text1">我们充分尊重和保护您的隐私，在您提交账户注销申请，并结清所有相关事宜后，我们会根据法律规定，对注销用户信息进行有序删除。</div>
+			<div class="off_mob">您的手机号码：<span class="color_mob">{$phone}</span></div>
+			<div class="off_d1">
+				<ul class="off_ul1 clearfix">
+					<li>验证码</li>
+					<li><input type="tel" id="verifyCode" placeholder="请输入手机验证码"></li>
+					<li id="js_btn1">获取</li>
+				</ul>
+			</div>
+			<div class="off_d2">注销原因</div>
+			<div class="off_d3">
+				<textarea name="reason" id="reason" cols="30" rows="10" placeholder="注销原因"></textarea>
+			</div>
+			<div class="cash_btn">我要注销</div>
+		</div>
+		<include file="Pub:footerNew"/>
+		<!-- <div class="cash_pop">
+			<div class="cash_bg"></div>
+			<div class="cash_content10">
+				<div><img src="" alt=""></div>
+				<div>注销成功</div>
+				<div>确定</div>
+			</div>
+		</div>
+		<div class="cash_pop">
+			<div class="cash_bg"></div>
+			<div class="cash_content10">
+				<div><img src="" alt=""></div>
+				<div >
+					<div style="color:#df0158;">注销失败</div>
+					<div style="color:#666;margin-top:0.2rem;">现金猫你还有未还清的借款</div>
+				</div>
+				<div>确定</div>
+			</div>
+		</div> -->
+	</div>
+	<input type="hidden" id="tick" value="{$tick}"/>
+</body>
+<script>
+$(document).ready(function(){	
+	$("#js_btn1").click(function(){
+		verify();
+	});
+	$(".cash_btn").click(function(){
+		var verifyCode = $("#verifyCode").val();
+		var reason 	   = $("#reason").val();
+		$.ajax({
+			url:'/Member/delUserInfo',
+			type:'post',
+			data:'verifyCode='+verifyCode+"&reason="+reason,
+			success:function(response){
+				var response = $.parseJSON(response);
+				if(response.status){
+					var tick = $("#tick").val();
+					layer.open({
+					    content: response.message
+					    ,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });
+					mj('logout',{
+						tick: tick,	
+					},function(status,data){
+						if(status){							
+							$.ajax({
+								url:'/Member/getMaxentId',
+								type:'post',
+								data:'tick='+tick+"&event=3",
+								success:function(response){
+									var response = $.parseJSON(response);
+									layer.open({
+									    content: response.message
+									    ,skin: 'msg'
+									    ,time: 2 //2秒后自动关闭
+									  });
+								}
+							})
+						}
+					})
+				}else{
+					layer.open({
+					    content: response.message
+					    ,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });
+				}
+			}
+		})
+	})
+	//倒计时函数
+	function time(){
+		var timeNumber = 60;
+		$("#js_btn1").unbind().css("background","#ccc");
+		clearInterval(timer);
+		var timer = setInterval(function(){
+			$("#js_btn1").html(timeNumber+"s");
+			if(!timeNumber){
+				clearInterval(timer);
+				$("#js_btn1").unbind().css("background","#39c");
+				$("#js_btn1").html("获取");
+				$("#js_btn1").click(function(){
+					time();
+				});
+			}
+			timeNumber--;
+		},1000);	
+	};
+	//验证码按钮验证函数
+	function verify(){
+		var phone = {$telnum};
+		$.ajax({
+			url:'/Member/sendPhoneCode',
+			type:'post',
+			data:'phone='+phone,
+			success:function(response){
+				var response = $.parseJSON(response);
+				if(response.status){					
+					time();
+				}else{
+					layer.msg(response.message);
+				}
+			}
+		})		
+	};
+})
+</script>
+</html>

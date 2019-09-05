@@ -1,0 +1,97 @@
+<include file="Pub:headerNew"/>
+<body>
+	<div class="cash_view">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="bank_main">
+			<div class="bank_d1">
+				<ul class="mess_ul1">
+					<li>
+						<div>开户银行</div>
+						<div>
+						<select name="" id="bankName">
+						{$str}
+						</select>
+						</div>
+					</li>
+					<li>
+						<div>开户省份</div>
+						<div><input type="text" id="province" placeholder="请输入您的开户省份" value="{$info['bank_province']}" <if condition="$info['bank_province']">readonly="readonly"</if> ></div>
+					</li>
+					<li>
+						<div>开户地区</div>
+						<div><input class="cash" id="city" type="text" placeholder="请输入您的开户地区" value="{$info['bank_city']}" <if condition="$info['bank_city']">readonly="readonly"</if> ></div>
+					</li>
+					<li>
+						<div>银行卡号</div>
+						<div><input style="width:100%;" class="job" id="bankCard" type="text" placeholder="请输入您的银行卡号" value="{$info['bank_card']}" <if condition="$info['bank_card']">readonly="readonly"</if>  ></div>
+					</li>
+				</ul>
+			</div>
+			<div class="bank_d3">提交</div>
+		</div>	
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$(".bank_d3").click(function(){
+				var bank_name = $("#bankName").val();
+				var province  = $("#province").val();
+				var city	  = $("#city").val();
+				var bankCard  = $("#bankCard").val();
+				if(province == ''){
+					layer.open({
+					    content: "请输入开户省份"
+					    ,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });
+					return false;
+				}
+				if(city == ''){
+					layer.open({
+					    content: "请输入开户地区"
+					    ,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });
+					return false;
+				}
+				if(bankCard == ''){
+					layer.open({
+					    content: "请输入银行卡号"
+					    ,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });
+					return false;
+				} 
+				$.ajax({
+					url:'/Borrow/addOtherCard',
+					type:'post',
+					data:'bankName='+bank_name+"&province="+province+"&city="+city+"&bankCard="+bankCard,
+					success:function(response){
+						var response = $.parseJSON(response);
+						if(response.status){
+							layer.open({
+							    content: response.message
+							    ,skin: 'msg'
+							    ,time: 2 //2秒后自动关闭
+							  });
+							setTimeout("window.location.href=document.referrer",2000);
+						}else{
+							layer.open({
+							    content: response.message
+							    ,skin: 'msg'
+							    ,time: 2 //2秒后自动关闭
+							  });
+						}
+					}
+				})
+			})
+		})
+		</script>	
+		<!-- 网页底部 -->
+		<include file="Pub:footerNew"/>
+	</div>
+</body>
+</html>
+</body>
+
+</script>
+</html>

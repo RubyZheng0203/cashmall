@@ -1,0 +1,51 @@
+<include file="Pub:headerNew"/>  
+<style>
+	.borrow_div .p_strong{
+		font-size: 0.23rem;
+	}
+	.borrow_div .p_strong{
+		margin: 0 0;
+	}
+	.borrow_div > p:nth-child(even){
+		margin-bottom:10px;
+	}
+	.underline{
+		padding-bottom:1px; 
+		border-bottom:1px solid #000;
+	}
+</style>
+<body style="background:#fff;font-size:0.25rem;">
+	<div class="cash_view" style="background:#fff;">
+		<!-- 网页的头部 -->
+		<div class="borrow_a_all">
+			<h3 style="text-align:center">授信诊断咨询授权书</h3>
+			<p style="text-indent:0;">上海优懋商务信息咨询服务中心：</p>
+			<p>本人（姓名）<span class="underline">{$real_name}</span>（身份证号码：<span class="underline" style="word-break:break-all;">{$id_card}</span>）（下称“用户”），拟向贵司在线购买<span class="underline">个人授信诊断报告服务</span>，<span class="p_strong">特同意并不可撤销的授权：</span></p>
+			<p class="p_strong">（一）贵司查询或核实、搜集、保存、处理、共享、使用（含合法业务应用）本人因申请借款向平台服务方及其他为本人申请借款提供数据、征信等服务的第三方（以下合称“服务方”，含其关联方，下同）提供的及/或经本人授权由服务方取得的本人相关数据，并出具分析评判报告（下称“咨询报告”），且不再另行告知本人。</p>
+			<p class="p_strong">（二）贵司向本人及出借人、服务方提供咨询报告（电子版或纸质版），以贵司具体出具的为准。</p>
+			<p class="p_strong">本人在此声明已充分理解上述授权条款含义，知晓并自愿承担上述因收集和使用本人数据可能会给本人的信用评级（评分）、信用报告等结果产生的不利影响，以及该等数据被使用者依法提供给第三方后被他人不当利用的风险，但本人仍同意上述授权。</p>
+			<p class="p_strong">服务方特别提示：</p>
+			<p>为了保障用户的合法权益，请用户务必阅读并充分理解与遵守本授权书；<span class="p_strong">若用户不接受本授权书的任何条款，请用户立即终止授权并停止购买服务。</span></p>
+			<p>贵司及服务方已经对上述事宜及其风险向本人做了充分说明，本人已知晓并同意。</p>
+			<p class="p_strong">本授权书一经出具即生效，本授权书是本人真实意思表示，本人同意承担由此带来的一切法律后果。</p>
+			<div style="text-align:right">授权人（签字）：     {$real_name}</div>
+			<div style="text-align:right">签订日期：     <span id="year"></span>年  <span id="month"></span>月  <span id="day"></span>日</div>
+		</div>
+		<!-- 网页底部 -->
+		<include file="Pub:footerNew"/>
+	</div>
+</body>
+
+<script>
+	$(function(){
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = date.getMonth()+1;
+		var day = date.getDate();
+		$("#year").html(year);
+		$("#month").html(month);
+		$("#day").html(day);
+ 		
+	});
+</script>
+</html>

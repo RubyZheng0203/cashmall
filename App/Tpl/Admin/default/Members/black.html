@@ -1,0 +1,71 @@
+<tagLib name="htmlA" />
+<div class="so_main">
+
+<div class="page_tit">设置黑白灰金名单</div>
+<div class="form2">
+	<form method="post" action="__URL__/doblack" onsubmit="return subcheck();">
+	<input type="hidden" name="id" value="{$id}" />
+	<input type="hidden" name="type" value="{$type}" />
+	<div id="tab_1">
+        <dl class="lineD"><dt>是否设置：</dt><dd>
+	        <if condition="$type eq 1">
+	        	<if condition="$status eq 1">
+	        		<htmlA:radio id="status" default="1|设置为黑名单,3|不处理"/>
+	        	<else/>
+	        		<htmlA:radio id="status" default="2|取消黑名单,3|不处理"/>
+	        	</if>
+	        	
+	        </if>
+	        <if condition="$type eq 2">
+	        	<if condition="$status eq 1">
+	        		<htmlA:radio id="status" default="1|设置为白名单,3|不处理"/>
+	        	<else/>
+	        		<htmlA:radio id="status" default="2|取消白名单,3|不处理"/>
+	        	</if>
+	        </if>
+	        <if condition="$type eq 3">
+	        	<if condition="$status eq 1">
+	        		<htmlA:radio id="status" default="1|设置为灰名单,3|不处理"/>
+	        	<else/>
+	        		<htmlA:radio id="status" default="2|取消灰名单,3|不处理"/>
+	        	</if>
+	        </if>
+	        <if condition="$type eq 4">
+	        	<if condition="$status eq 1">
+	        		<htmlA:radio id="status" default="1|设置为金名单,3|不处理"/>
+	        	<else/>
+	        		<htmlA:radio id="status" default="2|取消金名单,3|不处理"/>
+	        	</if>
+	        </if>
+        </dd></dl>
+        <dl class="lineD"><dt>原因：</dt><dd><textarea name="reason"  id="reason" /></textarea></dd></dl>
+	</div>
+	<div class="page_btm">
+	  <input type="submit" class="btn_b" value="确定" />
+	</div>
+	</form>
+</div>
+
+</div>
+<script type="text/javascript">
+var cansub = true;
+function subcheck(){
+	if(!cansub){
+		alert("请不要重复提交，如网速慢，请等待！");
+		return false;	
+	}
+	if($("input[name='status']:checked").val()!=1 && $("input[name='status']:checked").val()!=2&& $("input[name='status']:checked").val()!=0){
+		ui.error("请选择是否设置");
+		return false;
+	}else{
+		if($("input[name='status']:checked").val() == 1){
+			if($('#reason').val() == '' || $('#reason').val() ==null){
+				ui.error("请填写设置的原因！");
+				return false;
+			}
+		}
+	}
+	cansub = false;
+	return true;
+}
+</script>

@@ -1,0 +1,67 @@
+<include file="Public:_header" />
+<tagLib name="htmlA" />
+<style type="text/css">
+.sel_fs{width:110px}
+</style>
+<!--调试内容开始-->
+<!--<pre><php>var_dump($_SERVER);</php></pre>-->
+<!--调试内容结束-->
+<div class="so_main">
+
+<div class="page_tit">发送优惠券</div>
+<div class="page_tab"><span data="tab_1" class="active">发送工具</span></div>
+<div class="form2">
+	<form id="send_form" method="post" action="__URL__/doSend" onsubmit="return subcheck();">
+	<div id="tab_1">
+	<dl class="lineD"><dt>有效时间：</dt><dd><input name="expire" id="expire" value="{$vo.expire}"/>（天）</dd></dl>
+	<dl class="lineD"><dt>金额：</dt><dd><input name="money" id="money" value="{$vo.uids}"/></dd></dl>
+	<dl class="lineD"><dt>备注：</dt><dd><input name="memo" id="memo" value="{$vo.memo}"/></dd></dl>
+	<input type="hidden" name="bid" value="{$bid}">
+	<input type="hidden" name="uid" value="{$uid}">
+	</div><!--tab1-->
+	<!--银行卡信息-->
+	<div class="page_btm">
+	  <input type="button" id="submit_btn" class="btn_b" value="确定" style="margin-right:20px;" />
+	  <input type="button" class="btn_b" value="返回" onclick="javascript:location.href='__URL__/index.html';" />
+	</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$('#submit_btn').click(function(){
+			$('#send_form').submit();
+		});
+	});
+	
+	var cansub = true;
+	function subcheck(){
+		
+		if(!cansub){
+			alert("请不要重复提交，如网速慢，请耐心等待！");
+			return false;	
+		}
+
+		var expire 	= $('#expire').val();
+		var money 	= $('#money').val();
+		var memo 	= $('#memo').val();
+		
+	    if(expire ==''||expire ==null){
+			ui.error("请填写有效时间");
+			return false;
+		}
+		if(money==''||money==0){
+			ui.error("请填写金额");
+			return false;
+		}
+		if(memo ==''||memo ==null){
+			ui.error("请填写内容");
+			return false;
+		}
+	
+		cansub = false;
+		return true;
+	}
+
+</script>
+</div>
+<include file="Public:_footer" />

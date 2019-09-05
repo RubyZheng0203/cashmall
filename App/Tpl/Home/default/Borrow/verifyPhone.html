@@ -1,0 +1,204 @@
+<include file="Pub:headerNew"/>
+<body>
+	<div class="cash_view">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="testmob_main">
+			<!-- <div class="borrow_d1">
+				<ul class="borrow_d1_ul1 clearfix">
+					<li>
+						<div class="active">1</div>
+						<div class="line"></div>
+						<div>选择金额</div>
+					</li>
+					<li>
+						<div class="active">2</div>
+						<div class="line"></div>
+						<div>验证身份</div>
+					</li>
+					<li>
+						<div class="active">3</div>
+						<div></div>
+						<div>验证手机</div>
+					</li>
+					<li>
+						<div>4</div>
+						<div style="display:none"></div>
+						<div>发放借款</div>
+					</li>
+				</ul>
+			</div>  --> 
+			<if condition="(empty($info)) AND ($borrow)">
+				<div class="testmob_d1">
+					<ul class="testmob_ul1">
+						<li>
+							<div>手机号码</div>
+							<div><input type="text" id="phone" placeholder="请输入你的手机号码" value="{$phone}" <if condition="$phone">readonly=readonly</if> /></div>
+						</li>
+						<li>
+							<div>服务密码</div>
+							<div><input type="password" id="password" placeholder="运营商服务密码" value=""></div>
+							<div onclick="location.href='/index/password'">忘记密码</div>
+						</li>					
+					</ul>
+				</div>
+				<div class="sign_d2" style="margin:0.4rem auto;" onclick="verify()">
+					下一步
+				</div>
+			<else/>
+			
+				<if condition="$info['verify_phone'] eq '1'">
+					<div class="sign_d2" style="margin:0.4rem auto;" onclick="next()">
+						查询成功，下一步
+					</div>
+				<elseif condition="$info['verify_phone'] eq '2'"/>
+					<script>
+						window.location.href="/Borrow/refuse";
+					</script>
+					<!-- <div class="sign_d2" style="margin:0.4rem auto;">
+						<a href="/borrow/index">查询失败,返回首页</a>
+					</div> -->
+				<else/>
+					<div class="sign_d2" style="margin:0.4rem auto;">
+						等待查询结果
+					</div>
+				</if>
+			 
+			</if>
+			<div class="testmob_d2">
+				<dl>
+					<dt>温馨提示：</dt>
+					<dd>1、请授权本人实名认证手机号码（使用超过4个月）</dd>
+					<dd>2、登录成功后您将收到运营商通知短信，无需回复</dd>
+					<if condition="($borrow) AND ($info['verify_phone'] eq '0')">
+						<dd>3、<font color="red">请于10分钟后点击页面右上角刷新</font></dd>
+					</if>
+				</dl>
+			</div>
+		</div>
+		<!-- 验证码-->
+		<div class="bank_pop" id="bank_pop2" style="display:none;z-index:99;">
+			<div class="bank_bg"></div>
+			<div class="bank_content" style="height:3.1rem;width:4.4rem;margin-top:-2rem;margin-left:-2.2rem;">
+				<div class="bank_pop1" style="margin-bottom:0.3rem;font-size:0.28rem;">请输入收到验证码</div>
+				<div style="text-align:center;">
+					<input type="tel" id="bindCode" style="font-size:0.26rem;width:60%;height:0.5rem;border:1px solid #ccc;border-radius:4px;padding-left:0.2rem;" placeholder="请输入验证码">
+				</div>
+				<div class="bank_pop2" style="font-size:0.26rem;width:2.6rem;" id="bindcard">确定提交</div>
+				<input type="hidden" id="bindTick" value=""/>
+			</div>
+		</div>
+		<!-- 网页底部 -->
+		<input type="hidden" id="tick" value="{$tick}"/>
+		<input type="hidden" id="tickIn" value="{$tickIn}"/>
+			<input type="hidden" id="uid" value="{$_SESSION['uid']}"/>
+		<include file="Pub:footerNew"/>
+	</div>
+  <script>
+    $(function(){
+    	var url = location.href;
+		$.ajax({
+			url:'/Member/saveUserOperation',
+			type:'post',
+			data:'url='+url,
+			success:function(response){
+				
+			}
+		})
+    	var tickIn = $("#tickIn").val();
+		var uid = $("#uid").val();
+		var object = {
+				event : "customize_event",
+				eventType : "VERIFYTELIN_EVENT",
+				eventNum : 10,
+				uid	: uid,
+				tick : tickIn,
+				status : 1
+			}
+		requestDevice(object);
+    	$(".cash_bg").click(function(){
+    		$(".cash_pop").hide();
+    	});
+    	if($(".mobsure_main").css("display") == "block"){
+    		$("body").css("background","#fff");
+    		$(".cash_view").css("background","#fff");
+    	}
+    })
+    function next(){
+    	window.location.href="/Borrow/msgCheck";
+    }
+    function verify(){
+    	var phone 		= $("#phone").val();
+    	var password 	= $("#password").val();
+		if(password == "" || password.length > 8 || password.length < 6){
+			layer.open({
+			    content: '请输入正确服务密码'
+			    ,skin: 'msg'
+			    ,time: 2 //2秒后自动关闭
+			  });	
+            return false;
+		}
+		layer.open({type: 2,shadeClose: false,content:'提交中'});
+		submit(phone,password);
+    }
+    
+    function submit(phone,password){
+		$.ajax({
+			url:'/CheckPhone/requestJavaApi',
+			type:'post',
+			data:"phone="+phone+"&password="+password,
+			success:function(response){
+				var response = $.parseJSON(response);
+				var ticks = $("#tick").val();
+				var uid = $("#uid").val();
+				var object = {
+						event : "customize_event",
+						eventType : "VERIFYTEL_EVENT",
+						eventNum : 11,
+						uid	: uid,
+						tick : ticks,
+						status : response.status
+					}
+				requestDevice(object);
+				if(response.status){
+					layer.open({
+					    content: '信息已提交，等待审核'
+					    ,skin: 'msg'
+					    ,time: 2 
+					  });
+					window.location.reload();
+				}else{		
+					layer.closeAll();
+					if (response.message == 'sms'){
+						window.location.href="/Borrow/verifyPhoneTwo";
+					}else{
+						layer.open({
+						    content: response.message
+						    ,shadeClose: false,skin: 'msg'
+						    ,time: 2 //2秒后自动关闭
+						  });							
+					}
+				}
+			},
+			error:function(jqXHR, textStatus, errorThrown){  
+				layer.closeAll(); 
+                if(textStatus=="timeout"){  
+                    layer.open({
+						content: "网络超时"
+						,skin: 'msg'
+						,time: 2 //2秒后自动关闭
+					});
+                }else{   
+                    layer.open({
+						content: "网络超时"
+						,skin: 'msg'
+						,time: 2 //2秒后自动关闭
+					});  
+                }  
+            }　
+		})
+    }
+  </script>
+</body>
+</script>
+</html>

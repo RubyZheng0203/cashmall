@@ -1,0 +1,119 @@
+<include file="../Public/_header" />
+<style type="text/css">
+.quxiantu{ margin-top:30px;}
+.qleft{ float:left; width:50%; text-align:left;}
+.qright{ float:right; width:50%; text-align:right;}
+
+.ssx a{height:30px; line-height:30px}
+.lf{
+    float:left;
+    width:48%; border:1px solid #c7d8ea; margin: 10px;
+}
+.lf h6{
+    border-bottom: 1px solid #c7d8ea;
+    color: #3a6ea5;
+    height: 26px;
+    line-height: 28px;
+    padding: 0 10px;
+    font-size: 13px;
+}
+.lf .content{
+    padding: 9px 10px;
+    line-height: 22px;
+}
+.lf .content a{
+    color:red;
+    
+}
+</style>
+<script type="text/javascript" src="__ROOT__/Style/Js/highcharts.js"></script>
+<script type="text/javascript" src="__ROOT__/Style/Js/exporting.js"></script>
+<div class="so_main">
+	<div class="page_tit">欢迎页</div>
+  	<!--列表模块-->
+  	<div class="Toolbar_inbox">
+    	<div class="page right">
+			当前时间<span id="clock"></span>
+    	</div>
+    	<a href="javascript:;" class="btn_a"><span>欢迎登陆</span></a></div>
+		<script>
+			function changeClock()
+			{
+				var d = new Date();
+				document.getElementById("clock").innerHTML = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+			}
+			window.setInterval(changeClock, 1000);
+		</script>  
+	<div class="lf">
+	    <h6>个人信息</h6>
+	    <div class="content">
+	        您好，{$user.user_name}
+	        <br />
+	        所属角色：{$user.groupname} 
+	        <br />
+	        上次登录时间：{$user.last_log_time|date='Y-m-d H:i:s',###}
+	        <br />
+	        上次登录IP：{$user.last_log_ip}   
+	    </div>
+	</div>
+	<div class="lf">
+		<h6>系统信息</h6>
+		<div class="content">
+	    	<div style="float: left; width:300px;">
+	        	福米金融现金猫管理系统
+	     	</div>
+	    	<div style="float: left;">
+	        	操作系统：{$service.service_name} 
+	     	</div>
+	     	<br />
+			<div style="float: left; width:300px;">
+	       		服务器软件：{$service.service}
+	     	</div>
+	    	<div style="float: left;">
+	        	MySQL 版本：{$service.mysql}
+	     	</div>
+	     	<br />
+		 	<div style="float: left; width:300px;">
+	     		服务器协议：{$Think.SERVER.SERVER_PROTOCOL}
+	     	</div>
+	    	<div style="float: left;">
+	      		服务器名称：{$Think.SERVER.SERVER_NAME}
+	     	</div>
+	     	<br />
+		 	<div style="float: left; width:300px;">
+	      		PHP运行方式：<?php echo strtoupper(php_sapi_name())?>
+	     	</div>
+	    	<div style="float: left;">
+	      		PHP版本：<?php echo PHP_VERSION?>
+	     	</div>
+			<br />
+		 </div>
+	</div>
+	<!-- <div class="lf">
+    	<h6>网站运行数据</h6>
+    	<div class="content">
+	    	<div style="float: left; width:300px;">
+	         	注册用户总数：<if condition="$count gt 0"><a href="__APP__/admin/members/daCount" >{$count}</a><else /> 0 </if>个
+	     	</div>
+	     	<div style="float: left; width:300px;">
+	         	申请借款用户总数：<if condition="$countBorrow gt 0"><a href="__APP__/admin/members/daCount" >{$countBorrow}</a><else /> 0 </if>个
+	     	</div>
+	     	<br />
+    		<div style="float: left; width:300px;">
+      			放款总金额：<if condition="$loanMoney gt 0"><a href="__APP__/admin/borrow/waitverify2.html">{$loanMoney|Fmoney=###}</a><else /> 0.00 </if>元
+     		</div>
+	 		<div style="float: left; width:300px;">  
+      		 	回款到账总金额：<if condition="$repayment gt 0"><a href="__APP__/admin/vipapply/index?status=0">{$repayment|Fmoney=###}</a><else /> 0.00 </if>元
+     		</div>
+	    </div>
+	</div>-->
+	<div class="lf">
+	    <h6>现金猫管理系统</h6>
+	    <div class="content">
+	    	版权所有：福米互联网金融信息服务(上海)有限公司
+	        <br />    
+	       	 官方网站：<a href="http://www.cashmall.com.cn" target="_blank">http://www.cashmall.com.cn</a> 
+	    </div>
+	</div>
+</div>
+<include file="Public:_footer" />

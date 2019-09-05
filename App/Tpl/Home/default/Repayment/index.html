@@ -1,0 +1,60 @@
+<include file="Pub:headerNew"/>
+<style>
+	.repay_con_cen_btn{
+		width:1.2rem;
+	}
+</style>
+<body>
+	<div class="cash_view">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="cash_repay" style="margin-bottom:1.8rem;">
+			<div class="repay_top">
+				<div class="repay_top_1"><p>{$total}元</p><p>待还总额</p></div>
+				<div style="width:6.1rem;margin:0 auto;">
+					<div class="repay_top_2">{$count}笔<br/>待还笔数</div>
+					<div class="repay_top_2" style="border:none;">{$dueC}笔<br/>逾期笔数</div>
+				</div>
+			</div>
+			<volist name="apply" id="vo">  
+				<div class="repay_con">
+					<div class="repay_con_top">{$vo.deadline}到期</div>
+					<div class="repay_con_cen">
+						<div class="repay_con_cen_left"><p>{$vo.money}元</p><p>应还金额</p></div>
+						<form method="post" action="../repayment/repaymentInfo">
+							<input type="hidden" name="bid" value="{$vo.id}"/>
+							<if condition="$vo.is_withdraw eq 0">
+								<input type="submit" value="立即还款" class="repay_con_cen_btn" style="-webkit-appearance:none;background:#fff;color:#2aa1ff;border:1px solid #2aa1ff;line-height: 0.51rem;"/>
+								<input value="提现" type="button" id="tixian" class="repay_con_cen_btn" style="-webkit-appearance:none;margin-right: 0.1rem;" />
+							<else/>
+								<input type="submit" value="立即还款" class="repay_con_cen_btn" style="-webkit-appearance:none;" />
+							</if>
+						</form>
+						
+						<form method="post" action="/fuiouback/Withd" id="tixianForm">
+							<input type="hidden" name="bid" value="{$vo.id}"/>
+						</form>
+					</div>
+					<div class="repay_con_btm">状态{$vo.msg}</div>
+				</div>
+			</volist>
+		</div>
+		<div class="repay_txt" style="position:absolute;">
+			<p>温馨提示：</p>
+			<p>根据《征信业管理条例》规定，我司将按规定如实上报逾期用户信用信息，为避免影响征信，请您按时还清借款。</p>
+		</div>
+		<include file="Pub:footerNew"/>
+	</div>
+</body>
+<script>
+$(function(){
+	document.title = "还款/续期";
+	$(".cash_bg").click(function(){
+		$(".cash_pop").hide();
+	});
+	$("#tixian").click(function(){
+		$("#tixianForm").submit();
+	});
+});
+</script>
+</html>

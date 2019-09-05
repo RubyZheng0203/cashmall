@@ -1,0 +1,278 @@
+<include file="Pub:headerNew"/>
+<body style="">
+	
+	<div class="cash_view">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="sign_main">
+
+			<div class="sign_title">借款协议</div>
+					 <if condition="$info['is_random'] eq '1'"><div style="font-size:0.26rem;padding:0 5%;margin:15px 0;color:#2777c8">用户您好：通过对您的信用评估，授予您{$info['money']}元借款额度，点击“确认打款”即可放款。</div></if>
+			<div class="sign_d1" style="margin-top:0;">
+				<ul class="sign_ul2">
+					<li>
+						<div>借款人</div>
+						<div>{$member['real_name']}</div>
+					</li>
+					<li>
+						<div>借款金额</div>
+						<div>{$info['money']}</div>
+					</li>
+					<li>
+						<div>借款期限</div>
+						<div>{$info['duration']}天</div>
+					</li>
+					<li>
+						<div>综合费用</div>
+						<div>
+							<span class="sign2_s2" id="sign_s4">?</span>
+							<span>{$info['fee']}元</span>
+						</div>
+					</li>
+					<!-- <li>
+						<div>打款金额</div>
+						<div>
+							<span class="sign2_s2" id="sign_s4">?</span>
+							<span>480元</span>
+						</div>
+					</li> -->
+					<li>
+						<div>本期利息</div>
+						<div>{$info['interest']}元</div>
+					</li>
+					<li>
+						<div>还款方式</div>
+						<div>一次性还款</div>
+					</li>
+					<li>
+						<div>还款金额</div>
+						<div>{$info['total']}元</div>
+					</li>
+					<li>
+						<div>还款日期</div>
+						<div>-----</div>
+					</li>
+					<li>
+						<div>逾期利息</div>
+						<div>{$info['due_rate']}</div>
+					</li>
+					<li>
+						<div>
+							<span>逾期管理费</span>
+							<!-- <span class="sign2_s2" id="sign_s5">!</span> -->
+							<span class="sign2_s2" onclick="location.href='/index/borrowManage'">!</span>
+						</div>
+						<div>{$info['late_rate']}</div>
+					</li>
+					
+					<!-- <li>
+						<div>逾期政策</div>
+						<div class="sign2_d2">
+							<span class="sign2_s2" id="sign2_s3" style="text-align:center;">？</span>
+							<span class="span_s1">7天容时期，费用5元/天</span><br/>
+							<span class="span_s1">7天后逾期，费用10元/天</span>
+						</div>
+					</li> -->
+				</ul>
+			</div>
+			<!-- <a href="https://mp.weixin.qq.com/s/ODCSPOipT2fEnjQ9wF5u1g" style="width:90%;display:block; margin:15px auto 40px;"><img src="/style/cash/images/huiyuan.jpg" style="width:100%;"></a> -->
+			<div class="sign1_d2" style="color: #2777c8;text-align: center;padding:0;">
+				<span><input type="checkbox" id="check"></span>
+				<span>我同意<a href='/index/borrowAgreement?id={$info.id}'style="text-decoration:underline;">《{$member['real_name']}-借款服务协议》</a></span>
+			</div>
+			<div class="cash_btn">确认</div>
+		</div>
+		<!-- 综合费用弹窗 -->
+		<div class="cash_pop" id="cash_pop1" style="display:none">
+			<div class="cash_bg"></div>
+			<div class="sign_pop_content1">
+				<dl class="pop_dl1">
+					<dt>综合费用</dt>
+					<dd>
+						<div>认证费</div>
+						<div>{$info['created_fee']}元</div>
+					</dd>
+					<dd>
+						<div>账户管理费</div>
+						<div>{$info['enabled_fee']}元</div>
+					</dd>
+					<dd>
+						<div>贷后管理费</div>
+						<div>{$info['audit_fee']}元</div>
+					</dd>
+					<dd>
+						<div>支付服务费</div>
+						<div>{$info['pay_fee']}元</div>
+					</dd>
+					<!-- <dd>
+						<div>利息</div>
+						<div>{$info['enabled_fee']}元</div>
+					</dd> -->
+					<!-- <if condition="empty($info['coupon_amount'])">
+					<else/>
+					<dd>
+						<div>优惠券</div>
+						<div>-{$info['coupon_amount']}元</div>
+					</dd>
+					</if> -->
+					<dd>
+						<div>总计</div>
+						<div>{$info['created_fee']+$info['audit_fee']+$info['enabled_fee']+$info['pay_fee']}元</div>
+					</dd>
+				</dl>
+				<!-- <div style="color:#2777c8;text-align:right;width:80%; margin:0 auto;">*综合年化340%</div> -->
+				<div class="pop_sign_btn">我知道了</div>
+			</div>
+		</div>
+		<!--  -->
+		<div class="cash_pop" id="cash_pop2" style="display:none">
+			<div class="cash_bg"></div>
+			<div class="sign_pop_content2">
+				<div class="sign_title1">现金猫借款</div>
+				<dl class="pop_dl2">
+					<dt>容时期</dt>
+					<dd>还款日后的第1天至第7天是容时期，容时期内还款不影响信用评分，但每天会产生滞纳金，数额是借款金额的1%。借款500元，滞纳金每天5天；借款1000元，滞纳金每天10元。</dd>
+				</dl>
+				<dl class="pop_dl3">
+					<dt>逾期</dt>
+					<dd style="border-bottom:none">如您在容时期内未能正常还款即属于逾期。借款逾期后，每天滞纳金为借款金额的2%。借款500元，滞纳金每天10元；借款1000元，滞纳金每天20元。</dd>
+				</dl>
+				<div class="pop_sign_btn">我知道了</div>
+			</div>
+		</div>
+		<div class="cash_pop" id="cash_pop9" style="display:none;">
+			<div class="cash_bg"></div>
+			<div class="sign_pop_content2" style="height:3.5rem;">
+				<div class="sign_title1">逾期管理费提示</div>
+				<dl class="pop_dl2">
+					<dt></dt>
+					<dd style="border:none">借款人应依法履行债务清偿责任，平台有权对逾期拒还者进行追究，请合理借贷，按时还款。</dd>
+				</dl>
+				<div class="pop_sign_btn">我知道了</div>
+			</div>
+		</div>
+		<!-- <div class="cash_pop" id="cash_pop_huiyuan" style="display:none;">
+			<div class="cash_bg"></div>
+			<div class="sign_pop_content2" style="height:3rem;padding:0;">
+				<p style="line-height:2rem;text-align:center;font-size:21px;border-bottom:1px solid #ccc;margin:0;">推荐加入会员</p>
+				<div style="display:table;padding-left:0.1rem;">
+					<div class="pop_sign_btn" style="width:2.65rem;margin:0;border-radius:0;line-height:0.98rem;background:#fff;color:#2777c8;height:0.98rem;float:left;border-right:1px solid #ccc;">已加入</div>
+					<div class="pop_sign_btn" style="width:2.65rem;margin:0;border-radius:0;line-height:0.98rem;background:#fff;color:#333;height:0.98rem;float:left;">残忍拒绝</div>
+				</div>
+			</div>
+		</div> -->
+		<input type="hidden" id="tick" value="{$tick}"/>
+		<input type="hidden" id="tickIn" value="{$tickIn}"/>
+		<input type="hidden" id="uid" value="{$_SESSION['uid']}"/>
+		<input type="hidden" id="bid" value="{$bid}"/>
+		<!-- 网页底部 -->
+		<include file="Pub:footerNew"/>
+	</div>
+	<script>
+		$(function(){
+			//var huiyuan = 1;
+			var tickIn = $("#tickIn").val();
+			var uid = $("#uid").val();
+			var bid = $("#bid").val();
+			var object = {
+					event : "customize_event",
+					eventType : "SIGNINGIN_EVENT",
+					eventNum : 16,
+					uid	: uid,
+					tick : tickIn,
+					status : 1
+				}
+			requestDevice(object);
+			$("#sign_s4").click(function(){
+				$("#cash_pop1").show();
+			});
+			$("#sign_s10").click(function(){
+				$("#cash_pop10").show();
+			});
+			$("#sign2_s3").click(function(){
+				$("#cash_pop2").show();
+			});
+	    	$(".cash_bg").click(function(){
+	    		$(".cash_pop").hide();
+	    	});
+	    	$(".pop_sign_btn").click(function(){
+	    		$("#cash_pop1").hide();
+	    	});
+	    	$(".cash_btn").click(function(){
+	    		sign();
+	    		/* if(huiyuan == 1){
+	    			$("#cash_pop_huiyuan").show();
+	    			huiyuan = 0;
+	    		}else{
+	    			sign();
+	    		} */
+	    	})
+    		$("#sign_s5").click(function(){
+    			$("#cash_pop9").show();
+    		});
+			function sign(){
+				$(".cash_btn").unbind();
+				if(!$("input[type='checkbox']").is(':checked')){
+		    			layer.open({
+							    content: "请勾选我同意!"
+							    ,skin: 'msg'
+							    ,time: 2 //2秒后自动关闭
+							  });
+		    			$(".cash_btn").click(function(){
+				    		sign();
+				    	})
+		    		}else{
+		    			layer.open({type: 2,shadeClose: false,content:'签约中'});
+		    			$.ajax({
+		    				url:'/Borrow/doSign',
+		    				type:'post',
+		    				data:'bid='+bid,
+		    				success:function(response){
+		    					var response = $.parseJSON(response);
+		    					var ticks = $("#tick").val();
+		    					var uid = $("#uid").val();
+		    					var object = {
+		    							event : "customize_event",
+		    							eventType : "SIGNING_EVENT",
+		    							eventNum : 17,
+		    							uid	: uid,
+		    							tick : ticks,
+		    							status : response.status
+		    						}
+		    					requestDevice(object);
+		    					if (response.status == 1){
+		    						layer.closeAll();
+		    						layer.open({
+		    						    content: response.message
+		    						    ,skin: 'msg'
+		    						    ,time: 2 //2秒后自动关闭
+		    						  });
+		    						setTimeout(function(){
+		    							window.location.href="/Borrow/msgCheck";
+		    						},2000);
+		    					}else if(response.status == 2){
+									window.location.href='/Borrow/refuse';				
+								}else{
+		    						layer.closeAll();
+		    						layer.open({
+		    						    content: response.message
+		    						    ,skin: 'msg'
+		    						    ,time: 2 //2秒后自动关闭
+		    						  });
+		    						setTimeout(function(){
+		    							window.location.href="/member/currborrow";
+		    						},2000);
+		    					}
+		    				}
+		    			})
+		    		}
+			}
+		})
+	</script>
+</body>
+
+</html>
+</body>
+
+</script>
+</html>

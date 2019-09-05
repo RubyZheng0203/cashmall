@@ -1,0 +1,97 @@
+<include file="Public:_header" />
+<tagLib name="htmlA" />
+<div class="so_main">
+	<div class="page_tit">App推送模板管理</div>
+	<div class="page_tab"><span data="tab_2">推送模板</span></div>
+	<div class="form2">
+		<form method="post" action="__URL__/save" onsubmit="return subcheck();" enctype="multipart/form-data">
+			<input type="hidden" name="id" value="{$vo.id}">
+			<div id="tab_1">
+				<dl class="lineD"><dt>通知栏提示文字：</dt><dd><htmlA:text id="ticker" name="ticker" value="{$vo.ticker}"/></dd></dl>
+			</div>
+			<div id="tab_1">
+				<dl class="lineD"><dt>通知标题：</dt><dd><htmlA:text id="titlev" name="titlev" value="{$vo.title}"/></dd></dl>
+			</div>
+			<div id="tab_1">
+				<dl class="lineD"><dt>通知文字描述：</dt><dd><htmlA:text id="textv" name="textv" value="{$vo.text}"/></dd></dl>
+			</div> 
+			<div id="tab_1">
+				<dl class="lineD"><dt>点击通知后的跳转类型：</dt>
+					<dd>
+						<if condition="$vo.after_open eq go_app">
+							<input name="after_open" type="radio" checked="checked" value="go_app" />打开应用
+						<else />
+							<input name="after_open" type="radio" value="go_app" />打开应用
+						</if>
+						<if condition="$vo.after_open eq go_url">
+							<input name="after_open" type="radio" checked="checked" value="go_url" />跳转到URL(H5页面)
+						<else />
+							<input name="after_open" type="radio" value="go_url" />跳转到URL(H5页面)
+						</if>
+						<if condition="$vo.after_open eq go_activity">
+							<input name="after_open" type="radio" checked="checked" value="go_activity" />打开特定的activity(APP页面)
+						<else />
+							<input name="after_open" type="radio" value="go_activity" />打开特定的activity(App页面)
+						</if>
+						<if condition="$vo.after_open eq go_custom">
+							<input name="after_open" type="radio" checked="checked" value="go_custom" />用户自定义内容
+						<else />
+							<input name="after_open" type="radio" value="go_custom" />用户自定义内容
+						</if>
+					</dd>
+				</dl>
+			</div>
+			<div id="tab_1">
+				<dl class="lineD"><dt>用户自定义内容(URL)：</dt><dd><htmlA:text id="chaining" name="chaining" value="{$vo.chaining}"/></dd></dl>
+			</div>
+			<div id="tab_1">
+				<dl class="lineD"><dt>跳转页面(url(H5)或activity(App))：</dt><dd><htmlA:text id="url" name="url" value="{$vo.url}"/></dd></dl>
+			</div>
+			<div class="page_btm">
+			  <input type="submit" class="btn_b" value="确定" /><span style="color:#CCCCCC">(所有方式修改提交一次即可)</span>
+			</div>
+		</form>
+	</div>
+</div> 
+<include file="Public:_footer" />
+<script>
+var cansub = true;
+function subcheck(){
+    if(!cansub){
+        alert("请不要重复提交，如网速慢，请耐心等待！");
+        return false;
+    }
+    var ticker     = $("#ticker").val();
+    var titlev     = $("#titlev").val();
+    var textv      = $("#textv").val();
+    var chaining   = $("#chaining").val();
+    var url        = $("#url").val();
+    var after_open = $('input:radio[name="after_open"]:checked').val();
+    if(ticker == "" || ticker == null){
+        ui.error("请填写通知栏提示文字");
+        return false;
+    }
+    if(titlev == "" || titlev == null){
+        ui.error("请填写通知标题");
+        return false;
+    }
+    if(textv == "" || textv == null){
+        ui.error("请填写通知文字描述");
+        return false;
+    }
+    if(after_open == null){
+    	ui.error("请选择点击通知后的跳转类型");
+        return false;
+    }
+    if(chaining == "" || chaining == null){
+        ui.error("请填写用户自定义内容（URL）");
+        return false;
+    }
+    if(url == "" || url == null){
+        ui.error("请填写跳转页面(url(H5)或activity(App))");
+        return false;
+    }
+    cansub = false;
+    return true;
+}
+</script>

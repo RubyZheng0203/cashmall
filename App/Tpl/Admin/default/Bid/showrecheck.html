@@ -1,0 +1,51 @@
+<include file="Public:_header" />
+<tagLib name="htmlA" />
+<link href="__ROOT__/Style/Swfupload/swfupload.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="__ROOT__/Style/cash/css/viewer.min.css">
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/handlers.js"></script>
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/swfupload.js"></script>
+<style type="text/css">
+    .x_member_form{width:1000px; overflow:hidden}
+    .x_member_form .form2{height:auto; overflow:auto;}
+    .x_member_form .form2 .lineD{overflow:hidden}
+    .x_member_form .form2 .lineD dt{width:150px; color:#9CB8CC; font-weight:bold}
+    .x_member_form .form2 .lineD dd{width:200px; float:left; margin-left:0px}
+    .x_member_form .form2 .lineD dd.xwidth{width:500px;}
+    .x_member_form .form2 .lineD dt.title{color:#F00}
+    ul li{list-style: none;}
+</style> 
+<div class="so_main x_member_form">
+    <div class="page_tit">待授信的处理</div> 
+    <div class="form2">
+        <form method="post" action="__URL__/checksave" onsubmit="return subcheck();">
+            <input type="hidden" name="bid" value="{$bid}" />
+            <input type="hidden" name="uid" value="{$uid}" />
+            <div id="tab_1">
+                <dl class="lineD"><dt>处理结果：</dt><dd><htmlA:radio id="status" default="1|通过,2|不处理"/></dd></dl>
+        		<dl class="lineD"><dt>原因：</dt><dd><textarea name="reason"  id="reason" /></textarea></dd></dl>
+                <div class="page_btm">
+                    <input type="submit" class="btn_b" value="提交" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        var cansub = true;
+        function subcheck() {
+            if (!cansub) {
+                alert("请不要重复提交，如网速慢，请耐心等待！");
+                return false;
+            }
+            cansub = false;
+            return true;
+
+        }
+    </script>
+    <script src="__ROOT__/Style/js/viewer.min.js"></script>
+    <script>
+        var viewer = new Viewer(document.getElementById('jq22'), {
+            url: 'data-original'
+        });
+    </script>
+</div>
+<include file="Public:_footer" />

@@ -1,0 +1,49 @@
+<include file="Public:_header" />
+<tagLib name="htmlA" />
+<style type="text/css">
+	.sel_fs{width:110px}
+</style>
+<link href="__ROOT__/Style/Swfupload/swfupload.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/handlers.js"></script>
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/swfupload.js"></script>
+
+<div class="so_main">
+	<div class="page_tit">查询借款会员照片信息</div>
+	<div class="form2">
+		<div id="tab_5" >
+	        <dl class="lineD">
+	        	<dt>手机号码：</dt>
+	        	<dd>
+		        	<htmlA:input id="mobile" style="width:150px;"/>
+	        	</dd>
+	        	<dt>会员编号：</dt>
+	        	<dd>
+		        	<htmlA:input id="uid" style="width:150px;"/>
+	        	</dd>
+	        	<dd>
+		        	<input type="button" onclick="dolist()" id="submit" value="查询" />&nbsp;&nbsp;&nbsp;
+	        	</dd>
+	        </dl>
+	    </div>
+		<div class="list">
+			<div id="searchList"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	function dolist(id){
+		$("#searchList").html("");
+		var mobile = $("#mobile").val();
+		var uid    = $("#uid").val();
+		if (mobile == "" && uid == "") {
+			alert("请输入手机号码或者会员编号");
+			return false;
+		}
+		var data = {'mobile':mobile,'uid':uid};
+		$.post("__URL__/dopic", data, function(res){
+			$("#searchList").html(res.message);
+		}, 'json');
+		
+	}
+</script>
+<include file="Public:_footer" />

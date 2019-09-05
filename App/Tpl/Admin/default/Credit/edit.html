@@ -1,0 +1,70 @@
+<include file="Public:_header" />
+<tagLib name="htmlA" />
+<link href="__ROOT__/Style/Swfupload/swfupload.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/handlers.js"></script>
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/swfupload.js"></script>
+<div class="so_main">
+	<div class="page_tit">添加授信诊断通过率</div>
+	<div class="form2">
+		<form method="post" action="__URL__/doEdit" onsubmit="return subcheck();">
+			<div id="tab_1">
+				<dl class="lineD"><dt>分值From：</dt><dd><htmlA:input id="score_from"  value="{$vo.score_from}" style="width:80px;" tip="*拍拍信的分值大于等于填入值，分值全部填0表示未获取到拍拍信的情况"/></dd></dl>
+				<dl class="lineD"><dt>分值To：</dt><dd><htmlA:input id="score_to"  value="{$vo.score_to}" style="width:80px;" tip="*拍拍信的分值小于填入值，分值全部填0表示未获取到拍拍信的情况"/></dd></dl>
+				<dl class="lineD"><dt>通过率（%）：</dt><dd><htmlA:input id="rate"  value="{$vo.rate}" style="width:80px;" tip="*授信诊断通过概率"/></dd></dl>
+				<input type="hidden" id="id" name="id" value="{$vo.id}" />
+				<div class="page_btm">
+		            <input type="submit" class="btn_b" value="提交" />
+		        </div>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript">
+		var cansub = true;
+		function subcheck(){
+			if(!cansub){
+				alert("请不要重复提交，如网速慢，请耐心等待！");
+				return false;	
+			}
+			
+			var score_from 		= $('#score_from').val();
+			var score_to 		= $('#score_to').val();
+			var rate 			= $('#rate').val();
+			
+			if(!isNaN(score_from)){  
+				if(score_from==''){
+					ui.error("请填写分值From");
+					return false;
+				}
+			}else{
+				ui.error("分值From需填写数字");
+				return false;
+			}
+			
+			if(!isNaN(score_to)){  
+				if(score_to==''){
+					ui.error("请填写分值To");
+					return false;
+				}
+			}else{
+				ui.error("分值To需填写数字");
+				return false;
+			}
+			
+			if(!isNaN(rate)){  
+				if(rate==''||rate==0){
+					ui.error("请填写通过率");
+					return false;
+				}
+			}else{
+				ui.error("通过率需填写数字");
+				return false;
+			}
+			
+		    cansub = false;
+			return true;
+		
+		}
+
+	</script>
+</div>
+<include file="Public:_footer" />

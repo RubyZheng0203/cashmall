@@ -1,0 +1,102 @@
+<include file="Public:_header" />
+<tagLib name="htmlA" />
+<style type="text/css">
+.sel_fs{width:110px}
+</style>
+<!--调试内容开始-->
+<!--<pre><php>var_dump($_SERVER);</php></pre>-->
+<!--调试内容结束-->
+<div class="so_main"> 
+
+<div class="page_tit">发送安卓消息(*此功能仅用于活动宣传)</div>
+<div class="page_tab"><span data="tab_1" class="active">发送工具</span></div>
+<div class="form2">
+	<form id="send_form" method="post" action="__URL__/doSend" onsubmit="return subcheck();">
+	<div id="tab_1">
+	<dl class="lineD"><dt>发送对象(UID)：</dt><dd><textarea name="uids" id="uids"></textarea>多个UID请用“,”逗号分割(英文输入法下的)<br/><br/>
+	<input type="checkbox" id="sendall" name="sendall" value="1" />给所有人发送推送</dd></dl>
+	<dl class="lineD"><dt>通知标题：</dt><dd><textarea name="titlev" id="titlev"></textarea></dd></dl>
+	<dl class="lineD"><dt>通知文字描述：</dt><dd><textarea name="textv" id="textv"></textarea></dd></dl>
+	<dl class="lineD"><dt>通知栏提示文字：</dt><dd><textarea name="ticker" id="ticker"></textarea></dd></dl>
+	</div>
+	<div id="tab_1">
+		<dl class="lineD"><dt>点击通知后的跳转类型：</dt>
+			<dd>
+				<input name="after_open" type="radio" value="go_app" />打开应用
+				<input name="after_open" type="radio" value="go_url" />跳转到URL(H5页面)
+				<input name="after_open" type="radio" value="go_activity" />打开特定的activity(App页面)
+				<input name="after_open" type="radio" value="go_custom" />用户自定义内容
+			</dd>
+		</dl>
+	</div>
+	<dl class="lineD"><dt>用户自定义内容(URL)：</dt><dd><textarea name="chaining" id="chaining"></textarea></dd></dl>
+	<dl class="lineD"><dt>跳转页面(url(H5)或activity(App))：</dt><dd><textarea name="url" id="url"></textarea></dd></dl>
+	<div class="page_btm">
+	  <input type="button" id="submit_btn" class="btn_b" value="确定" style="margin-right:20px;" />
+	  <input type="button" class="btn_b" value="返回" onclick="javascript:location.href='__URL__/index.html';" />
+	</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$('#submit_btn').click(function(){
+			if ($('#sendall').attr('checked') == true) {
+				if (confirm('是否确认发送给所有人？')) {
+					$('#send_form').submit();
+				}
+			} else { 
+				$('#send_form').submit();
+			}
+		});
+	});
+	
+	var cansub = true;
+	function subcheck(){
+		if(!cansub){
+			alert("请不要重复提交，如网速慢，请耐心等待！");
+			return false;	
+		}
+		var after_open 	= $("input[name='after_open']:checked").val();
+		var uids 	 	= $('#uids').val();
+		var titlev   	= $('#titlev').val();
+		var textv    	= $('#textv').val();
+		var ticker   	= $('#ticker').val();
+		var chaining 	= $('#chaining').val();
+		var url      	= $('#url').val();
+		
+	    
+	    if ($('#sendall').attr('checked') == true) {
+	    	
+		}else{
+			if(uids ==''|| uids ==null){
+				ui.error("请填写发送对象(UID)");
+				return false;
+			}
+		}
+		if(titlev ==''||titlev ==null){
+			ui.error("请填写通知标题");
+			return false;
+		}
+		if(textv ==''||textv ==null){
+			ui.error("请填写通知文字描述");
+			return false;
+		}
+		if(ticker ==''||ticker ==null){
+			ui.error("请填写通知栏提示文字");
+			return false;
+		}
+		if(url ==''||url ==null){
+			ui.error("请填写跳转页面(url(H5)或activity(App))");
+			return false;
+		}
+		if(after_open == null){
+			ui.error("请选择点击通知后的跳转类型");
+			return false;
+		}
+		cansub = false;
+		return true;
+	}
+
+</script>
+</div>
+<include file="Public:_footer" />

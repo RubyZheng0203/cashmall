@@ -1,0 +1,75 @@
+[ 2019-03-12T13:34:56+08:00 ] / | ERR: Cron:cron_1 Runat 2019-03-12 13:34:56 Use 0.001976 s
+Cron:cron_2 Runat 2019-03-12 13:34:56 Use -0.000018 s
+
+[ 2019-03-12T13:37:00+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 13:37:00 Use 0.001597 s
+
+[ 2019-03-12T13:42:39+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 13:42:39 Use 0.001058 s
+
+[ 2019-03-12T13:43:49+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 13:43:49 Use 0.000994 s
+
+[ 2019-03-12T13:44:22+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 13:44:22 Use 0.000962 s
+
+[ 2019-03-12T13:44:57+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 13:44:57 Use 0.000850 s
+
+[ 2019-03-12T13:44:57+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-12 13:44:57 Use 0.000957 s
+
+[ 2019-03-12T13:45:42+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 13:45:42 Use 0.001011 s
+
+[ 2019-03-12T13:47:40+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-12 13:47:40 Use 0.001163 s
+
+[ 2019-03-12T13:48:37+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 13:48:37 Use 0.001053 s
+
+[ 2019-03-12T13:49:39+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 13:49:39 Use 0.000933 s
+
+[ 2019-03-12T13:49:57+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 13:49:57 Use 0.000891 s
+
+[ 2019-03-12T13:50:40+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 13:50:40 Use 0.000885 s
+
+[ 2019-03-12T13:52:56+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-12 13:52:56 Use 0.000933 s
+
+[ 2019-03-12T13:53:41+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 13:53:41 Use 0.000898 s
+
+[ 2019-03-12T13:54:11+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 13:54:11 Use 0.001045 s
+
+[ 2019-03-12T13:54:36+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 13:54:36 Use 0.000923 s
+
+[ 2019-03-12T13:55:55+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-12 13:55:55 Use 0.002032 s
+
+[ 2019-03-12T13:55:55+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 13:55:55 Use 0.001260 s
+
+[ 2019-03-12T14:04:52+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 14:04:52 Use 0.001675 s
+
+[ 2019-03-12T14:10:52+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-12 14:10:52 Use 0.001080 s
+
+[ 2019-03-12T14:14:00+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-12 14:14:00 Use 0.003556 s
+
+[ 2019-03-12T14:14:00+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 14:14:00 Use 0.003501 s
+
+[ 2019-03-12T14:21:17+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 14:21:17 Use 0.000900 s
+
+[ 2019-03-12T14:21:37+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-12 14:21:37 Use 0.000814 s
+
+[ 2019-03-12T14:21:37+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 14:21:37 Use 0.000923 s
+
+[ 2019-03-12T14:22:15+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-12 14:22:15 Use 0.000997 s
+
+[ 2019-03-12T14:23:39+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-12 14:23:39 Use 0.000941 s
+
+[ 2019-03-12T14:24:25+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-12 14:24:25 Use 0.000900 s
+
+[ 2019-03-12T14:24:53+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-12 14:24:53 Use 0.001731 s
+
+[ 2019-03-12T14:24:53+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 14:24:53 Use 0.000927 s
+
+[ 2019-03-12T14:35:01+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-12 14:35:01 Use 0.001672 s
+
+[ 2019-03-12T14:35:26+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-12 14:35:26 Use 0.000931 s
+
+[ 2019-03-12T14:43:36+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-12 14:43:36 Use 0.067093 s
+
+[ 2019-03-12T14:43:56+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-12 14:43:56 Use 0.001589 s
+
+[ 2019-03-12T14:43:56+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-12 14:43:56 Use 0.000792 s
+
+[ 2019-03-12T18:23:44+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-12 18:23:44 Use 0.001879 s
+

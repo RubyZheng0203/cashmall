@@ -1,0 +1,50 @@
+<include file="Pub:headerNew"/>  
+<body style="background:#fff;font-size:0.25rem;">
+	<div class="cash_view" style="background:#fff;">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="borrow_a_all">
+			<p>如您将所借款项用于借款指定用途以外的范畴，您的借款将被宣布提前到期，您需要提前还款并支付利息及违约金。</p>
+			<p>如您逾期还款，逾期处理方式有：</p>	
+			<p>1、以包括但不限于短信、电话、上门催收、委托第三方服务机构进行催收等对您的逾期借款进行合法催收。</p>
+			<p>2、以各种合法通讯手段(包括但不限于：电话、短信、微信等)向您的近亲属、朋友及电话联系人告知您的欠款信息，并在本平台或报纸、杂志、网站上发布您的欠款信息，信息内容包括但不限于您的姓名、身份证号码、住址、工作单位、照片、欠款金额、逾期时间及违约责任等。</p>
+			<p>3、将您的“逾期记录”、“恶意行为”或“不良情况”等违约失信信息提供给个人信用信息数据库，以及向各类媒体、用人单位、数据服务机构及催收服务机构等机构进行披露。</p>
+			<p>4、采取法律等其他各类合法手段对逾期借款进行处理，包括但不限于发律师函、提起诉讼等方式。</p>
+		</div>
+		<!-- 网页底部 -->
+		<include file="Pub:footerNew"/>
+	</div>
+</body>
+
+<script>
+	$(function(){
+		var num = $("#bianhao").html();
+		$("#bianhao").html(addZero(num));
+		function addZero(num){
+			var num = num;
+			if(num > 0 && num < 10){
+				return "00"+num;
+			}else if(num >= 10 && num <100){
+				return "0"+num;
+			}else{
+				return num;
+			}
+		}
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = date.getMonth()+1;
+		var day = date.getDate();
+		$("#year").html(year);
+		$("#month").html(month);
+		$("#day").html(day);
+ 		//判断app
+ 		if(app()){
+ 			$("#fujian1").hide();
+ 			$("#fujian2").show();
+ 		}else{
+ 			$("#fujian1").show();
+ 			$("#fujian2").hide();
+ 		}
+	});
+</script>
+</html>

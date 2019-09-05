@@ -1,0 +1,146 @@
+<include file="Public:_header" />
+<tagLib name="htmlA" />
+<link href="__ROOT__/Style/Swfupload/swfupload.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/handlers.js"></script>
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/swfupload.js"></script>
+<div class="so_main">
+	<div class="page_tit">添加{$name}产品信息</div>
+	<div class="form2">
+		<form method="post" action="__URL__/doAdd" onsubmit="return subcheck();">
+			<div id="tab_1">
+				<dl class="lineD"><dt>是否上架：</dt><dd><htmlA:radio id="is_on" default="0|否,1|是" value="" tip="是否上架"/></dd></dl>
+				<dl class="lineD"><dt>产品金额（元）：</dt><dd><htmlA:input id="money"  value="" style="width:80px;" tip="*借出的本金"/></dd></dl>
+				<dl class="lineD"><dt>借款期限：</dt><dd><htmlA:input id="duration"  value="" style="width:80px;"/> <htmlA:select id="repayment_type" datakey="repayment" value="" style="width:100px;"/></dd></dl>
+				<dl class="lineD"><dt>年化利率（%）：</dt><dd><htmlA:input id="rate"  addstr='onkeyup="sumrate();"' value="" style="width:80px;"/></dd></dl>
+				<dl class="lineD"><dt>利息（元）：</dt><dd><htmlA:input id="interest"  value="" style="width:80px;"/></dd></dl>
+				<dl class="lineD"><dt>贷后管理费（元）：</dt><dd><htmlA:input id="audit_rate"  value="" tip="" style="width:80px;"/></dd></dl>
+				<dl class="lineD"><dt>认证费（元）：</dt><dd><htmlA:input id="created_rate"  value="" tip="" style="width:80px;"/></dd></dl>
+				<dl class="lineD"><dt>账户管理费（元）：</dt><dd><htmlA:input id="enabled_rate"  value="" tip="" style="width:80px;"/></dd></dl>
+				<dl class="lineD"><dt>支付服务费（元）：</dt><dd><htmlA:input id="pay_fee"  value="" tip="" style="width:80px;"/></dd></dl>
+				<dl class="lineD"><dt>续期服务费（元）：</dt><dd><htmlA:input id="renewal_fee"  value="" tip="" style="width:80px;"/></dd></dl>
+				<dl class="lineD"><dt>逾期利息日费率（%）：</dt><dd><htmlA:input id="due_rate"  value="" tip="费用=本金*日费率*期限" style="width:80px;"/></dd></dl>
+		        <dl class="lineD"><dt>逾期管理日费率（%）：</dt><dd><htmlA:input id="late_rate"  value="" tip="费用=本金*日费率*期限" style="width:80px;"/></dd></dl>
+		        <dl class="lineD"><dt>是否可以续期：</dt>
+		        	<dd>
+		        		<input name="is_xuqi" type="radio" value="1">是
+		        		<input name="is_xuqi" type="radio" value="0">否
+		        	</dd>
+		        </dl>
+		        <dl class="lineD"><dt>可续期天数：</dt><dd><htmlA:input id="renewal_day"  value="" tip="可以选择的续期的天数，英文逗号分隔" style="width:80px;"/></dd></dl>
+				<input type="hidden" id="type" name="type" value="{$type}" />
+				<div class="page_btm">
+		            <input type="submit" class="btn_b" value="提交" />
+		        </div>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript">
+		var cansub = true;
+		function subcheck(){
+			if(!cansub){
+				alert("请不要重复提交，如网速慢，请耐心等待！");
+				return false;	
+			}
+			
+			var money 			= $('#money').val();
+			var duration 		= $('#duration').val();
+			var rate 			= $('#rate').val();
+			var audit_rate 		= $('#audit_rate').val();
+			var created_rate 	= $('#created_rate').val();
+			var enabled_rate 	= $('#enabled_rate').val();
+			var pay_fee        	= $('#pay_fee').val();
+			var renewal_fee 	= $('#renewal_fee').val();
+			var due_rate 		= $('#due_rate').val();
+			var late_rate 		= $('#late_rate').val();
+			var repayment_type 	= $('#repayment_type').val();
+			
+			if(!isNaN(money)){  
+				if(money==''||money==0){
+					ui.error("请填写产品金额");
+					return false;
+				}
+			}else{
+				ui.error("产品金额需填写数字");
+				return false;
+			}
+			
+			if(!isNaN(duration)){  
+				if(duration==''||duration==0){
+					ui.error("请填写借款期限");
+					return false;
+				}
+			}else{
+				ui.error("借款期限需填写数字");
+				return false;
+			}
+			 
+			if(repayment_type==''||repayment_type==0){
+				ui.error("请选择借款期限");
+				return false;
+			}
+			
+			if(!isNaN(rate)){  
+				if(rate==''||rate==0){
+					ui.error("请填写年化利率");
+					return false;
+				}
+			}else{
+				ui.error("年化利率需填写数字");
+				return false;
+			}
+			
+			
+			
+			if(isNaN(audit_rate)){  
+				ui.error("贷后管理费需填写数字");
+				return false;
+			}
+			
+			if(isNaN(created_rate)){  
+				ui.error("认证费需填写数字");
+				return false;
+			}
+			
+			if(isNaN(enabled_rate)){  
+				ui.error("账户管理费需填写数字");
+				return false;
+			}
+			
+			if(isNaN(pay_fee)){  
+				ui.error("支付服务费需填写数字");
+				return false;
+			}
+			
+			if(isNaN(renewal_fee)){  
+				ui.error("续期服务费需填写数字");
+				return false;
+			}
+			
+			if(isNaN(due_rate)){  
+				ui.error("逾期罚息需填写数字");
+				return false;
+			}
+			
+			if(isNaN(late_rate)){  
+				ui.error("逾期管理费需填写数字");
+				return false;
+			}
+	
+		    cansub = false;
+			return true;
+		
+		}
+		
+		function sumrate(){
+			var total;
+			var money    = $("#money").val();
+			var rate  	 = parseFloat($("#rate").val());
+			var duration = $('#duration').val();
+			
+			total = money*rate*duration/360/100;
+			total = total.toFixed(2);
+			$("#interest").val(total);
+		}
+	</script>
+</div>
+<include file="Public:_footer" />

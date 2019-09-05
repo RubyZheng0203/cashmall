@@ -1,0 +1,115 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+	var editUrl = '__URL__/edit';
+	var editTitle = '编辑产品信息';
+	var isSearchHidden = 1;
+	var searchName = "搜索/筛选";
+</script>
+<div class="so_main">
+	<div class="page_tit">借款产品Ⅱ类</div>
+	<!--搜索/筛选会员-->
+	<include file="search" />
+	<!--搜索/筛选会员-->
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+		<!-- <htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />-->
+		<htmlA:commonBtn type="jsfun" action="additem()" value="添加" />
+	</div>
+	<div class="list">
+		<table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			    <th style="width:30px;">
+			        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+			        <label for="checkbox"></label>
+			    </th>
+			    <th class="line_l">ID</th>
+				<th class="line_l">产品金额（元）</th>
+				<th class="line_l">年化利率（%）</th>
+				<th class="line_l">利息（元）</th>
+				<th class="line_l">借款期限</th>
+				<th class="line_l">贷后管理费（元）</th>
+				<th class="line_l">认证费（元）</th>
+				<th class="line_l">账户管理费（元）</th>
+				<th class="line_l">支付服务费（元）</th>
+				<th class="line_l">续期服务费（元）</th>
+				<th class="line_l">逾期利息（%）</th>
+				<th class="line_l">逾期管理费（%）</th>
+				<th class="line_l">是否可以续期</th>
+				<th class="line_l">可续期天数</th>
+			    <th class="line_l">操作</th>
+			</tr>
+			<volist id="vo" name="list">
+       		<tr overstyle='on' id="list_{$vo.id}">
+		        <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+		        <td>{$vo.id}</td>
+				<td>{$vo.money}</td>
+		        <td>{$vo.rate}%</td>
+				<td>{$vo.interest}元</td>
+				<td>{$vo.duration}{$vo.type}</td>
+		        <td>{$vo.audit_rate}元</td>
+		        <td>{$vo.created_rate}元</td>
+		        <td>{$vo.enabled_rate}元</td>
+		        <td>{$vo.pay_fee}元</td>
+		        <td>{$vo.renewal_fee}元</td>
+		        <td>{$vo.due_rate}%</td>
+		        <td>{$vo.late_rate}%</td>
+		        <td>
+			        <if condition="$vo['is_xuqi'] eq 1">
+			        		是
+			        	<else />
+			        		否
+			        </if>
+		    	</td>
+		        <td>{$vo.renewal_day}</td>
+		        <td>
+		        	<a href="javascript:;" onclick="edit('?id={$vo.id}')">[编辑]</a>&nbsp;&nbsp; 
+					<if condition ="$vo.is_on eq 0">
+						<a href="javascript:;" onclick="changeOn({$vo.id},1)">[上架]</a>&nbsp;&nbsp; 
+					<else/>
+						<a href="javascript:;" onclick="changeOn({$vo.id},0)">[下架]</a>&nbsp;&nbsp; 
+					</if>
+        		
+        		</td>
+       		</tr>
+			</volist>
+		</table>
+	</div>
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+  		<!--<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />-->
+  		<htmlA:commonBtn type="jsfun" action="additem()" value="添加" />
+	</div>
+</div>
+<script type="text/javascript">
+	function showurl(url,Title){
+		ui.box.load(url, {title:Title});
+	}
+	
+	function additem()
+    {
+    	location.href="/admin/item/add?type=2";
+        return true;
+    }
+	
+    function changeOn(id,status){
+    	if(confirm("确定要操作？")){
+    		$.ajax({
+    			url:'__URL__/changeOn',
+    			type:'post',
+    			data:'id='+id+"&status="+status,
+    			success:function(response){
+    				var response=$.parseJSON(response);
+    				if(!response.status){
+    					alert("操作失败");
+    				}else{
+    					alert("操作成功");
+    	                location.href="__URL__/itemSec";
+    				}
+    			}
+    		})
+    	}
+    }
+</script>
+<include file="Public:_footer" />

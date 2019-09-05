@@ -1,0 +1,95 @@
+<include file="Pub:headerNew"/>
+<body>
+	<div class="cash_view">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="member_main">
+			<ul class="member_ul1">
+				<li onclick="location.href='/Member/index'">个人资料</li>
+				<li class="active">我的借款</li>
+				<li onclick="location.href='/Member/ticket'">优惠券</li>
+			</ul>
+			<volist name="borrowInfo" id="vo">
+			<div class="member_d3"> 
+				<div class="member_d1">
+					<div class="member_d2"  onclick="location.href='/Member/details?id={$vo['id']}'">查看详情></div>
+					<ul class="member_ul2">
+						<li>
+							<div>申请时间</div>
+							<div>{$vo['add_time']|date="Y-m-d",###}</div>
+						</li>
+						<li> 
+							<div>借款编号</div>
+							<div>{$vo['id']}</div>
+						</li>
+						<li>
+							<div>借款金额</div>
+							<div>{$vo['money']}元</div>
+						</li>
+						<li>
+							<div>借款期限</div>
+							<div>{$vo['duration']}天</div>
+						</li>
+						<li>
+							<div>打款日期</div>
+							<div><if condition="empty($vo['len_time'])">----<else/>{$vo['len_time']|date="Y-m-d",###}</if></div>
+						</li>
+						<li>
+							<div>约定还款日</div>
+							<div><if condition="empty($vo['deadline'])">----<else/>{$vo['deadline']|date="Y-m-d",###}</if></div>
+						</li>
+						<li>
+							<div>借款类型</div>
+							<div>普通借款</div>
+						</li>
+						<li>
+							<div style="width:40%;">借款状态</div>
+							<div style="width:60%;">{$vo['statusMsg']}</div>
+						</li>
+					</ul>
+				</div>
+				
+				<if condition = "$vo.flg eq 1 ">
+					<div class="cash_btn" id="delete" onclick="delOrder({$vo['id']})">取消申请</div>
+				<else/>
+				</if>			
+			</div>
+			</volist>
+ 
+		</div>
+		<script type="text/javascript">
+		function delOrder(id){
+			layer.open({type: 2,shadeClose: false,content:'删除中'});
+			del(id);
+		}
+		function del(id){
+			$.ajax({
+				url:'/Borrow/delOrders',
+				type:'post',
+				data:"id="+id,
+				success:function(response){
+					var response = $.parseJSON(response);
+					if(response.status){
+						layer.open({
+						    content: response.message
+						    ,shadeClose: false,skin: 'msg'
+						    ,time: 2 //2秒后自动关闭
+						  });
+						window.location.reload();
+					}else{
+						layer.open({
+						    content: response.message
+						    ,shadeClose: false,skin: 'msg'
+						    ,time: 2 //2秒后自动关闭
+						  });
+					}
+				}
+			})
+		}
+		</script>
+		<include file="Pub:footerNew"/>
+	</div>
+</body>
+
+</script>
+</html>

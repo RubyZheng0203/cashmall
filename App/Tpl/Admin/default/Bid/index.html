@@ -1,0 +1,188 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+	var isSearchHidden = 1;
+	var searchName = "搜索/筛选";
+	var editUrl = '__URL__/check';
+	var editTitle = '审核用户信息';
+</script>
+<div class="so_main">
+	<div class="page_tit">可上标的借款</div>
+	<!--搜索/筛选-->
+	<include file="search" />
+	<!--搜索/筛选-->
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />
+		<htmlA:commonBtn type="jsfun" action="checkid();" value="批量上标" style="search_action" />
+		<htmlA:input id="borrow_rate" value=""  tip="  批量上标的年化利率%"/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;批量发送福米推送:<input type="checkbox" id="send_wechat_all"  value="">
+	</div>
+	<div class="list">
+		<table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			    <th style="width:30px;">
+			        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+			        <label for="checkbox"></label>
+			    </th>
+			    <th class="line_l">借款申请ID</th>
+				<th class="line_l">借款人编号</th>
+				<th class="line_l">借款人手机号</th>
+				<th class="line_l">借款人姓名</th>
+				<th class="line_l">借款金额（元）</th>
+				<th class="line_l">借款利息（元）</th>
+				<th class="line_l">年化率（%）</th>
+				<th class="line_l">借款期限</th>
+				<th class="line_l">授信付款日期</th>
+				<th class="line_l">发送福米推送</th>
+			    <th class="line_l">操作</th>
+			</tr>
+			
+			<volist id="vo" name="list">
+	       		<tr overstyle='on' id="list_{$vo.id}">
+			        <td><input type="checkbox" value="{$vo.id}" id="checkbox_{$vo.id}" name="checkbox"  onclick="checkon(this)"></td>
+			        <td>{$vo.id}</td>
+			        <td><htmlA:user id="vo.uid" uname="vo.uid" /></td>
+			        <td>{$vo.iphone}</td>
+			        <td>{$vo.real_name}</td>
+					<td>{$vo.money}</td>
+					<td>{$vo.interest}</td>
+					<td>{$vo.rate}</td>
+					<td>{$vo.duration}{$vo.type}</td>
+					<td>{$vo.recheck_time|date="Y-m-d H:i",###}</td>
+					<td><input type="checkbox" id="" class="checked_ipt" value="{$vo.id}"></td>
+			        <td>
+						<a href="javascript:;" onclick="edit('?uid={$vo.uid}&id={$vo.id}')">[审核]</a>&nbsp;&nbsp;
+						<a href="javascript:;" onclick="check({$vo.uid},{$vo.id})">[决策树]</a>
+			        	<span style="color:#3b5999;cursor:pointer;" class="checked_a" data-id="{$vo.id}">[上标]</span>
+			        	<?php if(strstr($vo['promotion_code'],'android_') !== false ){ ?>
+			        		<a href="javascript:;" onclick="risk({$vo.uid},{$vo.iphone},{$vo.id})">[APP风控]</a>
+			        	<?php  } ?>
+			        	
+					</td>
+	       		</tr>
+	       		<input type="hidden" value="{$vo.duration}" id="duration_{$vo.id}" name="duration_{$vo.id}">
+	       		<input type="hidden" value="{$vo.rate}" id="rate_{$vo.id}" name="rate_{$vo.id}">
+			</volist>
+		</table>
+	</div>
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+  		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />
+	</div>
+</div>
+<script type="text/javascript">
+	function showurl(url,Title){
+		ui.box.load(url, {title:Title});
+	}
+	
+	function risk(uid,iphone,bid){
+		url = "__URL__/checkRisk?uid="+uid+"&iphone="+iphone+"&id="+bid;
+    	ui.box.load(url, {title:"借款会员"+uid+"的App风控"});
+ 	}
+	
+	function check(uid,bid){
+    	url = "../../Home/CheckUser/requestBackApi";
+		$.ajax({
+				url: url,
+				data: {"uid":uid,"bid":bid,"cid":5},
+				type: "post",
+				dataType: "json",
+				success: function (d, s,  r) {
+					if(d){
+						alert(d.message);
+					}
+				}
+		});
+	}
+	
+	function checkid(){
+		var id          = document.getElementsByName('checkbox');
+		var borrow_rate = $("#borrow_rate").val();
+		var send_wechat_all = $("#send_wechat_all").attr("checked");
+		var id_str      ='';
+		var count       = 0;
+		var duration    = 0;
+		var rate        = 0
+		for(var i = 0; i < id.length; i++){
+	        if(id[i].checked){
+	        	var ids 		= $("#checkbox_"+id[i].value).val();
+	        	var durations 	= $("#duration_"+id[i].value).val();
+	        	var rates 		= $("#rate_"+id[i].value).val();
+	        	if(id_str == ''){
+	        		id_str = ids;
+	        	}else{
+	        		id_str = id_str+","+ids;
+	        	}
+	        	count++;
+	      
+	        	if(duration==0){
+	        		duration = durations;
+	        	}else{
+	        		if(duration!=durations){
+	        			ui.error("批量上传的标的借款期限必须一致！");
+	        			return false;
+	        		}
+	        	}
+	        	if(borrow_rate==""){
+		        	if(rate==0){
+		        		rate = rates;
+		        	}else{
+		        		if(rate!=rates){
+		        			ui.error("批量上传的标的年化利率必须一致！");
+		        			return false;
+		        		}
+		        	}
+	        	}else{
+	        		if(borrow_rate < 2){
+	        			ui.error("填写的年化利率小于2！");
+	        			return false;
+	        		}
+	        	}
+	        	
+	        }
+		}
+		if(count==0){
+			ui.error("请选择需要上传的标");
+			return false;
+		}
+		if(count>20){
+			ui.error("最多只能批量上传20个标");
+			return false;
+		}
+		if(send_wechat_all == true){
+			send_wechat_all = 1;
+		}else{
+			send_wechat_all = 0;
+		}
+		 $.ajax({
+				url: "__URL__/upBatchBid/",
+				data: {"id":id_str,"rate":borrow_rate,"send_wechat":send_wechat_all},
+				type: "post",
+				dataType: "json",
+				success: function (d, s, r) {
+					if(d){
+						if(d.status==1){
+							 alert(d.message);
+						}else{
+							location.href="__URL__/index";
+						}
+					}
+				}
+			});
+		
+	}
+	$(".checked_a").each(function(index){
+		$(this).click(function(){
+			var checked = $(".checked_ipt").eq(index).attr("checked");
+			var value = $(".checked_ipt").eq(index).val();
+			if(checked){
+				window.location.href = "__URL__/upbid?id="+value+"&send_wechat=1";
+			}else{
+				window.location.href = "__URL__/upbid?id="+value;
+			}
+		});
+	});
+</script>
+<include file="Public:_footer" />

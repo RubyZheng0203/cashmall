@@ -1,0 +1,50 @@
+<include file="Pub:headerNew"/>
+<body style="background:#fff;">
+	<style>
+	.cash_view{background: #fff;}
+	</style>
+	<div class="cash_view">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="password_main" style="width:100%;">
+			<img src="/style/cash/images/cash_bom1.png" alt="">
+		</div>
+		<div style="width:2.34rem;height:2.37rem;margin:0.2rem auto;">
+			<img src="/style/cash/images/cash_bom2.png" style="width:100%;" alt="">
+		</div>
+		<div style="text-align:center;">
+			微信搜索"现贷猫"
+		</div>
+		<!-- 网页底部 -->
+		<include file="Pub:footerNew"/>
+	</div>
+</body>
+<input type="hidden" id="uid" value="{$uid}">
+<input type="hidden" id="tick" value="{$tick}">
+<input type="hidden" id="url" value="{$url}">
+</html>
+</body>
+<script type="text/javascript">
+$(document).ready(function(){
+	 var uid = $("#uid").val();
+	 var tick = $("#tick").val();
+	 var url = $("#url").val();
+	 layer.open({
+		    type: 2
+		    ,content: '登录中'
+		  });
+	 var ticks = $("#tick").val();
+	 var uid = $("#uid").val();
+		var object = {
+				event : "customize_event",
+				eventType : "LOGIN_EVENT",
+				eventNum : 2,
+				uid	: uid,
+				tick : ticks,
+				status : 1
+			}
+		requestDevice(object);
+		window.location.href = url;
+})
+</script>
+</html>

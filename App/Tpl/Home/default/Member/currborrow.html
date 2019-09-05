@@ -1,0 +1,249 @@
+<include file="Pub:headerNew"/>
+<link rel="stylesheet" href="/Style/cash/css/animate.min.css">
+<body style="background:#f1f1f1;">
+	<div class="cash_view" style="background:#f1f1f1;">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="cash_borrow">
+			<div class="swiper-container" id="banner">
+			  <div class="swiper-wrapper" id="ban-con">
+			  
+			  </div>
+			  <div class="swiper-pagination" style="bottom:0"></div>
+			</div>
+			<div class="borrow_list">
+				<empty name ="apply1">
+					<div class="borrow_list_content">
+						<div class="borrow_list_top">银卡借款</div>
+						<div class="toindex" data-type="1" style="display:table;width:100%;">
+							<dl class="borrow_list_1"><dt>信用额度</dt><dd>{$money1}元</dd></dl>
+							<dl class="borrow_list_1 borrow_list_2"><dt>借款期限</dt><dd>{$duration1}天</dd></dl>
+						</div>
+					</div>
+				</empty> 
+				<volist name="apply1" id="vo">
+					<div class="borrow_list_content">
+						<div class="borrow_list_top">银卡借款</div>
+						<div class="borrow_list_2">
+							<p>当前借款：{$vo.money}元/{$vo.duration}天</p>
+							<if condition = "$vo.status eq 4 && $vo.is_withdraw eq 0">
+							<a class="borrow_list_btn" onclick="location.href = '/Repayment/index'">已放款待提现</a>
+							<elseif condition = "$vo.status eq 4"/>
+							<a class="borrow_list_btn" onclick="location.href = '/Repayment/index'">还款/续期</a>
+							<else/>
+							<a class="borrow_list_btn" onclick="location.href = '{$vo.url}'">继续申请</a>
+							</if>
+							<div>
+								<if condition = "$vo.flg eq 1">
+								<span class="borrow_list_2_left" onclick="delOrder({$vo.id})">取消</span>
+								<else/>
+								<span class="borrow_list_2_left borrow_orange">{$vo.statusMsg}</span>
+								</if>
+								<span class="borrow_list_2_right" onclick="location.href = '/member/borrow'">借款详情</span>
+							</div>
+						</div>
+					</div>
+				</volist>
+				<empty name ="apply2">
+					<div class="borrow_list_content">
+						<div class="borrow_list_top">金卡借款</div>
+						<div class="toindex" data-type="2" style="display:table;width:100%;">
+							<dl class="borrow_list_1"><dt>信用额度</dt><dd>{$money2}元</dd></dl>
+							<dl class="borrow_list_1 borrow_list_2"><dt>借款期限</dt><dd>{$duration2}天</dd></dl>
+						</div>
+					</div>
+				</empty> 
+				<volist name="apply2" id="vo">
+					<div class="borrow_list_content">
+						<div class="borrow_list_top">金卡借款</div>
+						<div class="borrow_list_2">
+							<p>当前借款：{$vo.money}元/{$vo.duration}天</p>
+							<if condition = "$vo.status eq 4 && $vo.is_withdraw eq 0">
+							<a class="borrow_list_btn" onclick="location.href = '/Repayment/index'">已放款待提现</a>
+							<elseif condition = "$vo.status eq 4"/>
+							<a class="borrow_list_btn" onclick="location.href = '/Repayment/index'">还款/续期</a>
+							<else/>
+							<a class="borrow_list_btn" onclick="location.href = '{$vo.url}'">继续申请</a>
+							</if>
+							<div>
+								<if condition = "$vo.flg eq 1">
+								<span class="borrow_list_2_left" onclick="delOrder({$vo.id})">取消</span>
+								<else/>
+								<span class="borrow_list_2_left borrow_orange">{$vo.statusMsg}</span>
+								</if>
+								<span class="borrow_list_2_right" onclick="location.href = '/member/borrow'">借款详情</span>
+							</div>
+						</div> 
+					</div>
+				</volist>
+				<div>
+					<div class="borrow_grade" style="margin-bottom:1.5rem;margin-top:-0.1rem;" onclick="location.href = '/member/grade'">等级：
+					<span><if condition = "$lv eq 1">初级<elseif condition = "$lv eq 2"/>中级<elseif condition = "$lv eq 3"/>高级</if></span>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" id="lv" value="{$lv}"/>
+			<input type="hidden" id="str" value=""/>
+			<input type="hidden" id="tick" value="{$tick}"/>
+			<input type="hidden" id="tickIn" value="{$tickIn}"/>
+			<input type="hidden" id="uid" value="{$_SESSION['uid']}"/>
+			<input type="hidden" id="tx" value="{$tx}"/>
+		</div>
+		<!-- 网页底部 -->
+		<include file="Pub:footerNew"/>
+		<div class="cash_pop" id="cash_pop1" style="display:none;">
+			<div class="cash_bg"></div>
+			<div class="sign_pop_content7 animated bounceInUp" style="height:3rem;">
+				<div class="delay_bank_title"></div>
+				<div class="delay_bank_c1"></div>
+				<div class="pop_sign_btn">我知道了</div>
+			</div>
+		</div>
+		<div class="cash_pop" id="tixian_pop" style="display:none;">
+			<div class="cash_bg"></div>
+			<div class="sign_pop_content7 animated bounceInUp" style="height:3.5rem;">
+				<div class="delay_bank_title">提现提醒</div>
+				<div>您现贷猫账户有未提现借款，请及时提现。</div>
+				<div class="pop_sign_btn">确定</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div class="cash_pop" id="cash_pop" >
+              <div class="cash_bg"></div>
+              <div class="sign_pop_content7" style="width:80%;height:auto;top:35%;margin-left:-40%;">
+                <p style="margin:10px 0;text-indent: 0!important;">亲爱的现贷猫用户：</p>
+                <p>根据国务院2018年节假日安排的通知，我司国庆节假期放假时间为10月1日至10月7日。放假期间，客服无法第一时间回复，如有疑问请在“现贷猫”微信公众账号留言，给您带来不便敬请谅解。</p>
+                <p style="text-align:right;margin-top:10px;">现贷猫</p>
+                <p style="text-align:right;">2018年9月30日</p>
+              </div>
+            </div> -->
+</body>
+<script>
+	//banner
+	$(function(){
+		var tx = $("#tx").val();
+		if(tx == 1){
+			$("#tixian_pop").show();
+		}
+		$(".cash_bg").click(function(){
+			$(".cash_pop").hide();
+		});
+		var ban_con = "";
+		$.ajax({
+			url:'/member/banner',
+			data: "",
+			timeout: 5000,
+			cache: false,
+			type: "get",
+			dataType: "json",
+			success: function (json) {
+				if(json.code == 200){
+					var da = json.result.content;
+					if(da){
+						for(var i in da){
+						    if(da[i].url == ""){
+						    	ban_con = `<div class="swiper-slide"><img  width="100%" src="${da[i].img}" /></div>`;
+						    }else{
+						    	ban_con = `<div class="swiper-slide"><a href="${da[i].url}"><img  width="100%" src="${da[i].img}" /></a></div>`;
+						    }
+							$("#ban-con").append(ban_con);
+						}
+					}
+				}
+				var mySwiper = new Swiper('#banner', {
+					pagination : '.swiper-pagination',
+					autoplay: 5000,
+					loop : true,
+					autoplayDisableOnInteraction : false,
+					//observer:true,//修改swiper自己或子元素时，自动初始化swiper
+			    	//observeParents:true//修改swiper的父元素时，自动初始化swiper
+				});
+			}
+		});
+	});
+</script>
+<script type="text/javascript">
+		$(document).ready(function(){
+			var lv = $("#lv").val();
+			var llen = $(".borrow_list_btn").length;
+			var html = $(".borrow_list_btn").html();
+			if(lv == 1 && llen == 0){
+				$(".borrow_list_content:nth-child(2)").addClass("borrow_hui");
+				$(".borrow_list_content:nth-child(2) .toindex").addClass("borrow_pop1").removeClass("toindex");
+				$(".delay_bank_c1").html("信用额度不足，保持良好的还款有助于提额。");
+			}else if(lv == 1 && llen != 0){
+				$(".toindex").parent().addClass("borrow_hui").addClass("borrow_pop1");
+				$(".toindex").removeClass("toindex");
+				$(".delay_bank_c1").html("您当前有一笔借款正在进行，请取消或还清后再申请。");
+			}else if(lv == 2 && llen != 0){
+				$(".toindex").parent().addClass("borrow_hui").addClass("borrow_pop1");
+				$(".toindex").removeClass("toindex");
+				$(".delay_bank_c1").html("您当前有一笔借款正在进行，请取消或还清后再申请。");
+			}else if(lv == 3 && llen != 0 && html == "继续申请"){
+				$(".toindex").parent().addClass("borrow_hui").addClass("borrow_pop1");
+				$(".toindex").removeClass("toindex");
+				$(".delay_bank_c1").html("您当前有一笔借款正在进行，取消或者放款后方可再申请。");
+			}
+			$(".toindex").click(function(){
+				var type = $(this).data("type");
+				location.href = '/borrow/index?type=' + type;
+			});
+			$(".borrow_pop1").click(function(){
+				$("#cash_pop1").show();
+			});
+			var flg = $("#flg").val();
+			if(flg == "0"){
+				$("#delete").hide();
+			}
+			// layer.open({
+			// 	    content: '最近各大银行扣款业务不稳定，建议使用支付宝线下还款或者续期！'
+			// 	    ,btn: '我知道了',
+			// 	    shadeClose: true
+		 //  	});	
+			var uid = $("#uid").val();
+			 var tick = $("#tick").val();
+			 var url = $("#url").val();
+			 var ticks = $("#tick").val();
+			 var uid = $("#uid").val();
+				var object = {
+						event : "customize_event",
+						eventType : "LOGIN_EVENT",
+						eventNum : 2,
+						uid	: uid,
+						tick : ticks,
+						status : 1
+					}
+				requestDevice(object);
+		});
+
+		function delOrder(id){
+			layer.open({type: 2,shadeClose: false,content:'删除中'});
+			del(id);
+		}
+		function del(id){
+			$.ajax({
+				url:'/Borrow/delOrders',
+				type:'post',
+				data:"id="+id,
+				success:function(response){
+					var response = $.parseJSON(response);
+					layer.closeAll('loading');
+					if(response.status){
+						layer.open({
+						    content: response.message
+						    ,shadeClose: false,skin: 'msg'
+						    ,time: 2 //2秒后自动关闭
+						  });
+						window.location.reload();
+					}else{
+						layer.open({
+						    content: response.message
+						    ,shadeClose: false,skin: 'msg'
+						    ,time: 2 //2秒后自动关闭
+						  });
+					}
+				}
+			})
+		}
+</script>
+</html>

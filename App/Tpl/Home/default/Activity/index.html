@@ -1,0 +1,84 @@
+<include file="Pub:headerNew"/>
+<link rel="stylesheet" href="/Style/cash/css/animate.min.css">
+<body>
+	<div class="cash_view" style="background:#fff;padding:0;height:100vh;overflow:hidden;">
+		<div class="app2_all">
+			<div class="top_logo"><!-- <img src="/style/cash/images/logo_png.png" alt=""> --></div>
+			<div class="app2_back active  bounceInRight" data-duration="1000" data-delay="1000"><img src="/style/cash/images/app2_img1.png" alt=""></div>
+			<div style="position:absolute;left:0;bottom:0.3rem;" class="app2_content active bounceInLeft" data-duration="1000" data-delay="1500">
+				<div class="app2_text1 active  rubberBand" data-duration="1000" data-delay="2800"><img src="/style/cash/images/app2_img4.png" alt=""></div>
+				<div class="app2_img3 active bounceInUp" data-duration="1000" data-delay="2000"><img src="/style/cash/images/app2_img3.png" alt=""></div>
+			</div>
+		</div>
+	</div>
+		
+ 	<input type="hidden" value="{$url}" id="url"/>
+	</div>
+</body>
+<script>
+	$(function(){
+		// $(".active").each(function(){
+		// 	var delay = $(this).data("delay")+"ms";
+		// 	var duration= $(this).data('duration') + "ms";
+		// 	if(duration)$(this).css({'-webkit-animation-duration':duration,'animation-duration':duration});
+  //           if(delay)$(this).css({'-webkit-animation-delay':delay,'animation-delay':delay});
+		// });
+		function weixin(){
+		    var ua = window.navigator.userAgent.toLowerCase();
+		    if(ua.match(/MicroMessenger/i) != 'micromessenger'){
+		    	
+		    }else{
+		    	return true;
+		    }
+		}
+		if(weixin()){
+			$(".active").each(function(){
+				$(this).addClass("animated");
+				var delay = $(this).data("delay")+"ms";
+				var duration= $(this).data('duration') + "ms";
+				if(duration)$(this).css({'-webkit-animation-duration':duration,'animation-duration':duration});
+	            if(delay)$(this).css({'-webkit-animation-delay':delay,'animation-delay':delay});
+			});
+		}else{
+			$(".app2_back ").hide();
+			$(".app2_content").css("marginTop","0.8rem")
+			var  a = ismobile();
+			if(a == 0){
+				 layer.open({
+				    content: 'ios版本敬请期待！'
+				    ,btn: '我知道了',
+				    shadeClose: false
+				  });
+			}else{
+				/*layer.open({
+				    content: '网络问题，程序猿正在加急处理中...'
+				    ,btn: '我知道了',
+				    shadeClose: false
+			  	});*/
+				var url = $("#url").val();
+				window.location.href = url;
+			}
+		}
+		function ismobile(test){
+		    var u = navigator.userAgent, app = navigator.appVersion;
+		    if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){
+		     if(window.location.href.indexOf("?mobile")<0){
+		      try{
+		       if(/iPhone|mac|iPod|iPad/i.test(navigator.userAgent)){
+		        return '0';
+		       }else{
+		        return '1';
+		       }
+		      }catch(e){}
+		     }
+		    }else if( u.indexOf('iPad') > -1){
+		        return '0';
+		    }else{
+		        return '1';
+		    }
+		};
+	});
+	
+</script>
+
+</html>

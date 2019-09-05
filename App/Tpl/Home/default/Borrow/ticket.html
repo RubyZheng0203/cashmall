@@ -1,0 +1,64 @@
+<include file="Pub:headerNew"/>
+<body style="background:#fff;">
+	<div class="cash_view" style="background:#fff;">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="main_ticket">
+			<div class="mticket_title">恭喜您，注册成功！</div>
+			<div class="mticket_title2">现贷猫赠送了您一张{$money}元还款优惠券，申请借款时可抵扣相关费用。（优惠券将在您借款成功后发放）</div>
+			<div class="ticket_all1 active1 clearfix">
+				<div class="ticket_left">
+					<ul class="ticket_ul1">
+						<li>还款优惠券</li>
+						<li class="li_ticket"><span class="ticket_fl1"><img src="/style/cash/images/ticket_yuan.png" alt=""></span><span>优惠券不可叠加使用</span></li>
+						<li class="li_ticket"><span class="ticket_fl1"><img src="/style/cash/images/ticket_yuan.png" alt=""></span><!-- <span class="ticket_fl1">有效期:{$info['end_time']|date="Y-m-d",###}</span> --><span class="ticket_fl1">有效期:未激活</span></li>
+					</ul>
+				</div>
+				<div class="ticket_right">
+					<div><span class="ticket_number">{$money}</span>元</div>
+					<div>优惠券</div>
+				</div>
+				<div class="ticket_yuan"></div>
+			</div>
+			<!-- <div class="mticket_main">
+				<div class="mticket_d1 clearfix">
+					<div class="t_money">
+						<span>￥</span>
+						<span>5</span>
+					</div>
+					<div class="t_money2">优惠券</div>
+				</div>
+				<div class="t_date">{$info['end_time']|date='Y-m-d',###}之前使用</div>
+				<ul class="ticket_ul2">
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+				<ul class="ticket_ul3">
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div> -->
+			<div class="cash_btn" onclick="location.href='/member/currborrow'">开始借款</div>
+		</div>
+		<!-- 网页底部 -->
+		<include file="Pub:footerNew"/>
+	</div>	
+			
+</body>
+<script>
+	$(function(){
+		$(".ticket_number").each(function(){
+			var str = $(this).html().split(".")[0];
+			$(this).html(str);
+		})
+	})
+</script>
+</html>

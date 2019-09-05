@@ -1,0 +1,34 @@
+<tagLib name="htmlA" />
+<div class="so_main">
+
+<div class="page_tit">取消借款申请处理</div>
+<div class="form2">
+	<form method="post" action="__URL__/docancle" onsubmit="return subcheck();">
+	<input type="hidden" name="id" value="{$id}" />
+	<input type="hidden" name="type" value="{$type}" />
+	<div id="tab_1">
+        <dl class="lineD"><dt>是否取消借款：</dt><dd><htmlA:radio id="status" default="1|取消借款,0|不取消借款"/></dd></dl>
+	</div>
+	
+	<div class="page_btm">
+	  <input type="submit" class="btn_b" value="确定" />
+	</div>
+	</form>
+</div>
+
+</div>
+<script type="text/javascript">
+var cansub = true;
+function subcheck(){
+	if(!cansub){
+		alert("请不要重复提交，如网速慢，请等待！");
+		return false;	
+	}
+	
+	if($("input[name='status']:checked").val()!=1 && $("input[name='status']:checked").val()!=0){ui.error("请选择初审处理结果");return false;}
+	else{
+		cansub = false;
+		return true;
+	}
+}
+</script>

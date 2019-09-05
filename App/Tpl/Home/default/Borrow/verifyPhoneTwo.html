@@ -1,0 +1,104 @@
+<include file="Pub:headerNew"/>
+<body>
+	<div class="cash_view">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="testmob_main">
+			<div class="borrow_d1">
+				<ul class="borrow_d1_ul1 clearfix">
+					<li>
+						<div class="active">1</div>
+						<div class="line"></div>
+						<div>选择金额</div>
+					</li>
+					<li>
+						<div class="active">2</div>
+						<div class="line"></div>
+						<div>验证身份</div>
+					</li>
+					<li>
+						<div class="active">3</div>
+						<div></div>
+						<div>验证手机</div>
+					</li>
+					<li>
+						<div>4</div>
+						<div style="display:none"></div>
+						<div>发放借款</div>
+					</li>
+				</ul>
+			</div>  
+			<div class="phone_test clearfix">
+				<div>手机验证</div>
+				<div><input type="tel" id="verifyCode" placeholder="请输入手机验证码"></div>
+				<div class="phone_test_btn" id="timing">获取</div>
+			</div>
+			<div class="sign_d2" style="margin:0.4rem auto;">下一步</div>
+			<div class="testmob_d2">
+				<dl>
+					<dt>温馨提示：</dt>
+					<dd>1、请授权本人实名认证手机号码（使用超过4个月）</dd>
+					<dd>2、登录成功后您将收到运营商通知短信，无需回复</dd>
+					<if condition="($borrow) AND ($info['verify_phone'] eq '0')"><dd>3、<font color="red">请于10分钟后点击页面右上角刷新</font></dd></if>
+				</dl>
+			</div>
+		<include file="Pub:footerNew"/>
+	</div>
+  <script>
+    $(function(){
+    	timing();
+    	$(".sign_d2").click(function(){
+    		var verifyCode =  $.trim($("#verifyCode").val());
+    		var num  = /^[0-9]*$/;
+    		if(verifyCode == ""){
+    			layer.open({
+    				content: "验证码不能为空"
+				    ,shadeClose: false,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+			  	});	
+    		}else if(!num.test(verifyCode)){
+    			layer.open({
+    				content: "验证码输入有误"
+				    ,shadeClose: false,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+			  	});
+    		}else if(!(verifyCode.length == 6)){
+    			layer.open({
+    				content: "验证码输入有误"
+				    ,shadeClose: false,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+			  	});
+    		}else{
+				layer.open({type: 2,shadeClose: false,content:'验证中'});							
+				$.ajax({
+					url:'/CheckPhone/requestPhoneLogin',
+					type:'post',
+					data:"vcode="+verifyCode,
+					success:function(response){	
+						var response = $.parseJSON(response);
+						layer.closeAll();
+						if(response.status){
+							layer.open({
+							    content: '信息已提交，等待审核'
+							    ,shadeClose: false,skin: 'msg'
+							    ,time: 2 //2秒后自动关闭
+							  });											
+							window.location.href = '/Borrow/verifyPhone';
+						}else{
+							layer.open({
+							    content: '登录失败'
+							    ,shadeClose: false,skin: 'msg'
+							    ,time: 2 //2秒后自动关闭
+							  });
+							window.location.reload();
+						}
+					}
+				})
+    		}
+    		
+    	});
+    }); 	
+  </script>
+</body>
+</script>
+</html>

@@ -1,0 +1,613 @@
+<include file="Pub:headerNew"/>
+<body>
+	<div class="cash_view">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="testmob_main">
+			<div class="detail_d1">
+				<div>尊敬的：{$info['real_name']}</div>
+				<div>您的身份证号：{$info['id_card']}</div>
+			</div>
+			<div class="detail_d2">
+				<ul class="detail_ul1 clearfix">
+					<li class="active">个人信息</li>
+					<li>职业信息</li>
+					<li>社会关系</li>
+				</ul>
+				<div class="line"></div>
+			</div>
+			<form action="" method="post" id="fm">
+			<ul id="deta_tabs">
+				<li>
+					<div class="detail_d3">
+						<ul class="mess_ul1">
+							<li>
+								<div id="qq">QQ号码</div>
+								<div><input type="tel" name="qq" placeholder="请输入常用的qq号码" value="{$memberInfo['qq_code']}"></div>
+							</li>
+							<li>
+								<div id="email">邮箱地址</div>
+								<div><input type="text" name="email" placeholder="请输入电子邮箱地址" value="{$memberInfo['email']}"></div>
+							</li>
+							<li style="border:none;position:relative;">
+								<div id="address" style="width:60%;">您的常住地址：</div>
+								<div style="width:20%"></div>
+						   </li>
+							<li style="border:none;position:relative;">
+								<div class="base_select1">
+									<span>省：</span>
+									<select id="area3" name="province2" style="width:1.5rem;height:0.4rem;">
+										<volist name="province" id="pro">
+								            <option value="{$pro.id}">{$pro.province}</option>
+								        </volist> 
+										</select>
+									</div>
+									<div class="base_select2">
+									<span>市：</span>
+									<select id="area4" name="city2" style="width:1.5rem;height:0.4rem;">
+										
+									</select>
+								</div>
+								<input type="hidden" id="city2" value="{$memberInfo['city']}"/>
+								<input type="hidden" id="province2" value="{$memberInfo['province']}"/>
+						   </li>
+						   <li>
+								<div id="address">详细地址</div>
+								<div><input style="width:100%;" type="text" name="address" placeholder="您的常住（或收货）地址" value="{$memberInfo['address']}"></div>
+							</li>
+				   						
+							<li>
+								<div id="education">学历水平</div>
+								<div><input class="edu" name="education" type="text" placeholder="请输入您的学历水平" value="{$memberInfo['education']}"></div>
+							</li>
+							<li>
+								<div id="marry">婚姻状况</div>
+								<div><input class="meer" name="marry" type="text" placeholder="请输入您的婚姻状况" value="{$memberInfo['marriage']}"></div>
+							</li>
+							<li>
+								<div id="house">房产情况</div>
+								<div><input class="house" name="house" type="text" placeholder="请输入您的房产情况" value="{$memberInfo['house']}"></div>
+							</li>
+							<li id="housetype">
+								<div id="house_type">房产类型</div>
+								<div><input class="house_type" name="house_type"  type="text" placeholder="请输入您的房产类型" value="{$memberInfo['house_type']}"></div>
+							</li>
+						</ul>
+					</div>
+					<div class="faminform_btn1">下一步</div>
+				</li>
+				<li>
+					<div class="detail_d3">
+						<ul class="mess_ul1">
+							<li>
+								<div id="job">职业类型</div>
+								<div><input type="text" name="job" class="job" placeholder="请输入您的职业类型" value="{$companyInfo['job_title']}"></div>
+							</li>
+							<li>
+								<div id="income">年薪收入</div>
+								<div><input type="text" name="salary" class="income" placeholder="请输入您的年薪收入" value="{$companyInfo['year_income']}"></div>
+							</li>
+							<li>
+								<div id="debt">负债情况</div>
+								<div><input type="text" name="debt" class="debt" placeholder="请输入您的负债情况" value="{$companyInfo['debt']}"></div>
+							</li>
+							<li>
+								<div id="job_time">工作时间</div>
+								<div><input type="text" name="job_time" class="job_time" placeholder="请输入您的工作时间" value="{$companyInfo['job_time']}"></div>
+							</li>
+							<li>
+								<div id="companyName">公司全称</div>
+								<div><input style="width:100%;" type="text" name="companyName" placeholder="请输入您的公司全称" value="{$companyInfo['company_name']}"></div>
+							</li>
+						</ul>
+						<div class="deta_province clearfix">
+							<div class="">
+								<select id="area1" name="province" class="ins-province" style="width:2rem;height:0.5rem;">
+								<volist name="province" id="pro">
+			                        <option value="{$pro.id}">{$pro.province}</option>
+			                        </volist>        
+	                    		</select>
+							</div>
+							<div>
+								<select id="area2" name="city" style="width:2rem;height:0.5rem;">								    
+	                    		</select>
+							</div>
+							<input type="hidden" id="city" value="{$companyInfo['company_city']}"/>
+							<input type="hidden" id="province" value="{$companyInfo['company_province']}"/>
+						</div>
+						<ul class="mess_ul1" style="margin-top:0.4rem;">
+							<li>
+								<div id="addressInfo">详细地址</div>
+								<div><input style="width:100%;" type="text" name="addressInfo" placeholder="请输入您的详细地址" value="{$companyInfo['company_address']}"></div>
+							</li>
+							<li>
+								<div id="tel_phone">单位电话</div>
+								<div><input type="tel" name="tel_phone" placeholder="请输入单位电话" value="{$companyInfo['company_tel']}"></div>
+							</li>
+						</ul>
+					</div>
+					<div class="faminform_btn1">下一步</div>
+				</li>
+				<li>
+					<div class="detail_d3">
+						<ul class="mess_ul1">
+								<li>
+									<div id="family">家庭关系</div>
+									<div><input type="text" name="family" class="family" placeholder="请选择一位家庭成员" value="{$relationInfo['relation1']}"></div>
+								</li>
+								<li>
+									<div id="relationName">亲属姓名</div>
+									<div><input type="text" id="relationName1" name="relationName" placeholder="请输入亲属姓名" value="{$relationInfo['name1']}"></div>
+								</li>
+								<li>
+									<div id="familyPhone">手机号码</div>
+									<div><input type="tel" name="familyPhone" placeholder="请输入家庭成员的手机号码" value="{$relationInfo['iphone1']}"></div>
+								</li>
+								<!-- <li>
+									<div>家庭电话</div>
+									<div><input type="tel" name="housePhone" placeholder="请输入家庭电话（选填）"></div>
+								</li> -->
+							</ul>
+						</div>
+						<div class="detail_d3" style="margin-top:20px;">
+							<ul class="mess_ul1">
+								<li>
+									<div id="relation">同事姓名</div>
+									<div><input type="text" name="relation" id="relation1"  placeholder="请输入同事姓名" value="{$relationInfo['name2']}"></div>
+								</li>
+							<li>
+									<div id="relationPhone">手机号码</div>
+									<div><input type="tel" name="relationPhone" placeholder="请输入同事的手机号码" value="{$relationInfo['iphone2']}"></div>
+								</li>								
+							</ul>
+						</div>
+						<div class="detail_d3" style="margin-top:20px;">
+							<ul class="mess_ul1">
+								<li>
+									<div id="friend">朋友姓名</div>
+									<div><input type="text" name="friend" id="friend1"  placeholder="请输入朋友姓名" value="{$relationInfo['name3']}"></div>
+								</li>
+								<li>
+									<div id="friendPhone">手机号码</div>
+									<div><input type="tel" name="friendPhone" placeholder="请输入朋友的手机号码" value="{$relationInfo['iphone3']}"></div>
+								</li>
+							</ul>
+						</div>
+					<div class="text-right">*请务必填写3页中的全部内容</div>
+					
+					<div class="faminform_btn1" id="submit">确定</div>
+				</li>
+			</ul>
+			</form>
+			<input type="hidden" id="tick" value="{$tick}"/>
+			<input type="hidden" id="tickIn" value="{$tickIn}"/>
+			<input type="hidden" id="uid" value="{$_SESSION['uid']}"/>
+			<input type="hidden" id="checkGrant" value="{$checkGrant}"/>
+		</div>
+		<!-- 网页底部 -->
+		<include file="Pub:footerNew"/>
+		<div class="cash_pop" id="shouquan_pop" style="display:none;">
+			<div class="cash_bg"></div>
+			<div class="sign_pop_content7 animated bounceInUp" style="height:6.5rem;margin-top:-3.25rem;">
+				<div class="delay_bank_title">授权提示</div>
+				<div class="delay_bank_c1">为了您能够正常提现，请根据下图进行授权。</div>
+				<img src="/style/cash/img/shouquan.png" style="width:100%;display:block;margin:0.2rem auto;">
+				<div class="pop_sign_btn" onclick="window.location.href='/fuiouback/Grant'">去授权</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript" src="__ROOT__/Style/cash/js/jquery-1.12.0.min.js"></script>
+<script src="__ROOT__/Style/cash/js/jquery.selector-px.js"></script>
+<script>
+	function validForm(data){
+		var arr = data.split('&');
+		for (var i=0;i<arr.length;i++){
+			var str = arr[i].split('=');
+			if(str[0] != 'house_type' ){
+				if(str[1] == ''){
+					var house = $(".house").val();
+					if(str[0]!='housePhone'){
+						var msg = $("#"+str[0]+"").text()+"不能为空";
+						return msg;
+						break;
+					}
+				}else{
+					// check(str[0],str[1]);
+				}
+			}
+		}
+	}
+	$("#submit").click(function(){
+		var params = $("#fm").serialize();
+		var msg = validForm(params);
+		var checkMsg = check(params);
+		if(msg){
+			layer.open({
+			    content: msg
+			    ,skin: 'msg'
+			    ,time: 2 //2秒后自动关闭
+			  });
+		}else if (checkMsg){
+			layer.open({
+			    content: checkMsg
+			    ,skin: 'msg'
+			    ,time: 2 //2秒后自动关闭
+			  });
+		}else{
+			layer.open({type: 2,shadeClose: false,content:'提交中'});
+			addInfo(params);
+		}
+
+	})
+	
+	function addInfo(params){
+		$.ajax({
+			url:'/Borrow/addAll',
+			type:'post',
+			data:params,
+			success:function(response){
+				var response = $.parseJSON(response);
+				var ticks = $("#tick").val();
+				var uid = $("#uid").val();
+				var object = {
+						event : "customize_event",
+						eventType : "USERINFO_EVENT",
+						eventNum : 9,
+						uid	: uid,
+						tick : ticks,
+						status : response.status
+					}
+				requestDevice(object);
+				if(response.status == 1){
+					layer.closeAll();
+					layer.open({
+					    content: response.message
+					    ,shadeClose: false,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });						
+					setTimeout("window.location.href='/Borrow/verifyPhone'",1000);
+				}else if(response.status == 2){	
+					window.location.href='/Borrow/refuse';
+				}else if(response.status == 0){
+					layer.closeAll();
+					layer.open({
+					    content: response.message
+					    ,shadeClose: false,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });	
+				}
+			}
+		})
+	}
+$(function () {	
+	var checkGrant = $("#checkGrant").val();
+	if(checkGrant != 4){
+		$("#shouquan_pop").show();
+	}
+	var url = location.href;
+	$.ajax({
+		url:'/Member/saveUserOperation',
+		type:'post',
+		data:'url='+url,
+		success:function(response){
+			
+		}
+	})
+	var tickIn = $("#tickIn").val();
+	var uid = $("#uid").val();
+	var object = {
+			event : "customize_event",
+			eventType : "USERINFOIN_EVENT",
+			eventNum : 8,
+			uid	: uid,
+			tick : tickIn,
+			status : 1
+		}
+	requestDevice(object);
+	var oldProvince = $("#province").val();
+	var oldProvince2 = $("#province2").val();
+	if(oldProvince){
+		$("#area1").val(oldProvince);
+	}
+	if(oldProvince2 && oldProvince2 !=0){
+		$("#area3").val(oldProvince2);
+	}
+	changeCity();
+	changeCity2();
+	var old_house = $(".house").val();
+	if(old_house == '无房'){
+		$("#housetype").hide();  
+	}
+  //学历
+  var edu = {$education};
+  $.scrEvent({
+    data: edu,
+    evEle: '.edu',
+    title: '学历水平',
+    afterAction: function (data) {
+      $('.edu').val(data);
+    }
+  });
+  //婚姻状况
+  var meer = {$marry};
+  $.scrEvent({
+    data: meer,
+    evEle: '.meer',
+    title: '婚姻状况',
+    afterAction: function (data) {
+      $('.meer').val(data);
+    }
+  });  
+  
+  // 职业类型
+  var job = {$workInfo};
+  $.scrEvent({
+    data: job,
+    evEle: '.job',
+    title: '职业类型',
+    afterAction: function (data) {
+      $('.job').val(data);
+    }
+  });
+  // 收入
+  var income = {$incomeInfo};
+  $.scrEvent({
+    data: income,
+    evEle: '.income',
+    title: '收入',
+    afterAction: function (data) {
+      $('.income').val(data);
+    }
+  });
+  
+  //负债情况
+  var debt = {$debt};
+  $.scrEvent({
+    data: debt,
+    evEle: '.debt',
+    title: '负债情况',
+    afterAction: function (data) {
+      $('.debt').val(data);
+    }
+  });
+  
+  // 家庭成员
+  var family = {$family};
+  $.scrEvent({
+    data: family,
+    evEle: '.family',
+    title: '家庭成员',
+    afterAction: function (data) {
+      $('.family').val(data);
+    }
+  });
+  //借款用途
+  var purpose = {$relation};
+  $.scrEvent({
+    data: purpose,
+    evEle: '.purpose',
+    title: '借款用途',
+    afterAction: function (data) {
+      $('.purpose').val(data);
+    }
+  });
+  // 房产类型
+  var house_type = {$houseType};
+  $.scrEvent({
+    data: house_type,
+    evEle: '.house_type',
+    title: '房产类型',
+    afterAction: function (data) {
+      $('.house_type').val(data);
+    }
+  });
+
+  // 工作时间
+  var job_time = {$exp};
+  $.scrEvent({
+    data: job_time,
+    evEle: '.job_time',
+    title: '工作时间',
+    afterAction: function (data) {
+      $('.job_time').val(data);
+    }
+  });
+  // 房产情况
+  var house = {$house};
+  $.scrEvent({
+    data: house,
+    evEle: '.house',
+    title: '房产情况',
+    afterAction: function (data) {
+      $('.house').val(data);
+      if(data == '无房'){
+    	  $("#housetype").hide();   	  
+      }else{
+    	  $("#housetype").show();
+      }
+    }
+  });
+  //选项卡
+  $("#deta_tabs > li").hide();
+  $("#deta_tabs > li").eq(0).show();
+  $(".faminform_btn1").each(function(index,dom){
+  	var index = index + 1;
+  	if (index < 3) {
+  		$(this).click(function(){
+
+  			$(".detail_ul1 li").removeClass("active");
+	  		if(index == 1){
+	  			$(".detail_d2 .line").animate({left:"36%"});
+	  		}else if(index == 2){
+	  			$(".detail_d2 .line").animate({left:"66%"});
+	  		}else{
+				$(".detail_d2 .line").animate({left:"8%"})
+	  		}
+	  		$("#deta_tabs > li").hide();
+	  		$("#deta_tabs > li").eq(index).show();
+  		});
+  	}
+  });
+  $(".detail_ul1 li").each(function(index,dom){
+  	$(this).click(function(){
+  		$(".detail_ul1 li").removeClass("active");
+  		$(this).addClass("active");
+  		if(index == 1){
+  			$(".detail_d2 .line").animate({left:"36%"});
+  		}else if(index == 2){
+  			$(".detail_d2 .line").animate({left:"66%"});
+  		}else{
+			$(".detail_d2 .line").animate({left:"8%"})
+  		}
+  		$("#deta_tabs > li").hide();
+  		$("#deta_tabs > li").eq(index).show();
+  	});
+  })
+  //地区联动
+  $("#area1").change(function(){
+	  changeCity();
+  });
+  $("#area3").change(function(){
+	  changeCity2();
+  });
+});
+function changeCity(){
+	var id = $("#area1").val();
+	$("#area2").html("");
+	  $.ajax({
+			 url:'/Borrow/getCity',
+			 type:'post',
+			 data:"id="+id,
+		 	 success:function(response){
+		 		var response = $.parseJSON(response);
+		 		$("#area2").empty()
+		 		$("#area2").append(response.message);
+		 		var oldCity = $("#city").val();
+		 		var oldProvince = $("#province").val();
+		 		if(oldCity&&id==oldProvince){
+		 			$("#area2").val(oldCity);
+		 		}
+		 	 }
+		 })
+}
+
+function changeCity2(){
+	var id = $("#area3").val();
+	$("#area4").html("");
+	  $.ajax({
+			 url:'/Borrow/getCity',
+			 type:'post',
+			 data:"id="+id,
+		 	 success:function(response){
+		 		var response = $.parseJSON(response);
+		 		$("#area4").empty()
+		 		$("#area4").append(response.message);
+		 		var oldCity2 = $("#city2").val();
+		 		var oldProvince2 = $("#province2").val();
+		 		if(oldCity2 && id == oldProvince2){
+		 			$("#area4").val(oldCity2);
+		 		}
+		 	 }
+		 })
+}
+
+function check(data){
+	var arr = data.split('&');
+	var qq_reg=/^\d{5,10}$/;
+	var email_reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+	var chinese_reg = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
+	var phone_reg = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
+	for (var i=0;i<arr.length;i++){
+		var str = arr[i].split('=');
+		if(str[0] == 'qq'){
+			if(!qq_reg.test(str[1])){
+				var msg = "请输入正确"+$("#"+str[0]+"").text()+"号码";
+				return msg;
+				break;
+			}
+		}else if(str[0] == 'email'){
+			if(!email_reg.test(unescape(str[1]))){
+				var msg = "请输入正确"+$("#"+str[0]+"").text();
+				return msg;
+				break;
+			}else if(unescape(str[1]).indexOf("+") > 0){
+				var msg = "邮箱地址不能带有空格";
+				return msg;
+				break;
+			}
+		}else if(str[0] == 'address'){
+			if(!chinese_reg.test(decodeURI(str[1]))){
+				var msg = "请输入正确"+$("#"+str[0]+"").text();
+				return msg;
+				break;
+			}
+		}else if(str[0] == 'companyName'){
+			if(!chinese_reg.test(decodeURI(str[1]))){
+				var msg = "请输入正确"+$("#"+str[0]+"").text();
+				return msg;
+				break;
+			}else{
+				var companyName = decodeURI(str[1]);
+				if(companyName.length < 5){
+					var msg = "请输入正确"+$("#"+str[0]+"").text();
+					return msg;
+					break;
+				}
+			}
+		}else if(str[0] == 'addressInfo'){
+			if(!chinese_reg.test(decodeURI(str[1]))){
+				var msg = "请输入正确"+$("#"+str[0]+"").text();
+				return msg;
+				break;
+			}
+		}else if(str[0] == 'relation'){
+			var msg = check_name(relation1);
+			if(msg){
+				msg = "同事姓名" + msg;
+				return msg;
+				break;
+			}
+		}else if(str[0] == 'friend'){
+			var msg = check_name(friend1);
+			if(msg){
+				msg = "朋友姓名" + msg;
+				return msg;
+				break;
+			}
+		}else if(str[0] == 'relationName'){
+			var msg = check_name(relationName1);
+			if(msg){
+				msg = "亲属姓名" + msg;
+				return msg;
+				break;
+			}
+		}else if(str[0] == 'familyPhone'){
+			if(!phone_reg.test(str[1])||str[1].length<11){
+				var msg = "请输入正确"+$("#"+str[0]+"").text();
+				return msg;
+				break;
+			}
+		}else if(str[0] == 'relationPhone'){
+			if(!phone_reg.test(str[1])||str[1].length<11){
+				var msg = "请输入正确"+$("#"+str[0]+"").text();
+				return msg;
+				break;
+			}
+		}else if(str[0] == 'friendPhone'){
+			if(!phone_reg.test(str[1])||str[1].length<11){
+				var msg = "请输入正确"+$("#"+str[0]+"").text();
+				return msg;
+				break;
+			}
+		}
+		
+	}		
+}
+  </script>
+</body>
+
+</html>
+</body>
+
+</script>
+</html>

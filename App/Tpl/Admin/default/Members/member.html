@@ -1,0 +1,57 @@
+<tagLib name="htmlA" />
+<style type="text/css">
+	.x_member_form{width:750px; overflow:hidden}
+	.x_member_form .form2{height:auto; overflow:auto;}
+	.x_member_form .form2 .lineD{overflow:hidden}
+	.x_member_form .form2 .lineD dt{width:150px; color:#9CB8CC; font-weight:bold}
+	.x_member_form .form2 .lineD dd{width:200px; float:left; margin-left:0px}
+	.x_member_form .form2 .lineD dd.xwidth{width:500px;}
+	.x_member_form .form2 .lineD dt.title{color:#F00}
+</style>
+<div class="so_main x_member_form">
+	<div class="page_tit">{$user}详细信息 UID:{$vm.id}  姓名:{$vi.real_name} </div>
+	<div class="page_tab"><span data="tab_1" class="active">会员资料</span><span data="tab_3">详细信息</span><span data="tab_2">借款统计</span></div>
+	<div class="form2">
+		<div id="tab_1">
+			<dl class="lineD"><dt>是否黑名单：</dt><dd>{$vm.is_black}</dd><dt>是否白名单：</dt><dd>{$vm.is_white}</dd></dl>
+			<dl class="lineD"><dt>是否灰名单：</dt><dd>{$vm.is_gray}</dd><dt>是否福米金融会员：</dt><dd>{$vm.sina_id}</dd></dl>
+			<dl class="lineD"><dt>是否金名单：</dt><dd>{$vm.is_gold}</dd></dl>
+			<dl class="lineD"><dt>性别：</dt><dd>{$vi.sex}</dd><dt>渠道码：</dt><dd>{$vm.promotion_code}</dd></dl>
+			<dl class="lineD"><dt>邮箱：</dt><dd>{$vi.email|default="未填"}</dd><dt>QQ号码：</dt><dd>{$vi.qq_code}</dd></dl>
+			<dl class="lineD"><dt>手机号码：</dt><dd>{$vm.iphone|default="未认证"}</dd><dt>年龄：</dt><dd>{$vi.age}</dd></dl>
+			<dl class="lineD"><dt>婚姻状况：</dt><dd>{$vi.marriaged}</dd><dt>有无子女：</dt><dd>{$vi.kids}</dd></dl>
+			<dl class="lineD"><dt>身份证号：</dt><dd>{$vi.id_card}</dd><dt>学历：</dt><dd>{$vi.education}</dd></dl>
+			<dl class="lineD"><dt>银行帐号：</dt><dd>{$vb.bank_card}</dd><dt>银行名称：</dt><dd>{$vb.bank_name}</dd></dl>
+			<dl class="lineD"><dt>银行开户行：</dt><dd>{$vb.bank_province}{$vo.bank_city}{$vb.bank_address}</dd><dt>推荐人：</dt><dd>{$vm.recommend_iphone}</dd></dl>
+			<dl class="lineD"><dt>常住地址：</dt><dd class="xwidth">{$vi.province}{$vi.city}{$vi.address}</dd></dl>
+		</div>
+		<div id="tab_3" style="display:none">
+			<dl class="lineD"><dt>年收入：</dt><dd>{$vc.year_income}</dd><dt>职业：</dt><dd>{$vc.job_title}</dd></dl>
+			<dl class="lineD"><dt>房产情况：</dt><dd>{$vi.house}</dd><dt>房产类型：</dt><dd>{$vi.house_type}</dd></dl>
+			<dl class="lineD"><dt>公司名称：</dt><dd>{$vc.company_name}</dd><dt>工作时间：</dt><dd>{$vc.job_time}</dd></dl>
+			<dl class="lineD"><dt>公司地址：</dt><dd>{$vc.company_province}{$vc.company_city}{$vc.company_address}</dd></dl>
+			<dl class="lineD"><dt>亲戚：</dt><dd>{$vr.relation1}</dd><dt>手机号：</dt><dd>{$vr.iphone1}</dd></dl>
+			<dl class="lineD"><dt>朋友：</dt><dd>{$vr.name3}</dd><dt>手机号：</dt><dd>{$vr.iphone3}</dd></dl>
+			<dl class="lineD"><dt>同事：</dt><dd>{$vr.name2}</dd><dt>手机号：</dt><dd>{$vr.iphone2}</dd></dl>
+			<dl class="lineD"><dt>上次登录IP地址：</dt><dd>{$vm.last_address}</dd><dt>APP定位：</dt><dd>{$vm.last_gps}</dd></dl>
+		</div>
+		<div id="tab_2" style="display:none">
+			<dl class="lineD"><dt class="title">借款金额统计</dt><dd class="xwidth">&nbsp;</dd></dl>
+			<dl class="lineD"><dt>借款积分：</dt><dd>{$vm.integral}</dd></dl>
+			<dl class="lineD"><dt>借款总额：</dt><dd>{$vm.borrowSum|Fmoney=###}</dd><dt>已还总额：</dt><dd>{$vm.repaySum|Fmoney=###}</dd></dl>
+			<dl class="lineD"><dt>待还总额：</dt><dd>{$vm.pendSum|Fmoney=###}</dd><dt>逾期总额：</dt><dd>{$vm.dueSum|Fmoney=###}</dd></dl>
+			<dl class="lineD"><dt class="title">借还款次数统计</dt><dd class="xwidth">&nbsp;</dd></dl>
+			<dl class="lineD"><dt>借款成功次数：</dt><dd>{$vm.borrowCount|default=0}次</dd><dt>正常还款次数：</dt><dd>{$vm.repayCount|default=0}次</dd></dl>
+			<dl class="lineD"><dt>提前还款次数：</dt><dd>{$vm.PrepaymentCount|default=0}次</dd><dt>逾期还款次数：</dt><dd>{$vm.dueCount|default=0}次</dd></dl>
+		</div>
+		<div class="page_btm">
+		  <input type="submit" class="btn_b" value="关闭" onclick="closeui();" />
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+function closeui(){
+	ui.box.close();
+}
+</script>
+<script type="text/javascript" src="__ROOT__/Style/A/js/adminbase.js"></script>

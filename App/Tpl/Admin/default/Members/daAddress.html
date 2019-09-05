@@ -1,0 +1,25 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+	var isSearchHidden = 1;
+	var searchName = "搜索/筛选会员";
+</script>
+<div class="so_main">
+	<div class="page_tit">会员统计</div>
+	<div class="-list">
+		<table id="area_list" width="100%" border="1" cellspacing="1" cellpadding="10" style="border-collapse: collapse;" class="new_table">
+			<tr>
+			    <th>注册城市</th>
+				<th>注册人数</th>
+			</tr>
+			<volist id="vo" name="list">
+       		<tr>
+		        <td><if condition="$vo.reg_address eq '' ">未知<else/>{$vo.reg_address}</if></td>
+		        <td>{$vo.count}</td>
+       		</tr>
+       		</volist>
+		</table>
+	</div>
+</div>
+<include file="Public:_footer" />

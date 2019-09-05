@@ -1,0 +1,68 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+	var isSearchHidden = 1;
+	var searchName = "搜索/筛选";
+</script>
+<div class="so_main">
+	<div class="page_tit">已结算的</div>
+	<!--搜索/筛选会员-->
+	<include file="searchbl" />
+	<!--搜索/筛选会员-->
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />
+	</div>
+	<div class="list">
+		<table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			    <th style="width:30px;">
+			        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+			        <label for="checkbox"></label>
+			    </th>
+			    <th class="line_l">借款申请ID</th>
+			    <th class="line_l">放款帐户</th>
+				<th class="line_l">借款人编号</th>
+				<th class="line_l">借款金额（元）</th>
+				<th class="line_l">借款利息（元）</th>
+				<th class="line_l">借款期限</th>
+				<th class="line_l">开户费</th>
+				<th class="line_l">动用费</th>
+				<th class="line_l">信审费</th>
+				<th class="line_l">续期费</th>
+				<th class="line_l">逾期费</th>
+				<th class="line_l">逾期管理费</th>
+				<th class="line_l">放款日期</th>
+			</tr>
+			<volist id="vo" name="list">
+       		<tr overstyle='on' id="list_{$vo.id}">
+		        <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+		        <td>{$vo.id}</td>
+		        <td>{$vo.loan_account}</td>
+		        <td><htmlA:user id="vo.uid" uname="vo.uid" /></td>
+				<td>{$vo.money}</td>
+				<td>{$vo.interest}</td>
+				<td>{$vo.duration}{$vo.type}</td>
+				<td>{$vo.created_fee}</td>
+				<td>{$vo.enabled_fee}</td>
+				<td>{$vo.audit_fee}</td>
+				<td>{$vo.renewal_fee}</td>
+				<td>{$vo.due_fee}</td>
+				<td>{$vo.late_fee}</td>
+				<td>{$vo.len_time|date="Y-m-d H:i",###}</td>
+       		</tr>
+			</volist>
+		</table>
+	</div>
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+  		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />
+	</div>
+</div>
+<script type="text/javascript">
+	function showurl(url,Title){
+		ui.box.load(url, {title:Title});
+	}
+</script>
+<include file="Public:_footer" />

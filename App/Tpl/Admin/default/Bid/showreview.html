@@ -1,0 +1,71 @@
+<include file="Public:_header" />
+<tagLib name="htmlA" />
+<link href="__ROOT__/Style/Swfupload/swfupload.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="__ROOT__/Style/cash/css/viewer.min.css">
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/handlers.js"></script>
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/swfupload.js"></script>
+<style type="text/css">
+    .x_member_form{width:1000px; overflow:hidden}
+    .x_member_form .form2{height:auto; overflow:auto;}
+    .x_member_form .form2 .lineD{overflow:hidden}
+    .x_member_form .form2 .lineD dt{width:150px; color:#9CB8CC; font-weight:bold}
+    .x_member_form .form2 .lineD dd{width:200px; float:left; margin-left:0px}
+    .x_member_form .form2 .lineD dd.xwidth{width:500px;}
+    .x_member_form .form2 .lineD dt.title{color:#F00}
+    ul li{list-style: none;}
+</style>
+<div class="so_main x_member_form">
+    <div class="page_tit">复审借款</div> 
+    <div class="form2">
+        <form method="post" action="__URL__/revsave" onsubmit="return subcheck();">
+            <input type="hidden" name="bid" value="{$bid}" />
+            <input type="hidden" name="uid" value="{$info.uid}" />
+            <div id="tab_1">
+                <dl class="lineD"><dt>会员UID：</dt><dd>{$info.uid}</dd><dt>手机号码：</dt><dd>{$info.iphone}</dd></dl>
+                <dl class="lineD"><dt>真实姓名：</dt><dd>{$info.real_name}</dd><dt>身份证号码：</dt><dd>{$info.id_card}</dd></dl>
+                <dl class="lineD"><dt>户籍地址：</dt><dd>{$info.register_address}</dd></dl>
+                <dl class="">
+                    <dt>
+                    <dd>
+                        <ul id="jq22">
+                            <li>身份证正面照：<img data-original="{$filename1}" src="{$filename1}" alt="图片1"></li>
+                            <li>身份证反面照：<img data-original="{$filename2}" src="{$filename2}" alt="图片2"></li>
+                            <li>自拍照：<img data-original="{$filename3}" src="{$filename3}" alt="图片3"></li>
+                            <li>身份验证照（微信）：<img data-original="{$filename4}" src="{$filename4}" alt="图片4"></li>
+                            <li>身份验证照（APP）：<img data-original="{$filename5}" src="{$filename5}" alt="图片5"></li>
+                        </ul>
+                    </dd>
+                    </dt>
+                </dl>
+                <dl class="lineD">
+                    <dt>审核：
+                    <dd style="width:140px;"><input type="radio" name="status"  value="1" >通过 <input type="radio" name="status"  value="2" style="margin-left:20px;">拒绝</dd>
+                    <input type="submit" class="btn_b" value="提交" />
+                    </dt>
+                </dl>
+                <!--<div class="page_btm">
+                    <input type="submit" class="btn_b" value="提交" />
+                </div>-->
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        var cansub = true;
+        function subcheck() {
+            if (!cansub) {
+                alert("请不要重复提交，如网速慢，请耐心等待！");
+                return false;
+            }
+            cansub = false;
+            return true;
+
+        }
+    </script>
+    <script src="__ROOT__/Style/js/viewer.min.js"></script>
+    <script>
+        var viewer = new Viewer(document.getElementById('jq22'), {
+            url: 'data-original'
+        });
+    </script>
+</div>
+<include file="Public:_footer" />

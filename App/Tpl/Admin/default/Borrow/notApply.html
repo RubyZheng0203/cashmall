@@ -1,0 +1,64 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+	var editUrl 		= '__URL__/cancle';
+	var editTitle 		= '取消借款申请';
+	var isSearchHidden 	= 1;
+	var searchName 		= "搜索/筛选";
+</script>
+<div class="so_main">
+	<div class="page_tit">未提交</div>
+	<!--搜索/筛选会员-->
+	<include file="searchnot" />
+	<!--搜索/筛选会员-->
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选会员" style="search_action" />
+	</div>
+	<div class="list">
+		<table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			    <th style="width:30px;">
+			        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0"> 
+			        <label for="checkbox"></label>
+			    </th>
+			    <th class="line_l">借款申请ID</th>
+			    <th class="line_l">借款人UID</th>
+				<th class="line_l">借款人手机</th>
+			    <th class="line_l">真实姓名</th>
+				<th class="line_l">借款金额（元）</th>
+				<th class="line_l">借款利息（元）</th>
+				<th class="line_l">借款期限</th>
+				<th class="line_l">申请日期</th>
+			    <th class="line_l">操作</th>
+			</tr>
+			<volist id="vo" name="list">
+       		<tr overstyle='on' id="list_{$vo.id}">
+		        <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+		        <td>{$vo.id}</td>
+		        <td><htmlA:user id="vo.uid" uname="vo.uid" /></td>
+		        <td>{$vo.iphone}</td>
+		        <td>{$vo.real_name|default="&nbsp;"}</td>
+				<td>{$vo.money}</td>
+				<td>{$vo.interest}</td>
+				<td>{$vo.duration}{$vo.type}</td>
+		        <td><if condition="$vo.add_time neq 0">{$vo.add_time|date="Y-m-d H:i",###}</if></td>
+		        <td>
+					<a href="javascript:;" onclick="showurl('__URL__/cancle?id={$vo['id']}','取消');">[取消]</a>&nbsp;&nbsp; 
+        		</td>
+       		</tr>
+			</volist>
+		</table>
+	</div>
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+  		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选会员" style="search_action" />
+	</div>
+</div>
+<script type="text/javascript">
+	function showurl(url,Title){
+		ui.box.load(url, {title:Title});
+    }
+</script>
+<include file="Public:_footer" />

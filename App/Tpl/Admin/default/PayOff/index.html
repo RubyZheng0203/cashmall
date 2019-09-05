@@ -1,0 +1,153 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+	var editUrl = '__URL__/edit';
+	var editTitle = '线下还款处理';
+	var isSearchHidden = 1;
+	var searchName = "搜索/筛选";
+</script>
+<div class="so_main">
+	<div class="page_tit">线下审核</div>
+	<!--搜索/筛选会员-->
+	<include file="search" />
+	<!--搜索/筛选会员-->
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />
+		<htmlA:commonBtn type="jsfun" action="send()" value="发送优惠券 "/>
+	</div>
+	<div class="list">
+		<table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			    <th style="width:30px;">
+			        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+			        <label for="checkbox"></label>
+			    </th>
+			    <!--<th class="line_l">ID</th>-->
+				<th class="line_l">还款人UID</th>
+				<!--<th class="line_l">借款账单ID</th>-->
+				<!--<th class="line_l">还款方式</th>-->
+				<th class="line_l">借款人姓名</th>
+				<th class="line_l">应还本金（元）</th>
+				<th class="line_l">应还利息（元）</th>
+				<th class="line_l">应还日期</th>
+				<th class="line_l">逾期天数</th>
+				<th class="line_l">逾期费（元）</th>
+				<th class="line_l">催收费（元）</th>
+				<th class="line_l">应还总金额（元）</th>
+				<th class="line_l">实际还款金额（元）</th>
+				<th class="line_l">备注</th>
+				<!--<th class="line_l">使用优惠券金额（元）</th>-->
+			    <th class="line_l">申请时间</th>
+				<th class="line_l">还款类型</th>
+				<th class="line_l">天数</th>
+			    <th class="line_l">操作</th>
+			</tr>
+			<volist id="vo" name="list">
+       		<tr overstyle='on' id="list_{$vo.id}">
+		        <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+		        <!--<td>{$vo.id}</td>-->
+				<td><htmlA:user id="vo.uid" uname="vo.uid" /></td>
+				<!--<td>{$vo.detail_id}</td>-->
+				<!--<td>{$vo.type_name}</td>-->
+				<td>{$vo.real_name}</td>
+		        <td>{$vo.capital}</td>
+		        <td>{$vo.interest}</td>
+		        <td>{$vo.deadline|date="Y-m-d H:i",###}</td>
+		        <td>{$vo.dueDay}</td>
+		        <td>{$vo.due_fee}</td>
+		        <td>{$vo.late_fee}</td>
+		        <td>{$vo.total_money}</td>
+		        <td>
+	        		<htmlA:input id="money_{$vo.id}" name="money"  class="Wdate" value="{$vo.money}" style="width:90px;" />
+       				<input type="button" onclick="editMoney({$vo.id});" value="更改">
+       			</td>
+       			<td>{$vo.reason}</td>
+				<!--<td>{$vo.coupon_money}</td>-->
+		        <td>{$vo.add_time|date="Y-m-d H:i",###}</td>
+				<td>{$vo.is_type}</td>
+				<td>
+					<if condition="$vo.type eq 2 ">
+	        			<htmlA:input id="day_{$vo.id}" name="day"  class="Wdate" value="{$vo.xuqi_days}" style="width:60px;"/>
+       					<input type="button" onclick="editDay({$vo.id});" value="更改">
+       				</if>
+       			</td>
+		        <td>
+					<if condition="$vo.status eq 0">
+						<a href="javascript:;" onclick="edit('?id={$vo.id}')">[审核]</a>&nbsp;&nbsp; 
+					</if>
+					<if condition="$vo.status eq 1">
+					--
+					</if>
+					<if condition="$vo.status eq 2">
+					不通过
+					</if>
+        		</td>
+       		</tr>
+			</volist>
+		</table>
+	</div>
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+  		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />
+  		<htmlA:commonBtn type="jsfun" action="send()" value="发送优惠券" />
+	</div>
+</div>
+<script type="text/javascript">
+	function showurl(url,Title){
+		ui.box.load(url, {title:Title});
+	}
+	
+	function editMoney(id){
+		var money = $("#money_"+id).val();
+		if(confirm("确定要更改实际还款金额？")){
+    		$.ajax({
+    			url:'__URL__/updateMoney',
+    			type:'post',
+    			data:'id='+id+"&money="+money,
+    			success:function(response){
+    				var response=$.parseJSON(response);
+    				if(!response.status){
+    					alert("操作失败");
+    				}else{
+    					alert("操作成功");
+    	                location.href="__URL__/index";
+    	                
+    				}
+    			}
+    		})
+    	}
+	}
+	
+	function editDay(id){
+		var day = $("#day_"+id).val();
+		if(confirm("确定要更改续期天数吗？")){
+    		$.ajax({
+    			url:'__URL__/updateDay',
+    			type:'post',
+    			data:'id='+id+"&day="+day,
+    			success:function(response){
+    				var response=$.parseJSON(response);
+    				if(!response.status){
+    					alert("操作失败");
+    				}else{
+    					alert("操作成功");
+    	                location.href="__URL__/index";
+    	                
+    				}
+    			}
+    		})
+    	}
+	}
+	
+    function send()
+    {
+    	location.href="/admin/coupon/send";
+        return true;
+    }
+
+
+	
+</script>
+<include file="Public:_footer" />

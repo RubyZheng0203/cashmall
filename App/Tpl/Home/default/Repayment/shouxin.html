@@ -1,0 +1,146 @@
+<include file="Pub:headerNew"/>
+<style>
+.sx-list{
+	display:table;
+	width:90%;
+	margin:0 auto;
+}
+.sx-list dl{
+	width:50%;
+	height:1.1rem;
+	float:left;
+	margin:0 auto;
+	font-size:0.23rem;
+}
+.sx-list dt{
+	padding:0.1rem 0 0 0.2rem;
+	float:left;
+}
+.sx-list dd{
+	float:left;
+	margin:0;
+	display:table;
+	line-height:0.8rem;
+	padding-left:0.1rem;
+}
+.sx-btm{
+	width:100%;
+	height:0.8rem;
+	padding:0.2rem 0;
+	background:#1a95e3;
+	position:fixed;
+	left:0;
+	bottom:0;
+}
+.sx-btm p{
+	margin:0;
+	font-size:0.23rem;
+	color:#fff;
+	text-align:center;
+	line-height: 0.4rem;
+}
+</style>
+<body style="background:#f3f3f3;">
+	<div class="cash_view" style="background:#f3f3f3;">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div style="width:100%;height:1.7rem;margin-bottom:0.15rem;padding:0.5rem 0.5rem 0 0.4rem;background:#fff;">
+			<img src="/style/cash/img/shouxin_img.png" alt="" style="width:1.1rem;display:block;float:left;"/>
+			<dl style="display:table;float:left;color:#343434;margin:0;width:4.2rem;padding-left:0.3rem;">
+				<dt style="height:0.42rem;font-size:0.27rem;">授信诊断</dt>
+				<dd style="line-height:0.5rem;font-size:0.22rem;margin:0;">根据您所填写的信息，为您提供信用诊断服务，并为您提供信用报告提示借款通过率。</dd>
+			</dl>
+		</div>
+		<div style="width:100%;display:table;margin-bottom:0.15rem;background:#fff;">
+			<p style="line-height:0.9rem;margin:0;text-align:center;font-size:0.23rem;color:#1d91e6;">请到合作方“优懋咨询”授信诊断，不过退款。</p>
+			<div class="sx-list">
+				<dl>
+					<dt><img src="/style/cash/img/shouxin_img1.png" alt="" style="width:0.6rem;display:block;"/></dt>
+					<dd>不良信息扫描</dd>
+				</dl>
+				<dl>
+					<dt><img src="/style/cash/img/shouxin_img2.png" alt="" style="width:0.6rem;display:block;"/></dt>
+					<dd>多平台借款检测</dd>
+				</dl>
+				<dl>
+					<dt><img src="/style/cash/img/shouxin_img3.png" alt="" style="width:0.6rem;display:block;"/></dt>
+					<dd>失信风险检测</dd>
+				</dl>
+				<dl>
+					<dt><img src="/style/cash/img/shouxin_img4.png" alt="" style="width:0.6rem;display:block;"/></dt>
+					<dd>黑名单检测</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="sign_d1" style="background:#f5f5f5;margin:0;">
+			<span><input type="checkbox" checked="checked" id="shouquan_check"></span><span style="color:#999;">我已阅读并同意<a style="color:#2777c8;" href="/index/diagnosisAuthorization">《授信诊断咨询授权书》</a></span>
+		</div>
+		<div class="sx-btm" id="sub">
+			<form action="/Repayment/renewalPay" method="post" id="form">
+				<if condition="$credit_discount eq 0">
+				<p style="font-size:0.3rem;font-weight:bold;">¥{$credit_amount}</p>
+				<input type="hidden" name="amount" value="{$credit_amount}">
+				<else/>
+				<p style="font-size:0.3rem;font-weight:bold;">¥{$credit_discount}<span style="font-size:0.23rem;padding-left:0.1rem;text-decoration:line-through;font-weight: lighter;">¥{$credit_amount}</span></p>
+				<input type="hidden" name="amount" value="{$credit_discount}">
+				</if>
+				<input type="hidden" id="day" name="day" value="{$day}">
+				<input type="hidden" id="money" name="money" value="{$money}">
+				<input type="hidden" id="selectTick" name="selectTick" value="{$selectTick}">
+				<input type="hidden" id="bid" name="bid" value="{$bid}">
+				<input type="hidden" id="detail_id" name="detail_id" value="{$detailid}"/>
+			</form>
+			<p>不过退款</p>
+		</div>
+	</div>
+	<div class="cash_pop cash_bg_close" id="cash_pop_wait" style="display:none;">
+		<div class="cash_bg" style="background:#fff;"></div>
+		<div style="width:100%;display:table;position:absolute;">
+			<img src="/style/cash/img/cash_wait.gif" alt="" style="display:block;width:1rem;margin:50% auto 0.5rem;"/>
+			<div style="width:100%;font-size:0.27rem;line-height:30px;text-align:center;color:#333;">支付信息确认中，请耐心等待！</div>
+		</div>
+	</div>
+</body>
+</html>
+</body>
+<script>
+$(".cash_bg_close").click(function(){
+	$("#cash_pop_wait").hide();
+});
+$("#sub").click(function() {
+	var check = $("#shouquan_check").is(":checked");
+	if(!check){
+		layer.open({
+		    content: '请先同意相关协议'
+		    ,btn: '我知道了'
+		});
+		return false;
+	}else{
+		var bid = $("#bid").val();
+		$.ajax({
+			url:'/Repayment/checkUserRenewalAuth2',
+			type:'post',
+			data:'bid='+bid,
+			success:function(response){
+				layer.closeAll();
+				var response = $.parseJSON(response);
+				if(response.status == 1){
+					$("#cash_pop_wait").fadeIn();
+					return false;
+				}else if(response.status == 2){
+					layer.closeAll();
+					layer.open({
+						content: response.message
+						,skin: 'msg'
+						,time: 2 //2秒后自动关闭
+					});
+					return false;
+				}else if(response.status == 0){
+					$("#form").submit();
+				}
+			}
+		});
+	}
+}); 
+</script>
+</html>

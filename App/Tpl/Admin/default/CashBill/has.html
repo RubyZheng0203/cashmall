@@ -1,0 +1,86 @@
+<include file="Public:_header"/>
+<tagLib name="htmlA"/>
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<script type="text/javascript">
+    var delUrl = '__URL__/doDel';
+    var addUrl = '__URL__/add';
+    var editUrl = '__URL__/edit';
+    var editTitle = '处理充值';
+    var isSearchHidden = 1;
+    var searchName = "搜索/筛选";
+</script>
+<div class="so_main">
+    <div class="page_tit">已还款列表</div>
+    <!--搜索-->
+    <include file="searchf"/>
+    <!--搜索-->
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$pagebar}</div>
+        <htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选 " style="search_action"/>
+        <htmlA:commonBtn type="href" action="__URL__/export_has?{$query}" value="将当前条件下数据导出为Excel"/>
+        (默认导出当前页)
+    </div>
+
+    <div class="list">
+        <table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th class="line_l">账单ID</th>
+
+                <th class="line_l">借款人UID</th>
+                <th class="line_l">借款人姓名</th>
+                <th class="line_l">申请金额(元)</th>
+                <th class="line_l">放款金额(元)</th>
+                <th class="line_l">借款期限(天)</th>
+                <th class="line_l">还款利息(元)</th>
+                <th class="line_l">实际还款日期</th>
+                <th class="line_l">实际还款本金(元)</th>
+                <th class="line_l">实际还款利息(元)</th>
+                <th class="line_l">逾期天数(天)</th>
+                <th class="line_l">逾期利息(元)</th>
+                <th class="line_l">催收费(元)</th>
+                <th class="line_l">是否续期</th>
+                <th class="line_l">续期费(元)</th>
+                <th class="line_l">放款日期</th>
+            </tr>
+            <!-- 头部结束 -->
+            <volist id="vo" name="list">
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}">
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td>
+                        <htmlA:user id="vo.uid" uname="vo.uid"/>
+                    </td>
+                    <td>{$vo.real_name}</td>
+                    <td>{$vo.money}</td>
+                    <td>{$vo.loan_money}</td>
+                    <td>{$vo.duration_time}</td>
+                    <td>{$vo.interest}</td>
+                    <td>{$vo.repayment_time|date="Y-m-d H:i:s",###}</td>
+                    <td>{$vo.capital}</td>
+                    <td>{$vo.is_interest}</td>
+                    <td>{$vo.due_day}</td>
+                    <td>{$vo.due_fee}</td>
+                    <td>{$vo.late_fee}</td>
+                    <td>{$vo.is_renewal}</td>
+                    <td>{$vo.renewal_fee}</td>
+                    <td>{$vo.len_time|date="Y-m-d H:i:s",###}</td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$pagebar}</div>
+        <htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选 " style="search_action"/>
+        <!-- <htmlA:commonBtn type="href" action="__URL__/export_every_repayment?{$query}" value="将当前条件下数据导出为Excel"/>-->
+    </div>
+</div>
+
+
+<include file="Public:_footer"/>

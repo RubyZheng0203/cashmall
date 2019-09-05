@@ -1,0 +1,147 @@
+<include file="Pub:headerNew"/>
+<style>
+.changeCard{
+	line-height:0.5rem;
+	margin-top:-0.5rem;
+	width:90%;
+	padding:0 5%;
+	color:#2777c8;
+	background:#fff;
+	text-align:right;
+}
+#addCard{
+	width: 90%;
+    float: right;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    padding-top: 0.7rem;
+    text-align: center;
+    border: 1px #ccc dashed;
+}
+</style>
+<body>
+	<div class="cash_view">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="member_main">
+			<ul class="member_ul1">
+				<li class="active">个人资料</li>
+				<li onclick="location.href='/member/borrow'">我的借款</li>
+				<li onclick="location.href='/member/ticket'">优惠券</li>
+			</ul>
+			<div class="member_d1">
+				<!-- <div class="member_d2" onclick="location.href='/Member/logoff'">注销></div> -->
+				<ul class="member_ul2">
+					<li> 
+						<div>手机号码</div>
+						<div>{$_SESSION['user_phone']}</div>
+					</li>
+					<li>
+						<div style="width:30%;">职业类别</div>
+						<div style="width:70%;">{$memberInfo['job_title']}</div>
+					</li>
+					<li>
+						<div>收入水平</div>
+						<div>{$memberInfo['year_income']}</div>
+					</li>
+					<li>
+						<div>{$memberInfo['connectName']}电话</div>
+						<div>{$memberInfo['iphone1']}</div>
+					</li>
+					<li>
+						<div>好友电话</div>
+						<div>{$memberInfo['iphone2']}</div>
+					</li>
+					<li>
+						<div>同事电话</div>
+						<div>{$memberInfo['iphone3']}</div>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<ul class="member_ul3 clearfix">
+					<li><img src="/style/cash/images/check22.png" alt=""></li>
+					<li>
+						<div>真实姓名</div>
+						<div>身份证号</div>
+					</li>
+					<li>
+						<div>{$memberInfo['real_name']}</div>
+						<div>{$memberInfo['id_card']}</div>
+					</li>
+				</ul>
+				<ul class="member_ul3 clearfix" style="background:#fff;">
+					<li><img src="/style/cash/images/check12.png" alt=""></li>
+					<li>
+						<div>银行名称</div>
+						<div>银行卡号</div>
+					</li>
+					<if  condition="$fuiou_id eq 0">
+					
+					<elseif condition="$memberInfo['bank_card']"/>
+						<li>
+							<div>{$memberInfo['bank_name']}</div>
+							<div>{$memberInfo['bank_card']}</div>
+						</li>
+					<else/>
+						<li><div id="addCard">添加银行卡</div></li>
+					</if>
+				</ul>
+				<if condition="$memberInfo['bank_card'] && $fuiou_id neq 0">
+					<div class="changeCard">
+						更换银行卡>>
+					</div>
+				<else/>
+					
+				</if>
+			</div>
+		</div>
+		<include file="Pub:footerNew"/>
+	</div>
+	<div class="bank_pop" id="bank_pop1">
+		<div class="bank_bg"></div>
+		<div class="bank_content">
+			<div class="bank_pop1">确定要更换银行卡吗？</div>
+			<div class="bank_pop2" id="unbind">更换</div>
+			<div class="bank_pop3">取消</div>
+		</div>
+	</div>
+</body>
+<script>
+$(function(){
+	$(".bank_pop").hide();
+	$(".bank_bg").click(function(){
+		$(".bank_pop").hide();
+	});
+	$(".bank_pop3").click(function(){
+		$(".bank_pop").hide();
+	});
+	//绑定银行卡
+	$("#addCard").click(function(){
+		window.location.href='/fuiouBack/Card';
+	});
+	//解绑银行卡
+	$(".changeCard").click(function(){
+		$("#bank_pop1").show();
+		$("#unbind").click(function(){
+			$.ajax({
+				url:'member/checkexBank',
+				type:'post',
+				success:function(response){
+					var response = $.parseJSON(response);
+					if(response.status == 1){
+						layer.open({
+	 					    content: '您有借款在身，不能更换银行卡'
+	 					    ,skin: 'msg'
+	 					    ,time: 2 //2秒后自动关闭 
+	 					});
+					}else if(response.status == 0){
+						window.location.href='/fuiouBack/Decard';			
+					}
+				}
+			});
+		})
+	}); 
+});
+</script>
+</html>

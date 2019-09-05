@@ -1,0 +1,105 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+	var isSearchHidden = 1;
+	var searchName = "搜索/筛选";
+</script>
+<div class="so_main">
+	<div class="page_tit">可结算的</div>
+	<!--搜索/筛选会员-->
+	<include file="searchb" />
+	<!--搜索/筛选会员-->
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />
+		<htmlA:commonBtn type="jsfun" action="checkid();" value="汇总结算" style="search_action" />
+	</div>
+	<div class="list">
+		<table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+			    <th style="width:30px;">
+			        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+			        <label for="checkbox"></label>
+			    </th>
+			    <th class="line_l">借款申请ID</th>
+			    <th class="line_l">放款帐户</th>
+				<th class="line_l">借款人编号</th>
+				<th class="line_l">借款金额（元）</th>
+				<th class="line_l">借款利息（元）</th>
+				<th class="line_l">借款期限</th>
+				<th class="line_l">开户费</th>
+				<th class="line_l">动用费</th>
+				<th class="line_l">信审费</th>
+				<th class="line_l">续期费</th>
+				<th class="line_l">逾期费</th>
+				<th class="line_l">逾期管理费</th>
+				<th class="line_l">放款日期</th>
+			    <th class="line_l">操作</th>
+			</tr>
+			<volist id="vo" name="list">
+       		<tr overstyle='on' id="list_{$vo.id}">
+		        <td><input type="checkbox" value="{$vo.id}" id="checkbox_{$vo.id}" name="checkbox"  onclick="checkon(this)"></td>
+		        <td>{$vo.id}</td>
+		        <td>{$vo.loan_account}</td>
+		        <td><htmlA:user id="vo.uid" uname="vo.uid" /></td>
+				<td>{$vo.money}</td>
+				<td>{$vo.interest}</td>
+				<td>{$vo.duration}{$vo.type}</td>
+				<td>{$vo.created_fee}</td>
+				<td>{$vo.enabled_fee}</td>
+				<td>{$vo.audit_fee}</td>
+				<td>{$vo.renewal_fee}</td>
+				<td>{$vo.due_fee}</td>
+				<td>{$vo.late_fee}</td>
+				<td>{$vo.len_time|date="Y-m-d H:i",###}</td>
+		        <td>
+		        	<a href="__URL__/sumbill?id={$vo.id}">[结算]</a>
+				</td>
+       		</tr>
+			</volist>
+		</table>
+	</div>
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+  		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />
+  		<htmlA:commonBtn type="jsfun" action="checkid();" value="汇总结算" style="search_action" />
+	</div>
+</div>
+<script type="text/javascript">
+	function showurl(url,Title){
+		ui.box.load(url, {title:Title});
+	}
+	
+	function checkid(){
+		var id 		= document.getElementsByName('checkbox');
+		var id_str  = '';
+		for(var i = 0; i < id.length; i++){
+	        if(id[i].checked){
+	        	var ids = $("#checkbox_"+id[i].value).val();
+	        	if(id_str == ''){
+	        		id_str = ids;
+	        	}else{
+	        		id_str = id_str+","+ids;
+	        	}
+	        }
+		}
+		 $.ajax({
+				url: "__URL__/sumamount/",
+				data: {"id":id_str},
+				type: "post",
+				dataType: "json",
+				success: function (d, s, r) {
+					if(d){
+						if(d.status==1){
+							 alert(d.message);
+						}else{
+							location.href="__URL__/unbalance";
+						}
+					}
+				}
+			});
+		
+	}
+</script>
+<include file="Public:_footer" />

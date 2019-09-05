@@ -1,0 +1,356 @@
+<include file="Pub:headerNew"/>
+<body style="background:#fff;">
+<div class="cash_view" style="background:#fff;">
+	<!-- 网页的头部 -->
+	<include file="Pub:footer"/>
+	<div class="auto_main" style="padding-bottom:60px;">
+		<div class="auto_title clearfix">
+			<div class="active">我要还款</div>
+			<div onclick="xvqi();">我要续期</div>
+			<form id="xuqiUrl" method="post" action="../repayment/renewalInfo">
+				<input type="hidden" id="bid" name="bid" value="{$info['bid']}"/>
+			</form>
+		</div>
+		<if condition="$info['overdue'] eq '0'">
+			<div>
+				<div class="auto_d1">
+					<div>距离还款日</div>
+					<div id="shijian">{$info['repayTime']}天</div>
+				</div>
+				<div class="auto_d2">
+					提前还款信用增值
+				</div>
+			</div>
+			<input type="hidden" id="huan_now" value="{$info['repayTime']}"/>
+			<else/>
+			<div>
+				<div class="auto_d1" style="background:#f61746;">
+					<div>您已逾期</div>
+					<div><if condition="is_string($info['dueTime'])">{$info['dueTime']}<else/>{$info['dueTime']}天</if></div>
+				</div>
+				<div class="auto_d2" style="color:#f61746;">
+					您已逾期，请珍惜您的个人信用
+				</div>
+			</div>
+		</if>
+		<ul class="sign_ul2">
+			<li>
+				<div>到期日期</div>
+				<div>{$info['deadline']|date="Y-m-d",###}</div>
+			</li>
+			<li>
+				<div>本金</div>
+				<div>
+					<span>{$info['money']}元</span>
+				</div>
+			</li>
+			<li>
+				<div>利息</div>
+				<div>
+					<span>{$info['interest']}元</span>
+				</div>
+			</li>
+			<li id="info_fee">
+				<div>综合费用</div>
+				<div>
+					<span class="sign2_s2" id="sign_s9">?</span>
+					<span>{$info['fee']}元</span>
+				</div>
+			</li>
+			<if condition="$info['overdue'] eq '1'">
+				<li>
+					<div>逾期利息</div>
+					<div>
+						<span class="sign2_s2" id="sign_s5">?</span>
+						<span>{$info['due_money']}元</span>
+					</div>
+				</li>
+				<li>
+					<div>逾期管理费</div>
+					<div>
+						<span class="sign2_s2" id="sign_s6">?</span>
+						<span>{$info['due_manage_money']}元</span>
+					</div>
+				</li>
+			</if>
+			<li>
+				<div>还款优惠券</div>
+				<div class="borrow_d3_title ticket_btn">
+					<span><img src="/style/cash/images/borrow3.png" alt=""></span>
+					<span>选择可用优惠券</span>
+					<span><img id="borrow_d10" src="/style/cash/images/borrow21.png" alt=""></span>
+				</div>
+			</li>
+			<!-- 优惠券选取 -->
+			<li class="ticket_content" style="display:none">
+				<volist name="ticket" id="vo">
+					<p class="details_ticket clearfix">
+						<span style=""><img class="gou" src="/style/cash/images/borrow10.png" alt=""></span>
+						<span>减去{$vo['money']}元&nbsp;&nbsp;{$vo['end_time']|date='Y-m-d',###}到期</span>
+						<input type="hidden" id="tickMoney" value="{$vo['money']}"/>
+						<input type="hidden" id="tickId" value="{$vo['id']}"/>
+					</p>
+				</volist>
+			</li>
+			<li>
+				<div>需还总额</div>
+				<div><span id="realTotal">{$info['total']}元</span></div>
+			</li>
+			<form action="/Repayment/repaymentType" method="post" id="form">
+				<input type="hidden" id="selectTick" name="selectTick" value=""/>
+				<input type="hidden" id="detail_id" name="detail_id" value="{$info['detail_id']}"/>
+				<input type="hidden" id="postmoney" name="postmoney" value="{$info['total']}"/>
+			</form>
+		</ul>
+		<div class="cash_btn" style="padding:0;margin-top:0.6rem;">现在就还</div>
+	</div>
+	<include file="Pub:footerNew"/>
+	<!-- 综合费用弹窗 -->
+	<div class="cash_pop" id="cash_pop9" style="display:none">
+		<div class="cash_bg"></div>
+		<div class="sign_pop_content1">
+			<dl class="pop_dl1">
+				<dt>综合费用</dt>
+				<dd>
+					<div>认证费</div>
+					<div>{$info['created_fee']}元</div>
+				</dd>
+				<dd>
+					<div>账户管理费</div>
+					<div>{$info['enabled_fee']}元</div>
+				</dd>
+				<dd>
+					<div>贷后管理费</div>
+					<div>{$info['audit_fee']}元</div>
+				</dd>
+				<dd>
+					<div>支付服务费</div>
+					<div>{$info['pay_fee']}元</div>
+				</dd>
+				<!-- <if condition="empty($info['coupon_amount'])">
+                <else/>
+                <dd>
+                    <div>优惠券</div>
+                    <div>-{$info['coupon_amount']}元</div>
+                </dd>
+                </if> -->
+				<dd>
+					<div>总计</div>
+					<div>{$info['fee']}元</div>
+				</dd>
+			</dl>
+			<div class="pop_sign_btn">我知道了</div>
+		</div>
+	</div>
+	<div class="cash_pop" id="cash_pop2" style="display:none">
+		<div class="cash_bg"></div>
+		<div class="sign_pop_content7">
+			<div class="delay_bank_title">逾期利息</div>
+			<div class="delay_bank_c1">{$info['due_rate']}</div>
+			<div class="pop_sign_btn">我知道了</div>
+		</div>
+	</div>
+	<div class="cash_pop" id="cash_pop3" style="display:none">
+		<div class="cash_bg"></div>
+		<div class="sign_pop_content7">
+			<div class="delay_bank_title">逾期管理费</div>
+			<div class="delay_bank_c1">{$info['late_rate']}</div>
+			<div class="pop_sign_btn">我知道了</div>
+		</div>
+	</div>
+	<!-- <div class="cash_pop" id="cash_pop6" style="display:none;">
+		<div class="cash_bg"></div>
+		<div class="sign_pop_content7" style="padding-top:0.5rem;height:3.4rem;">
+			<div class="delay_bank_title" style="color:#333;">续期请联系客服</div>
+			<div class="sign1_d2" style="text-align:center; color:#333;padding:0.1rem 0;">
+				<span><input type="checkbox" id="check" checked="checked"></span>
+				<span>我同意<a href="/index/borrowAgreement?id={$info['bid']}&x" style="color:#2777c8;">《借款服务协议》</a></span>
+			</div>
+			<div class="pop_sign_btn" id="pop6_sure">确定</div>
+			<img src="/style/cash/images/close1.png" alt="" id="pop6_close" style="position:absolute;right:0.2rem;top:0.15rem;width:0.3rem;"/>
+		</div>
+	</div> -->
+	<div class="cash_pop cash_bg_close" id="cash_pop_wait" style="display:none;">
+		<div class="cash_bg" style="background:#fff;"></div>
+		<div style="width:100%;display:table;position:absolute;">
+			<img src="/style/cash/img/cash_wait.gif" alt="" style="display:block;width:1rem;margin:50% auto 0.5rem;"/>
+			<div style="width:100%;font-size:0.27rem;line-height:30px;text-align:center;color:#333;">支付信息确认中，请耐心等待！</div>
+		</div>
+	</div>
+</div>
+<input type="hidden" id="is_new" value="{$info['is_new']}"/>
+</body>
+<script>
+function xvqi(){
+	/* layer.closeAll();
+	layer.open({
+	    content: "系统升级中，请稍后再试",
+	    shadeClose: false,skin: 'msg',
+	    time: 2 //2秒后自动关闭
+	});	
+	return false; */
+	var bid = $("#bid").val();
+	$.ajax({
+		url:'/Repayment/checkRenewalRedir',
+		type:'post',
+		data:'bid='+bid,
+		success:function(response){
+			var response = eval('('+response+')');
+			if(response.status == 0){
+				layer.open({
+					content: response.message,
+					skin   : 'msg',
+					time   : 2
+				})
+			}else{
+				$('#xuqiUrl').submit();
+			}
+		}
+	});
+}
+	$(function(){
+		
+		
+		$("#sign_s9").click(function(){
+			$("#cash_pop9").show();
+		});
+		var is_new = $("#is_new").val();
+		if(is_new == "0"){
+			$("#info_fee").hide();
+		}
+		$("#pop6_close").click(function(){
+			$("#cash_pop6").hide();
+		});
+		$("#pop6_sure").click(function(){
+			var a = $("#check").is(':checked');
+			if(a){
+				$("#cash_pop6").hide();
+			}else{
+				$("#cash_pop6").show();
+				layer.open({
+					content: '请勾选借款服务协议'
+					,skin: 'msg'
+					,time: 2 //2秒后自动关闭
+				});
+			}
+		});
+		// layer.open({
+		// 	content: '通知：现贷猫将在12.18日升级，届时将不再从本金中先行扣除息费，此后您当前借款将无法续期，如仍需续期请于18日前尽快续期。'
+		// 	,btn: '我知道了',
+		// 	shadeClose: true
+		// });
+		var huan_now = $("#huan_now").val();
+		if(huan_now == "今天是您的还款日"){
+			$(".auto_d2").html("今天是您的还款日").css("color","#f61746");
+			$("#shijian").html("0天");
+		}
+		// var total = {$info['total']};
+		$(".pop_sign_btn").click(function(){
+			$("#cash_pop1").hide();
+		})
+		$("#sign_s4").click(function(){
+			$("#cash_pop1").show();
+		});
+		$("#sign2_s3").click(function(){
+			$("#cash_pop2").show();
+		});
+		$("#sign_s5").click(function(){
+			$("#cash_pop2").show();
+		});
+		$("#sign_s6").click(function(){
+			$("#cash_pop3").show();
+		});
+		$(".cash_bg").click(function(){
+			$(".cash_pop").hide();
+		});
+		$(".sign_s66").click(function(){
+			$("#cash_pop2").show();
+		});
+		$(".ticket_btn").click(function(){
+
+			if($(".ticket_content").css("display") == "none"){
+				$(".ticket_content").show(200);
+				$("#borrow_d10").attr("src","/style/cash/images/borrow22.png");
+			}else{
+				$(".ticket_content").hide(200);
+				$("#borrow_d10").attr("src","/style/cash/images/borrow21.png");
+			}
+		});
+		// 优惠券选取js
+		var tickMoney = $("#tickMoney").val();
+		var total = {$info['total']};
+		var amout = Math.round((total-tickMoney)*100);
+		$(".details_ticket").each(function(index){
+			$(this).click(function(){
+				var a = $(".gou:eq("+index+")").attr("src");
+				total = {$info['total']};
+				if(a == "/style/cash/images/borrow10.png"){
+					$(".gou").attr("src","/style/cash/images/borrow10.png");
+					$(".gou:eq("+index+")").attr("src","/style/cash/images/borrow1.png");
+					tickMoney = $("#tickMoney").val();
+					var tickId	  = $("#tickId").val();
+					amout     = Math.round((total-tickMoney)*100);
+					if(amout<0){
+						layer.open({
+							content: '需还总额不能为负数'
+							,skin: 'msg'
+							,time: 2 //2秒后自动关闭
+						});
+					}
+					$("#realTotal").html((amout/100)+'元');
+					$("#postmoney").val((amout/100));
+					$("#selectTick").val(tickId);
+				}else{
+					$(".gou").attr("src","/style/cash/images/borrow10.png");
+					$("#selectId").val("");
+					$("#realTotal").html(total+'元');
+					$("#postmoney").val(total);
+				}
+			})
+		});
+
+		$(".cash_btn").click(function(){
+			if(amout < 0){
+				layer.open({
+					content: '需还总额不能为负数'
+					,skin: 'msg'
+					,time: 2 //2秒后自动关闭
+				});
+			}else{
+				if({$status} == "1"){
+					layer.open({
+						content: '信息审核中，无法操作'
+						,skin: 'msg'
+						,time: 2 //2秒后自动关闭
+					});
+				}else{
+					var bid = $("#bid").val();
+					$.ajax({
+						url:'/Repayment/checkUserRepayWech',
+						type:'post',
+						data:'bid='+bid,
+						success:function(response){
+							layer.closeAll();
+							var response = $.parseJSON(response);
+							if(response.status == 1){
+								$("#cash_pop_wait").fadeIn();
+							}else if(response.status == 2){
+								layer.open({
+									content: response.message,
+									skin   : 'msg',
+									time   : 2
+								})
+								setTimeout("window.location.href='/member/currborrow'",2000);
+							}else if(response.status == 0){
+								$("#form").submit();
+							}
+						}
+					});
+				}
+
+			}
+		})
+
+	})
+</script>
+</html>

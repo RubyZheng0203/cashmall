@@ -1,0 +1,485 @@
+<include file="Pub:headerNew"/>
+<script>
+function showPreview(source) {  
+
+	var file = source.files[0];  
+
+	if(window.FileReader) {  
+
+	    var fr = new FileReader();  
+	    fr.onloadend = function(e) {  
+
+	    	var num = source.id.split("")[4];
+	    	$(".id_ul1 li img").eq(num).css({"backgroundImage":"none"});
+	        // source.style.backgroundImages = e.target.result;  
+	        $(".id_ul1 img").eq(num)[0].src =e.target.result; 
+	    };  
+
+	    fr.readAsDataURL(file); 
+	}   
+} 
+</script>
+<body> 
+	<div class="cash_view">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="mess_main">
+			<div class="mess_title">完善信息</div>
+			<div>
+				<ul class="mess_ul1"> 
+					<li>
+						<div>真实姓名</div>
+						<div><input type="text" id="realName"  placeholder="" value="{$info['real_name']}" <if condition="$fuiou_id gt 0">readonly="readonly"</if> /></div>
+					</li> 
+					<li>
+						<div>身份证号</div>
+						<div><input type="text" id="idCard" placeholder="" value="{$info['id_card']}" <if condition="$fuiou_id gt 0">readonly="readonly"</if> /></div>
+					</li>
+					<li style="border:none">
+						<div style="width:60%;">您的户籍地址：</div>
+						<div style="width:10%;"></div>
+					</li>
+					<li style="border:none">
+						<div class="base_select1">
+							<span>省：</span>
+							<select name="" id="area1" name="province" style="width:1.5rem;height:0.4rem;">
+								<volist name="province" id="pro">
+			                        <option value="{$pro.id}">{$pro.province}</option>
+		                        </volist> 
+							</select>
+						</div>
+						<div class="base_select2">
+							<span>市：</span>
+							<select id="area2" name="city" style="width:1.5rem;height:0.4rem;">
+ 
+							</select>
+						</div>
+						<input type="hidden" id="city" value="{$info['register_city']}"/>
+						<input type="hidden" id="province" value="{$info['register_province']}"/>
+					</li>
+					<li>
+						<div>详细地址</div>
+						<div><input  id="cardInfo" type="text" placeholder="户籍详细地址" value="{$info['register_address']}" <if condition="$info['register_address']">readonly="readonly"</if> /></div>
+					</li>
+					<li>
+						<div>借款用途</div>
+						<div><input class="cash" value="购买电子产品" name="cashUse" id="cashUse" type="text" placeholder="请选择借款用途"></div>
+					</li>					
+				</ul>
+			</div>
+			<div id="pic" style="position:relative;">
+				<div class="pic_pop"></div>
+				<ul class="id_ul1 clearfix">
+						<li>
+						<a href="javascript:;" class="file">身份证正面<input type="file" name="file0" onchange="showPreview(this)" id="file0"></a>
+						<img src="" style="width:1.92rem;height:2rem;position:absolute;left:0;top:0;border:none" alt="" class="file0">
+					</li>
+					<li>
+						<a href="javascript:;" class="file">身份证反面<input type="file" name="file1" onchange="showPreview(this)" id="file1"></a>
+						<img src="" style="width:1.92rem;height:2rem;position:absolute;left:0;top:0;border:none" alt="" class="file1">
+					</li>
+					<li>
+						<a href="javascript:;" class="file">头像照正面<input type="file" name="file2" onchange="showPreview(this)" id="file2"></a>
+						<img src="" style="width:1.92rem;height:2rem;position:absolute;left:0;top:0;border:none" alt="" class="file2">
+					</li>
+					
+					</form>
+					
+				</ul>
+				<div style="text-align:right;padding-right:10px;" onclick="location.href='idDemo'"><span class="sign2_s2" style="width:0.2rem;height:0.2rem;line-height:0.2rem;font-size:0.2rem;background:red;" id="sign_s5">!</span><span style="font-size:0.2rem;color:#2777c8;">身份证拍摄示例</span></div>
+				<div class="file_text1">
+					1.每张照片大小不超过30kb；<br/>
+					2.请将身份证对焦拍摄，保证字体清晰，且在有效期内；<br/>
+					3.头像照正面请确保面部清晰，勿过度修图；<br/>
+					4.上传无关图片将无法通过审核.
+				</div>
+				
+			</div>
+			<div class="cash_btn">提交</div>
+		</div>
+		<!-- 网页底部 -->
+		<input type="hidden" id="tick" value="{$tick}"/>
+		<input type="hidden" id="tickIn" value="{$tickIn}"/>		
+		<input type="hidden" id="uid" value="{$_SESSION['uid']}"/>
+		<input type="hidden" id="pic2" value="{$is_pic}">
+		<include file="Pub:footerNew"/>
+	</div>
+	<div class="pic_pop2" style="display:none"> 
+		<div class="pic_bg"></div>
+		<div class="pic_content">
+			<div class="pic1">
+				<img src="/style/cash/images/2018011502.png" alt="">
+				<div class="close2"></div>
+			</div>
+			<div class="close1"></div>
+		</div>
+	</div>
+<input type="hidden" value="{$fuiou_id}" id="fuiou_id">
+<script type="text/javascript" src="__ROOT__/Style/cash/js/jquery-1.12.0.min.js"></script>
+<script src="__ROOT__/Style/cash/js/jquery.selector-px.js"></script>
+<script>
+  $(document).ready(function(){
+  		var is_pic = $("#pic2").val();
+  		if(is_pic == "1"){
+  			$("#pic").hide();
+  		}
+	  	var url = location.href;
+		$.ajax({
+			url:'/Member/saveUserOperation',
+			type:'post',
+			data:'url='+url,
+			success:function(response){
+				
+			}
+		})
+	  	var oldProvince = $("#province").val();
+		if(oldProvince){
+			$("#area1").val(oldProvince);
+		}
+		changeCity();		
+	  	//地区联动
+	  	$("#area1").change(function(){
+		  changeCity();
+	  	});
+	  	var tickIn = $("#tickIn").val();
+		var uid = $("#uid").val();
+		var object = {
+				event : "customize_event",
+				eventType : "REALNAMEIN_EVENT",
+				eventNum : 6,
+				uid	: uid,
+				tick : tickIn,
+				status : 1
+			};
+		requestDevice(object);
+	  //学历
+	  var cash = {$cashLoans};
+	  $.scrEvent({
+	    data: cash,
+	    evEle: '.cash',
+	    title: '借款用途',
+	    defValue: "交房租",
+	    afterAction: function (data) {
+	      $('.cash').val(data);
+	    }
+	  });
+
+	  
+  });
+  $(function(){
+  	$(".cash_btn").click(function(){
+  		next();
+  	});
+  });
+    function next(){
+		var name = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
+    	var idCard		= $.trim($("#idCard").val()).toUpperCase();
+    	var pro         = $('#area1 option:selected') .val();
+    	var city        = $('#area2 option:selected') .val();
+		var realName	= $.trim($("#realName").val());
+		var cashUse		= $.trim($("#cashUse").val());
+		var cardInfo	= $.trim($("#cardInfo").val());
+		var card = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+		var file0 = $("#file0").val();
+		var file1 = $("#file1").val();
+		var is_pic = $("#pic2").val();
+		var file2 = $("#file2").val();
+		if(realName == ''||!name.test(realName)){
+			layer.open({
+			    content: "请输入真实姓名！"
+			    ,skin: 'msg'
+			    ,time: 2 //2秒后自动关闭
+			  });
+			$(".cash_btn").click(function(){
+		  		next();
+		  	});
+			return false;
+		}
+		if(idCard == ''||!card.test(idCard)){
+			layer.open({
+			    content: "请输入正确身份证号码！"
+			    ,skin: 'msg'
+			    ,time: 2 //2秒后自动关闭
+			  });
+			  $(".cash_btn").click(function(){
+			  		next();
+			  	});	
+			return false;			
+		}
+		if(!pro){
+			layer.open({
+			    content: "请选择户籍省份！"
+			    ,skin: 'msg'
+			    ,time: 2 //2秒后自动关闭
+			  });
+			  $(".cash_btn").click(function(){
+		  		next();
+		  	});	
+			return false;
+		}
+		if(!city){
+			layer.open({
+			    content: "请选择户籍所在市！"
+			    ,skin: 'msg'
+			    ,time: 2 //2秒后自动关闭
+			  });
+			  $(".cash_btn").click(function(){
+		  		next();
+		  	});	
+			return false;
+		}		
+		if(cardInfo == ''||!name.test(cardInfo)){
+			layer.open({
+			    content: "请输入正确户籍地址！"
+			    ,skin: 'msg'
+			    ,time: 2 //2秒后自动关闭
+			  });	
+			$(".cash_btn").click(function(){
+		  		next();
+		  	});
+			return false;			
+		}
+		if(cashUse == ''){
+			layer.open({
+			    content: "请选择借款用途！"
+			    ,skin: 'msg'
+			    ,time: 2 //2秒后自动关闭
+		  	});
+		  	$(".cash_btn").click(function(){
+		  		next();
+		  	});	
+			return false;			
+		}
+		if(is_pic == "0"){
+
+			if(file0 == ""){
+				layer.open({
+				    content: "身份证正面为空！"
+				    ,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+				  });
+				  $(".cash_btn").click(function(){
+				  		next();
+				  	});	
+				return false;
+			}
+
+			if(file1 == ""){
+				layer.open({
+				    content: "身份证反面为空！"
+				    ,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+				  });
+				  $(".cash_btn").click(function(){
+				  		next();
+				  	});	
+				return false;
+			}
+
+			if(file2 == ""){
+				layer.open({
+				    content: "头像照正面为空！"
+				    ,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+				  });
+				  $(".cash_btn").click(function(){
+				  		next();
+				  	});	
+				return false;
+			}
+			console.log("图片提交中");
+			uploadpic("file0");
+			layer.open({type: 2,shadeClose: false,content:'提交中'});
+		}else{
+			layer.open({type: 2,shadeClose: false,content:'提交中'});
+			checkUser(idCard,realName,cardInfo,cashUse,pro,city);
+			console.log("提交中");
+		}
+		
+    }
+    function uploadpic(id){
+
+	var formData = new FormData();
+	console.log("图片提交中");
+    formData.append(id, document.getElementById(id).files[0]);
+    $.ajax({
+        url: "/borrow/upLoadImage",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+        	var data = $.parseJSON(data);
+           if(data.status == "1"){
+                uploadpic2("file1");
+           }else{
+           	layer.closeAll();
+  			   	layer.open({
+					    content: "身份证正面上传失败请刷新页面后再次上传"
+					    ,shadeClose: false,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  }); 
+           }
+
+        },
+        error: function () {
+            console.log("上传失败！");
+            
+        }
+    });
+}
+function uploadpic2(id){
+
+	var formData = new FormData();
+    formData.append(id, document.getElementById(id).files[0]);
+    $.ajax({
+        url: "/borrow/upLoadImage",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+        	var data = $.parseJSON(data);
+           if(data.status == "1"){
+           	console.log("2");
+                uploadpic3("file2");
+           }else{
+           	layer.closeAll();
+  			   	layer.open({
+					    content: "身份证反面上传失败请刷新页面后再次上传"
+					    ,shadeClose: false,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  }); 
+           }
+
+        },
+        error: function () {
+            console.log("上传失败！");
+            
+        }
+    });
+} 
+function uploadpic3(id){
+	var name = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
+	var idCard		= $.trim($("#idCard").val()).toUpperCase();
+	var pro         = $('#area1 option:selected') .val();
+	var city        = $('#area2 option:selected') .val();
+	var realName	= $.trim($("#realName").val());
+	var cashUse		= $.trim($("#cashUse").val());
+	var cardInfo	= $.trim($("#cardInfo").val());
+	var card = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+	var file0 = $("#file0").val();
+	var file1 = $("#file1").val();
+	var is_pic = $("#pic2").val();
+	var file2 = $("#file2").val();
+	var formData = new FormData();
+    formData.append(id, document.getElementById(id).files[0]);
+    $.ajax({
+        url: "/borrow/upLoadImage",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+        	var data = $.parseJSON(data);
+           if(data.status == "1"){
+           		console.log("3");
+                checkUser(idCard,realName,cardInfo,cashUse,pro,city);
+           }else{
+           		layer.closeAll();
+  			   	layer.open({
+					    content: "自拍照上传失败请刷新页面后再次上传"
+					    ,shadeClose: false,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  }); 
+           }
+
+        },
+        error: function () {
+            console.log("上传失败！");
+            
+        }
+    });
+} 
+function checkUser(idCard,realName,cardInfo,cashUse,pro,city){
+	var fuiou_id = $("#fuiou_id").val();
+	$.ajax({
+  		url:'/Borrow/addUserInfo',
+  		type:'post',
+  		data:"idCard="+idCard+"&realName="+realName+"&cardInfo="+cardInfo+"&cashUse="+cashUse+"&pro="+pro+"&city="+city,
+  		success:function(response){
+  			var response = $.parseJSON(response);
+  			var ticks = $("#tick").val();
+				var uid = $("#uid").val();
+				var object = {
+						event : "customize_event",
+						eventType : "REALNAME_EVENT",
+						eventNum : 7,
+						uid	: uid,
+						tick : ticks,
+						status : response.status
+					}
+				requestDevice(object);
+				console.log(response);
+  			if(response.status == 1){
+  				if(fuiou_id > 0){
+  					layer.closeAll();
+  	  			   	layer.open({
+  						    content: response.message
+  						    ,shadeClose: false,skin: 'msg'
+  						    ,time: 2 //2秒后自动关闭
+  						  });    			   	
+  	  			   	setTimeout("window.location.href='/Borrow/verifyUserStatus'",2000);
+  				}else{
+  					layer.closeAll();
+  					window.location.href='/fuiouback/ByFive';
+  				}
+  			}else if(response.status == 2){
+  				window.location.href='/Borrow/refuse';
+  			}else if(response.status == 0){
+  				layer.closeAll();
+  				layer.open({
+					    content: response.message
+					    ,shadeClose: false,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭 
+					  }); 				
+  			}
+  		}
+  	})
+  }
+  function changeCity(){
+		var id = $("#area1").val();
+		$("#area2").html("");
+		  $.ajax({
+				 url:'/Borrow/getCity',
+				 type:'post',
+				 data:"id="+id,
+			 	 success:function(response){
+			 		var response = $.parseJSON(response);
+			 		// $("#area2").empty();
+			 		$("#area2").append(response.message);
+			 		var oldCity = $("#city").val();
+			 		var oldProvince = $("#province").val();
+			 		if(oldCity&&id==oldProvince){
+			 			$("#area2").val(oldCity);
+			 		}
+			 	 }
+			 })
+	}
+	$(".pic_pop").click(function(){
+
+		$(".pic_pop2").show();
+	});
+	$(".close1,.close2").click(function(){
+
+		$(".pic_pop").hide();
+		$(".pic_pop2").hide();
+	});
+</script>
+
+<script>	
+</script>
+</body>
+
+</script>
+</html>

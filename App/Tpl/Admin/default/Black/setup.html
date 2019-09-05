@@ -1,0 +1,160 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+	var delUrl = '__URL__/doDel';
+	var addUrl = '__URL__/add';
+	var editUrl = '__URL__/edit';
+	var editTitle = '修改会员';
+</script>
+<div class="so_main">
+	<div class="page_tit">接口设置</div>
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+		每一条记录只对应每一个接口的设置，需开启后才会生效
+	</div>
+	<div class="list">
+		<table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			    <th style="width:30px;">
+			        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+			        <label for="checkbox"></label>
+			    </th>
+			    <th class="line_l">ID</th>
+				<th class="line_l">接口ID</th>
+			    <th class="line_l">接口名称</th>
+				<th class="line_l">时间间隔（单位：秒）</th>
+				<th class="line_l">每天允许数量</th>
+				<th class="line_l">剩余的请求量</th>
+				<th class="line_l">阀门开关</th>
+				<th class="line_l">状态</th>
+				<th class="line_l">上次阀门关闭时间</th>
+			    <th class="line_l">操作</th>
+			</tr>
+			<volist id="vo" name="list">
+       		<tr overstyle='on' id="list_{$vo.id}">
+		        <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+		        <td>{$vo.id}</td>
+		        <td>{$vo.api_id}</td>
+		        <td>{$vo.api_name}</td>
+				<td>
+					<htmlA:input id="interval" value="{$vo.interval|default=0}" style="width:80px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="button" onclick="changeInterval({$vo.id})" value="更改"/>
+				</td>
+				<td>
+					<htmlA:input id="num_day" value="{$vo.num_day|default=0}" style="width:80px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="button" onclick="changeNumDay({$vo.id})" value="更改"/>
+				</td>
+				<td>
+					<htmlA:input id="num" value="{$vo.num|default=0}" style="width:80px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="button" onclick="changeNum({$vo.id})" value="更改"/>
+				</td>
+				<td><if condition="$vo.flag eq 1">关闭中<else/>开启中</if></td>
+				<td><if condition="$vo.status eq 1">使用中<else/>未开启</if></td>
+		        <td><if condition="$vo.lasttime neq 0">{$vo.lasttime|date="Y-m-d H:i",###}</if></td>
+		        <td>
+					<if condition="$vo.status eq 1">
+						<a href="javascript:;" onclick="changeStatus({$vo.id},0)">禁用</a>&nbsp;&nbsp;
+					<else/>
+						<a href="javascript:;" onclick="changeStatus({$vo.id},1)">开启</a>
+					</if>
+					
+        		</td>
+       		</tr>
+			</volist>
+		</table>
+	</div>
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+		每一条记录只对应每一个接口的设置
+	</div>
+</div>
+<script type="text/javascript">
+	function showurl(url,Title){
+		ui.box.load(url, {title:Title});
+	}
+	
+	function changeInterval(id){
+		var interval = $("#interval").val();
+    	if(confirm("确定要更改此接口的时间间隔？")){
+    		$.ajax({
+    			url:'__URL__/changeInterval',
+    			type:'post',
+    			data:'id='+id+"&interval="+interval,
+    			success:function(response){
+    				var response=$.parseJSON(response);
+    				if(!response.status){
+    					alert("操作失败");
+    				}else{
+    					alert("操作成功");
+    	                location.href="__URL__/setup";
+    	                
+    				}
+    			}
+    		})
+    	}
+    }
+	
+	function changeNumDay(id){
+		var num_day = $("#num_day").val();
+    	if(confirm("确定要更改此接口每天允许的黑名单数量？")){
+    		$.ajax({
+    			url:'__URL__/changeNumDay',
+    			type:'post',
+    			data:'id='+id+"&num_day="+num_day,
+    			success:function(response){
+    				var response=$.parseJSON(response);
+    				if(!response.status){
+    					alert("操作失败");
+    				}else{
+    					alert("操作成功");
+    	                location.href="__URL__/setup";
+    	                
+    				}
+    			}
+    		})
+    	}
+    }
+	
+	function changeNum(id){
+		var num = $("#num").val();
+    	if(confirm("确定要更改此接口的剩余黑名单可请求的数量？")){
+    		$.ajax({
+    			url:'__URL__/changeNum',
+    			type:'post',
+    			data:'id='+id+"&num="+num,
+    			success:function(response){
+    				var response=$.parseJSON(response);
+    				if(!response.status){
+    					alert("操作失败");
+    				}else{
+    					alert("操作成功");
+    	                location.href="__URL__/setup";
+    	                
+    				}
+    			}
+    		})
+    	}
+    }
+	
+    function changeStatus(id,status){
+    	if(confirm("确定要更改此接口设置的状态？")){
+    		$.ajax({
+    			url:'__URL__/changeStatus',
+    			type:'post',
+    			data:'id='+id+"&status="+status,
+    			success:function(response){
+    				var response=$.parseJSON(response);
+    				if(!response.status){
+    					alert("操作失败");
+    				}else{
+    					alert("操作成功");
+    	                location.href="__URL__/setup";
+    	                
+    				}
+    			}
+    		})
+    	}
+    }
+</script>
+<include file="Public:_footer" />

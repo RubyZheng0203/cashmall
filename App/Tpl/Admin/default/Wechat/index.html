@@ -1,0 +1,82 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+	var isSearchHidden = 1;
+	var searchName = "搜索/筛选微信模板配置";
+</script>
+
+<div class="so_main">
+  <div class="page_tit">微信模板配置</div>
+  <div class="Toolbar_inbox">
+    <div class="page right">{$pagebar}</div>
+    <htmlA:commonBtn type="href" action="__URL__/add" value="添加"/>
+  </div>
+  <div class="list">
+    <table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th style="width:30px;"> <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+          <label for="checkbox"></label>
+        </th>
+        <th class="line_l">ID</th>
+        <th class="line_l">消息模板ID</th>
+        <th class="line_l">模板头消息</th>
+        <th class="line_l">信息跳转地址</th>
+        <th class="line_l">模板尾信息</th>
+        <th class="line_l">模板使用场景</th>
+        <th class="line_l">操作</th>
+      </tr>
+      <volist id="vo" name="info">
+        <tr overstyle='on' id="list_{$vo.id}">
+          <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+          <td>{$vo.id}</td>
+          <td>{$vo.msg_id}</td>
+          <td>{$vo.first}</td>
+          <td>{$vo.url}</td>
+          <td>{$vo.remark}</td>
+          <td>{$vo.use_scene}</td>
+          <td><a href="__URL__/edit?id={$vo.id}">[编辑]</a>&nbsp;<a onclick="del_act({$vo.id});">[删除]</a></td>
+        </tr>
+      </volist>
+    </table>
+  </div>
+  <div class="Toolbar_inbox">
+    <div class="page right">{$pagebar}</div>
+    <htmlA:commonBtn type="href" action="__URL__/add" value="添加"/>
+  </div>
+</div>
+<script type="text/javascript">
+function del_act(id){
+	if(confirm("确定要删除此条数据？")){
+		$.ajax({
+			url:'__URL__/delete',
+			type:'post',
+			data:'id='+id,
+			success:function(response){
+				var response=$.parseJSON(response);
+				if(!response.status){
+					Apprise(删除失败);
+				}else{
+					location.href="__URL__/index";
+				}
+			}
+		})
+	}
+}
+function editStatus(id){
+	$.ajax({
+		url:'__URL__/edit',
+		type:'post',
+		data:'id='+id,
+		success:function(response){
+			var response=$.parseJSON(response);
+			if(!response.status){
+				Apprise('更改失败');
+			}else{
+				window.location.reload();
+			}
+		}
+	})
+}
+</script>
+<include file="Public:_footer" />

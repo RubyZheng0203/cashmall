@@ -1,0 +1,355 @@
+<include file="Pub:headerNew"/>
+<style>
+	.yq-k{
+		width: 100%;
+
+	}
+	.yq-k img{
+		width: 100%;
+	}
+	.yq-btn{
+		width:3.4rem;
+		height:0.77rem;
+		line-height:0.79rem;
+		text-align:center;
+		color:#fff;
+		background:#1fadff;
+		margin:0 auto 2rem;
+		border-radius: 8px;
+		box-shadow: 0 3px 2px #05519f;
+	}
+	.k1k{
+    	width: 100%;
+    	height:100%;
+    	background: rgba(0,0,0,0.5);
+    	position:fixed;
+    	left: 0;
+    	top: 0;
+    	z-index:100;
+    }
+    .k1{
+    	width: 4.8rem;
+    	height: 3rem;
+    	background: #fff;
+    	margin: 3rem auto 0;
+    	border-radius: 8px;
+    	position: relative;
+    }
+    .k1 p{
+    	text-align: center;
+    	color:#666;
+    	font-size:0.26rem;
+    	line-height:0.4rem;
+    	padding:0.73rem 0 0.35rem;
+    	margin:0;
+    }
+    .shi-btn{
+    	width:2rem;
+		height:0.7rem;
+		line-height:0.7rem;
+		text-align:center;
+		color:#fff;
+		background:#2876c8;
+		margin:0 auto 2rem;
+		border-radius: 6px;
+		font-size:0.26rem;
+    }
+    .guan{
+    	width:0.32rem;
+    	height:0.32rem;
+    	position:absolute;
+    	right:-0.4rem;
+    	top:-0.4rem;
+    }
+    .deng-wrap{
+    	width:5.4rem;
+    	height:4.1rem;
+    }
+    .deng-tit{
+    	text-align:center;
+    	font-size:0.42rem;
+    	color:#666;
+    	line-height:1rem;
+    }
+    .deng-wrap ul{
+    	display:table;
+    	margin: 0 auto;
+    }
+    .deng-wrap ul li{
+    	width:5rem;
+    	padding-bottom:0.28rem;
+    }
+    .inputs{
+    	width:4.6rem;
+    	padding:0 0 0 0.34rem;
+    	height:0.65rem;
+    	border: 1px solid #2876c8;
+    	border-radius:7px;
+    	font-size: 0.26rem;
+    	float:left;
+    }
+    .deng-huo{
+    	display:block;
+    	width:1.1rem;
+    	line-height:0.65rem;
+    	background:#2876c8;
+    	color:#fff;
+    	text-align:center;
+    	float:right;
+    	border-radius:7px;
+    	font-size: 0.26rem;
+    }
+    .btn-hui{
+    	background:#ccc;
+    	color:#fff !important;
+    }
+    .fen-img{
+    	width:6rem;
+    	position:absolute;
+    	top:0;
+    	right:0.2rem;
+    }
+</style>
+<body style="background:#252056;">
+	<div id="yq" class="cash_view" style="background:#252056;padding:0;overflow:hidden;">
+		<div class="yq-k"><img src="/style/cash/img/yq_huodong.jpg" alt=""></div>
+		<if condition="$user neq 1">
+			<div id="d" class="yq-btn">去分享</div>
+		<else/>
+			<if condition="empty($invite_code) eq true">
+				<div id="sh" class="yq-btn">去分享</div>
+			<else/>
+				<div id="f" class="yq-btn">分享您的邀请链接</div>
+			</if>
+		</if>
+	</div>
+</body>
+<include file="Pub:footerNew"/>
+<div class="k1k" id="deng" style="display:none;height:150%;">
+	<div class="k1 deng-wrap">
+		<img src="/style/cash/img/yq_guan.png" alt="" class="guan guan2">
+		<div class="deng-tit">注册登录</div>
+		<ul>
+			<li>
+				<div style="width:100%;display:table;"><input id="phone" class="inputs" type="tel" placeholder="请输入手机号码" onblur="Blur();" onfocus="Focus();"></div>
+			</li>
+			<li style="padding-bottom:0;">
+				<div style="width:100%;display:table;"><input id="verifyCode" class="inputs" type="tel" placeholder="请输入短信验证码" onblur="Blur();" style="width:3.35rem;"><div class="deng-huo" id="js_btn1">获取</div></div>	
+			</li>
+		</ul>
+		<div style="height:0.5rem;line-height:0.5rem;color: #999;text-align: center;font-size: 0.27rem;" id="inform"></div>
+		<div class="shi-btn deng-btn" id="regist">提交</div>
+	</div>
+</div>
+<div class="k1k" id="shi" style="display:none;">
+	<div class="k1">
+		<p>您还没有邀请码<br/>请实名认证</p>
+		<div class="shi-btn tiao">去实名</div>
+		<img src="/style/cash/img/yq_guan.png" alt="" class="guan guan1">
+	</div>
+</div>
+<div class="k1k" id="fen" style="display:none;background: rgba(0,0,0,0.8);">
+	<img src="/style/cash/img/yq_jian.png" alt="" class="fen-img"/>
+</div>
+<input type="hidden" value="{$invite_code}" id="yaoqingma" />
+<input type="hidden" value="{$user_operation}" id="tiaozhuan" />
+<input type="hidden" id="tick" value=""/>
+<input type="hidden" id="uid" value=""/>
+<input type="hidden" id="userStatus" value=""/>
+<script>
+$(function(){
+	document.title = "现贷猫|邀请";
+	$(".cash_footer").css({background:"#060046",color:"#fff"});
+	var yyy = $("#yaoqingma").val();
+	$("#d").click(function(){
+    	$("#deng").show();
+    });
+	$("#sh").click(function(){
+    	$("#shi").show();
+    });
+	$("#f").click(function(){
+		window.location.href = "/member/invite_regist?invite_code=" + yyy;
+    });
+	$(".guan1").click(function(){
+		$("#shi").hide();
+    });
+	$(".guan2").click(function(){
+		$("#deng").hide();
+    });
+	$("#fen").click(function(){
+		$("#fen").hide();
+    });
+	var ttt = $("#tiaozhuan").val();
+	$(".tiao").click(function(){
+		if(ttt == ''){
+			$("#shi").hide();
+			window.location.href = "/Borrow/index.html";
+		}else{
+			$("#shi").hide();
+			window.location.href = ttt;
+		}
+    });
+});
+function Focus(){
+	$(".k1k").css("position","absolute");
+	$("body,html").animate({
+        scrollTop: '100'             
+    },0);
+}
+/* function Blur(){
+	$(".k1k").css("position","fixed");
+} */
+var yyy = $("#yaoqingma").val();
+</script>
+<script>
+		$(function(){			
+			//倒计时函数
+			function time(){
+				var timeNumber = 60;
+				$("#js_btn1").css("background","#ccc");
+				var timer = null;
+				clearInterval(timer);
+				timer = setInterval(function(){
+					$("#js_btn1").html(timeNumber+"s");
+					if(!timeNumber){
+						clearInterval(timer);
+						$("#js_btn1").css("background","#2777c8");
+						$("#js_btn1").html("获取");
+						$("#js_btn1").click(function(){
+							verify();
+						});
+					}
+					timeNumber--;
+				},1000);	
+			};
+			//验证码按钮验证函数
+			function verify(){
+				var phone = $.trim($("#phone").val());
+				var pat = /^1[3|4|5|7|8][0-9]\d{4,8}$/;//手机号码正则
+				if(phone == ""){
+					$("#inform").html("手机号码不能为空！");
+					return false;
+				}else if(!pat.test(phone)||phone.length<11){
+					$("#inform").html("手机号码填写有误！");
+					return false;
+				}else{
+					$("#js_btn1").unbind();
+					$.ajax({
+						url:'/member/sendPhoneCode',
+						type:'post',
+						data:'phone='+phone,
+						success:function(response){
+							var response = $.parseJSON(response);
+							console.log(response);
+							if(response.status){
+								var arr = response.message.split(',');
+								$("#userStatus").val(arr[1]);
+								$("#inform").html("验证码已发送");
+								$("#phone").val(arr[0]);
+								time();
+							}else{
+								layer.open({
+								    content: response.message
+								    ,skin: 'msg'
+								    ,time: 2 //2秒后自动关闭
+								  });
+								$("#js_btn1").click(function(){
+									verify();
+								});
+							}
+						}
+					})										
+				}
+
+			};
+			function verify2(){
+				var phone = $.trim($("#phone").val());
+				var verifyCode = $.trim($("#verifyCode").val());
+				var verifyCode = $("#verifyCode").val();
+				var pat = /^1[3|4|5|7|8][0-9]\d{4,8}$/;//手机号码正则
+				if(phone ==""){
+					$("#inform").html("手机号码不能为空！");
+					return false;
+				}else if(!pat.test(phone)){
+					$("#inform").html("手机号码填写有误！");
+					return false;
+				}else if(verifyCode == ""){
+					$("#inform").html("手机验证码不能为空！");
+					return false;
+				}else{
+					var userStatus = $("#userStatus").val();
+					if(userStatus == 0){
+						layer.open({
+						    type: 2,
+						    shadeClose: false,
+						    content: '注册中'
+						  });
+						add(phone,verifyCode);
+					}else{
+						layer.open({
+						    type: 2,
+						    shadeClose: false,
+						    content: '登录中'
+						  });
+						add(phone,verifyCode);
+					}
+				}
+
+			}; 
+			$("#js_btn1").click(function(){
+				verify();
+			});
+			$("#regist").click(function(){
+				verify2();
+			})
+			
+			function add(phone,verifyCode){
+				$.ajax({
+					url:'/member/yq_login',
+					type:'post',
+					data:'phone='+phone+"&verifyCode="+verifyCode,
+					success:function(response){
+						var response = $.parseJSON(response);
+						//在此加不可点击事件
+						if(response.status){
+							var arr = response.message.split(',');
+							if(arr[2] == 'regist'){
+								var object = {
+										event : "customize_event",
+										eventType : "REGIST_EVENT",
+										eventNum : 1,
+										uid	: arr[1],
+										tick : arr[0],
+										status : response.status
+									}
+									requestDevice(object);
+								window.location.reload();
+							}else{
+								var object2 = {
+										event : "customize_event",
+										eventType : "LOGIN_EVENT",
+										eventNum : 2,
+										uid	: arr[1],
+										tick : arr[0],
+										status : response.status
+									}
+									requestDevice(object2);
+								window.location.reload();
+							}								
+							
+						}else{
+							layer.closeAll();
+							layer.open({
+							    content: response.message
+							    ,shadeClose: false,
+							    skin: 'msg'
+							    ,time: 2 //2秒后自动关闭
+							  });							
+						}
+					}
+				})
+			}
+			
+		})
+	</script>
+</html>

@@ -1,0 +1,385 @@
+<include file="Pub:headerNew"/>
+<body style="background:#fff;">
+<div class="cash_view" style="background:#fff;">
+	<!-- 网页的头部 -->
+	<include file="Pub:footer"/>
+	<div class="auto_main" style="padding-bottom:60px;">
+		<div class="auto_title clearfix">
+			<div onclick="$('#huankuanUrl').submit();">我要还款</div>
+			<form id="huankuanUrl" method="post" action="../repayment/repaymentInfo">
+				<input type="hidden" name="bid" value="{$info['id']}"/>
+			</form>
+			<div class="active">我要续期</div>
+		</div>
+		<div class="auto_d2" style="margin-top:0.65rem;">
+			请选择续期天数
+		</div>
+		<div id="bank_tabs" class="clearfix">
+			<volist name="dayList" id="vo" key='i'>
+				<div class="<if condition='$i eq 1'>active</if>"  data-type="{$vo['day']}">{$vo['day']}天</div>
+			</volist>
+		</div>
+		<ul class="sign_ul2">
+			<li>
+				<div>续期还款日</div>
+				<div id="date">{$itemarr['date']|date="Y-m-d",###}</div>
+			</li>
+			<li>
+				<div>到期还款</div>
+				<div>
+					<span id="realTotal">{$itemarr['total']}元</span>
+				</div>
+			</li>
+		</ul>
+		<div class="delay_line"></div>
+		<div class="auto_d2">
+			续期费用明细
+		</div>
+		<ul class="sign_ul2" style="padding-top:0;">
+			<li>
+				<div>上期利息</div>
+				<div id="interest">{$info['interest']}元</div>
+			</li>
+			<li>
+				<div>上期综合费用</div>
+				<div>
+					<span class="sign2_s2" id="sign_s9">?</span>
+					<span id="all_fee">{$itemarr['fee']}元</span>
+				</div>
+			</li>
+			<!-- <li>
+                <div>贷后管理费</div>
+                <div id="audit_fee">{$itemarr['audit_fee']}元</div>
+            </li>
+            <li>
+                <div>账户管理费</div>
+                <div id="enabled_fee">{$itemarr['enabled_fee']}元</div>
+            </li> -->
+			
+			<if condition="$info['overdue'] eq '1'">
+				<li>
+					<div>逾期利息</div>
+					<div>
+						<span class="sign2_s2" id="sign_s5">?</span>
+						<span id="due_money">{$info['due_money']}元</span>
+					</div>
+				</li>
+				<li>
+					<div>逾期管理费</div>
+					<div>
+						<span class="sign2_s2" id="sign_s6">?</span>
+						<span id="due_manage">{$info['due_manage_money']}元</span>
+					</div>
+				</li>
+			</if>
+			<li>
+				<div>续期服务费</div>  
+				<div>
+					<span class="sign2_s2" id="sign_s4">?</span>
+					<span id="due_service">{$itemarr['renewal_fee']}元</span>
+				</div>
+			</li>
+			<li>
+				<div>续期优惠券</div>
+				<div class="borrow_d3_title ticket_btn">
+					<span><img src="/style/cash/images/borrow3.png" alt=""></span>
+					<span>选择可用优惠券</span>
+					<span><img id="borrow_d10" src="/style/cash/images/borrow21.png" alt=""></span>
+				</div>
+			</li>
+			<!-- 优惠券选取 -->
+			<li class="ticket_content" style="display:none">
+				<volist name="ticket" id="vo">
+					<p class="details_ticket clearfix">
+						<span style=""><img class="gou" src="/style/cash/images/borrow10.png" alt=""></span>
+						<span>减去{$vo['money']}元&nbsp;&nbsp;{$vo['end_time']|date='Y-m-d',###}到期</span>
+						<input type="hidden" id="tickMoney" value="{$vo['money']}"/>
+						<input type="hidden" id="tickId" value="{$vo['id']}"/>
+					</p>
+				</volist>
+			</li>
+			<li>
+				<div>总共应扣</div>
+				<div id="total">{$itemarr['due_total']}元</div>
+			</li>
+		</ul>
+		<form action="/Repayment/shouxin" method="post" id="form">
+			<input type="hidden" id="day" name="day" value="{$itemarr['duration']}">
+			<input type="hidden" id="money" name="money" value="{$itemarr['due_total']}">
+			<input type="hidden" id="selectTick" name="selectTick" value="">
+			<input type="hidden" id="bid" name="bid" value="{$info['id']}">
+			<input type="hidden" id="detail_id" name="detail_id" value="{$info['detail_id']}"/>
+		</form>
+		<input type="hidden" id="repayTime" value="{$info['deadline']}"/>
+		<input type="hidden" id="b_id" value="{$info['id']}"/>
+		<input type="hidden" id="baseMoney" value="{$info['money']}"/>
+		<input type="hidden" id="due_total" value="{$itemarr['due_total']}"/>
+		<input type="hidden" id="coupon" value=""/>
+
+		<div class="sign1_d2" style="text-align:center; color:#2777c8;">
+			<span><input type="checkbox" id="check"></span>
+			<span>我同意<a id="link_btn" href="#" style="text-decoration:underline;">《{$member['real_name']}-借款服务协议》</a></span>
+		</div>
+		<div class="cash_btn" style="padding:0;margin-top:0.6rem;">现在续期</div>
+	</div>
+	<include file="Pub:footerNew"/>
+	<!-- 综合费用弹窗 -->
+	<div class="cash_pop" id="cash_pop9" style="display:none">
+		<div class="cash_bg"></div>
+		<div class="sign_pop_content1">
+			<dl class="pop_dl1">
+				<dt>综合费用</dt>
+				<dd>
+					<div>认证费</div>
+					<div>{$info["created_fee"]}元</div>
+				</dd>
+				<dd>
+					<div>账户管理费</div>
+					<div>{$info['enabled_fee']}元</div>
+				</dd>
+				<dd>
+					<div>贷后管理费</div>
+					<div>{$info["audit_fee"]}元</div>
+				</dd>
+				<dd>
+					<div>支付服务费</div>
+					<div>{$info["pay_fee"]}元</div>
+				</dd>
+				<!-- <if condition="empty($info['coupon_amount'])">
+                <else/>
+                <dd>
+                    <div>优惠券</div>
+                    <div>-{$info['coupon_amount']}元</div>
+                </dd>
+                </if> -->
+				<dd>
+					<div>总计</div>
+					<div>{$itemarr['fee']}元</div>
+				</dd>
+			</dl>
+			<div class="pop_sign_btn">我知道了</div>
+		</div>
+	</div>
+	<div class="cash_pop" id="cash_pop1" style="display:none">
+		<div class="cash_bg"></div>
+		<div class="sign_pop_content7">
+			<div class="delay_bank_title">会员续期费</div>
+			<div class="delay_bank_c1"><span style="color:#323232;"></span>优福会会员续期费用，续期成功享受更多权益。</div>
+			<div class="pop_sign_btn">我知道了</div>
+		</div>
+	</div>
+	<div class="cash_pop" id="cash_pop2" style="display:none">
+		<div class="cash_bg"></div>
+		<div class="sign_pop_content7">
+			<div class="delay_bank_title">逾期利息</div>
+			<div class="delay_bank_c1">{$itemarr['due_rate']}</div>
+			<div class="pop_sign_btn">我知道了</div>
+		</div>
+	</div>
+	<div class="cash_pop" id="cash_pop3" style="display:none">
+		<div class="cash_bg"></div>
+		<div class="sign_pop_content7">
+			<div class="delay_bank_title">逾期管理费</div>
+			<div class="delay_bank_c1">{$itemarr['late_rate']}</div>
+			<div class="pop_sign_btn">我知道了</div>
+		</div>
+	</div>
+	<div class="cash_pop cash_bg_close" id="cash_pop_wait" style="display:none;">
+		<div class="cash_bg" style="background:#fff;"></div>
+		<div style="width:100%;display:table;position:absolute;">
+			<img src="/style/cash/img/cash_wait.gif" alt="" style="display:block;width:1rem;margin:50% auto 0.5rem;"/>
+			<div style="width:100%;font-size:0.27rem;line-height:30px;text-align:center;color:#333;">支付信息确认中，请耐心等待！</div>
+		</div>
+	</div>
+	<input type="hidden" id="all_fee" value="{$all_fee}"/>
+	<input type="hidden" id="cashpop4" value="{$status}">
+</div>
+</body>
+<script>
+	$(function(){
+
+		$("#sign_s9").click(function(){
+			$("#cash_pop9").show();
+		});
+		var day0 = $("#bank_tabs .active").attr("data-type");
+		$("#day").val(day0);
+		$("#link_btn").click(function(){
+			var day = $("#day").val();
+			window.location.href = "/index/borrowAgreement?id={$info.id}&x"
+		});
+		$("#bank_tabs div").click(function(){
+			var duration = $("#duration").val();
+			$("#bank_tabs div").removeClass("active");
+			$(this).addClass("active");
+			var select = $(this).attr("data-type");
+			$("#day").val(select);
+			countTime(select);
+		});
+		var a = 0;
+		$(".cash_btn").click(function(){
+			/* layer.closeAll();
+			layer.open({
+			    content: "系统升级中，请稍后再试",
+			    shadeClose: false,skin: 'msg',
+			    time: 2 //2秒后自动关闭
+			});	
+			return false; */
+			if({$is_repayment} == "1"){
+				layer.open({
+					content: '信息审核中，无法操作'
+					,skin: 'msg'
+					,time: 2 //2秒后自动关闭
+				});
+			}else{
+				var a = $("#check").is(':checked');
+				var status = $("#cashpop4").val();
+				var detail_id = $("#detail_id").val();
+				var duration = $("#day").val();
+				function xvqi(){
+					layer.open({
+						type: 2,
+						shadeClose: false,
+						content: '续期中'
+					});
+					var b_id = $("#b_id").val();
+					$.ajax({
+						url:'/Repayment/checkUserRenewalAuth',
+						type:'post',
+						data:'b_id='+b_id+"&duration="+duration+"&detail_id="+detail_id,
+						success:function(response){
+							layer.closeAll();
+							var response = $.parseJSON(response);
+							if(response.status == 1){
+								$("#form").submit();
+							}else if(response.status == 2){
+								$("#cash_pop_wait").fadeIn();
+							}else if(response.status == 3){
+								layer.open({
+									content: response.message,
+									skin   : 'msg',
+									time   : 2
+								})
+								setTimeout("window.location.href='/Repayment/index'",2000);
+							}else{
+								layer.open({
+									content: response.message,
+									skin   : 'msg',
+									time   : 2
+								})
+							}
+						}
+					});
+				}
+				if(a){
+					if(status == "3"){
+						layer.open({
+
+							content: '是否确定续期？这是您本次借款的最后一次续期，到期请准备资金还款'
+							,btn: ['确定', '取消']
+							,yes: function(index){
+								xvqi();
+								layer.close(index);
+							}
+
+						});
+
+					}else{
+
+						xvqi();
+					}
+
+				}else{
+					layer.open({
+						content: '请勾选借款服务协议'
+						,skin: 'msg'
+						,time: 2 //2秒后自动关闭
+					});
+				}
+			}
+
+		})
+		$("#sign_s4").click(function(){
+			$("#cash_pop1").show();
+		});
+		$("#sign_s5").click(function(){
+			$("#cash_pop2").show();
+		});
+		$("#sign_s6").click(function(){
+			$("#cash_pop3").show();
+		});
+		$(".cash_bg").click(function(){
+			$(".cash_pop").hide();
+		});
+		$(".pop_sign_btn").click(function(){
+			$("#cash_pop2").hide();
+		})
+		$(".pop_sign_btn").click(function(){
+			$("#cash_pop1").hide();
+			$("#cash_pop3").hide();
+		})
+		$(".ticket_btn").click(function(){
+
+			if($(".ticket_content").css("display") == "none"){
+				$(".ticket_content").show(200);
+				$("#borrow_d10").attr("src","/style/cash/images/borrow22.png");
+			}else{
+				$(".ticket_content").hide(200);
+				$("#borrow_d10").attr("src","/style/cash/images/borrow21.png");
+			}
+		});
+		// 优惠券选取js
+		$(".details_ticket").each(function(index){
+			$(this).click(function(){
+				var total = $("#due_total").val();
+				var a = $(".gou:eq("+index+")").attr("src");
+				if(a == "/style/cash/images/borrow10.png"){
+					$(".gou").attr("src","/style/cash/images/borrow10.png");
+					$(".gou:eq("+index+")").attr("src","/style/cash/images/borrow1.png");
+					var tickMoney = $("#tickMoney").val();
+					var tickId	  = $("#tickId").val();
+					var amout     = Math.round((total-tickMoney)*100);
+					$("#total").html((amout/100)+'元');
+					$("#money").val(amout/100);
+					$("#coupon").val(tickMoney);
+					$("#selectTick").val(tickId);
+					var day = $("#day").val();
+					countTime(day);
+				}else{
+					$(".gou").attr("src","/style/cash/images/borrow10.png");
+					$("#total").html(total+'元');
+					$("#money").val(total);
+					$("#coupon").val(0);
+					$("#selectTick").val("");
+					var day = $("#day").val();
+					countTime(day);
+				}
+			})
+		});
+		function countTime(day){
+			 layer.open({type: 2,content:'加载中'});
+			 var fee = $("#all_fee").val();
+			 var time 		= $("#repayTime").val();
+			 var item_id 	= $("#item_id").val();
+			 var money 		= $("#baseMoney").val();
+			 var interest 	= {$info['interest']};
+			 var due_money 	= {$info['due_money']};
+			 var due_manage  = {$info['due_manage_money']};
+			 var tickMoney   = $("#coupon").val();
+			 $.ajax({
+			 	url:'/Repayment/countRepayTime',
+			 	type:'post',
+			 	data:'day='+day+"&money="+money+"&interest="+interest+"&due_money="+due_money+"&due_manage="+due_manage+"&tickMoney="+tickMoney+"&fee="+fee,
+			 	success:function(response){
+			 		var response = $.parseJSON(response);
+			 		var str = response.message;
+			 		var arr = str.split(',');
+			 		$("#date").html(arr[0]);
+			 		$("#realTotal").html(arr[1]);
+			 		layer.closeAll();
+			 	}
+			 })
+		}
+
+	})
+</script>
+</html>

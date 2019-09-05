@@ -1,0 +1,82 @@
+<include file="Pub:headerNew"/>  
+<style>
+	table {
+		width: 100%;
+	}
+	table td{
+		width: 25%;
+		border-right: 1px solid #000;
+		border-top: 1px solid #000;
+		text-align: center;
+		padding: 20px 0;
+	}
+	table tr > td:first-child{
+		border-left: 1px solid #000;
+	}
+	table tr:nth-child(2) > td{
+		border-bottom: 1px solid #000;
+	}
+</style>
+<body style="background:#fff;font-size:0.25rem;">
+	<div class="cash_view" style="background:#fff;">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="borrow_a_all">
+			<h3>关于借款人综合资金成本的警示书</h3>
+			<div>尊敬的借款人，您好！</div>	
+			<p>您本次借款的资金成本如下：</p>
+			<table style="" cellspacing="0">
+				<tr>
+					<td>利率</td>
+					<td>账户管理费<br/>(单位：元)</td>
+					<td>支付服务费<br/>(单位：元)</td>
+					<td>年化</td>
+				</tr>
+				<tr>
+					<td>{$item.rate}%</td>
+					<td>{$item.enabled_rate}</td>
+					<td>{$item.pay_fee}</td>
+					<td>{$year_rate}%</td>
+				</tr>
+			</table>
+			<p>您本次借款还需支付给第三方服务机构认证费【  {$item.created_fee}】元、贷后管理费【 {$item.feedai} 】元，风险保障金【 0.00  】如果将该等费用计入借款总成本，您本次借款的综合成本为【{$total}】%。</p>
+			<p>另外提醒您注意，如果借款发生逾期，逾期催收过程中还会发生诉讼费、财产保全费、执行费、律师代理费、仲裁费、差旅费、评估费、拍卖费、催收费等实现债权的费用，以上费用并未包含在以上综合成本之内。</p>
+			<p>借款有风险，举债请谨慎！</p>
+		</div>
+		<!-- 网页底部 -->
+		<include file="Pub:footerNew"/>
+	</div>
+</body>
+
+<script>  
+	$(function(){
+		var num = $("#bianhao").html();
+		$("#bianhao").html(addZero(num));
+		function addZero(num){
+			var num = num;
+			if(num > 0 && num < 10){
+				return "00"+num;
+			}else if(num >= 10 && num <100){
+				return "0"+num;
+			}else{
+				return num;
+			}
+		}
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = date.getMonth()+1;
+		var day = date.getDate();
+		$("#year").html(year);
+		$("#month").html(month);
+		$("#day").html(day);
+ 		//判断app
+ 		if(app()){
+ 			$("#fujian1").hide();
+ 			$("#fujian2").show();
+ 		}else{
+ 			$("#fujian1").show();
+ 			$("#fujian2").hide();
+ 		}
+	});
+</script>
+</html>

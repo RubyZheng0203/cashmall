@@ -1,0 +1,163 @@
+<include file="Pub:headerNew"/>
+<style>
+.sxR-top-left{
+	width:26%;
+	height:2.5rem;
+	margin:0.1rem 0 0 5%;
+	border-right:1px solid #f3f3f3;
+	float:left;
+}
+.sxR-top-left p{
+	text-align:center;
+	margin:0;
+}
+.sxR-top-left p:first-child{
+	font-size:0.5rem;
+	padding-top:0.5rem;
+	line-height:0.85rem;
+}
+.sxR-top-right{
+	width:60%;
+	float:left;
+	height:2.5rem;
+	margin:0.33rem 0 0 5%;
+}
+.sxR-top-right li{
+	line-height:0.4rem;
+	color:#333;
+	font-size:0.25rem;
+}
+.sxR-list{
+	width:100%;
+	height:0.8rem;
+	padding:0.2rem 0;
+	background:#fff;
+	margin:0 0 0.1rem 0;
+}
+.sxR-list dl{
+	float:left;
+	width:60%;
+	padding-left:0.2rem;
+	line-height:0.4rem;
+	color:#666;
+	margin:0;
+}
+.sxR-list dl dt{
+	padding-left:0.15rem;
+	color:#333;
+	font-size:0.27rem;
+	position:relative;
+}
+.sxR-list dl dt span{
+	display:block;
+	height:0.3rem;
+	border-left:0.05rem solid #1499de;
+	position:absolute;
+	left:0;
+	top:0.07rem;
+}
+.sxR-list dl dd{
+	font-size:0.25rem;
+	padding-left:0.2rem;
+	margin:0;
+}
+.sxR-list div{
+	display:table;
+	float:right;
+	padding-right:0.3rem;
+	line-height:0.8rem;
+	font-size:0.27rem;
+}
+.sxR-green{
+	color:#04910f;
+}
+</style>
+<body style="background:#f3f3f3;">
+	<div class="cash_view" style="background:#f3f3f3;">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div style="width:100%;height:2.7rem;background:#fff;margin:0 0 0.15rem 0;">
+			<div class="sxR-top-left">
+				<p class="sxR-green">{$info['rate']}%</p>
+				<p style="font-size:0.27rem;color:#333;">通过概率</p>
+			</div>
+			<ul class="sxR-top-right">
+				<li>{$info['real_name']}</li>
+				<li>手机号：{$info['iphone']}</li>
+				<li>身份证：{$info['id_card']}</li>
+				<li>生成时间：{$info['add_time']}</li>
+				<li>失效时间：{$info['dis_time']}</li>
+			</ul>
+		</div>
+		<div class="sxR-list">
+			<dl>
+				<dt><span>&nbsp;</span>手机号</dt>
+				<dd>行业不良信息检测</dd>
+			</dl>
+			<div class="sxR-green">未命中</div>
+		</div>
+		<div class="sxR-list">
+			<dl>
+				<dt><span>&nbsp;</span>身份证号</dt>
+				<dd>行业不良信息检测</dd>
+			</dl>
+			<div class="sxR-green">未命中</div>
+		</div>
+		<div class="sxR-list">
+			<dl>
+				<dt><span>&nbsp;</span>社交关系</dt>
+				<dd>社交关系检测</dd>
+			</dl>
+			<div class="sxR-green">未命中</div>
+		</div>
+		<div class="sxR-list">
+			<dl>
+				<dt><span>&nbsp;</span>多平台借款</dt>
+				<dd>共债指数检测</dd>
+			</dl>
+			<div class="sxR-green">未命中</div>
+		</div>
+		<div class="sxR-list">
+			<dl>
+				<dt><span>&nbsp;</span>法院失信风险</dt>
+				<dd>法院失信风险名单检测</dd>
+			</dl>
+			<div class="sxR-green">未命中</div>
+		</div>
+		<div class="sxR-list">
+			<dl>
+				<dt><span>&nbsp;</span>恶意贷款</dt>
+				<dd>恶意贷款风险检测</dd>
+			</dl>
+			<div class="sxR-green">未命中</div>
+		</div>
+		<include file="Pub:footerNew"/>
+	</div>
+</body>
+</html>
+</body>
+<script>
+$("#sub").click(function() {
+	var check = $("#shouquan_check").is(":checked");
+	if(!check){
+		layer.open({
+		    content: '请先同意相关协议'
+		    ,btn: '我知道了'
+		});
+		return false;
+	}else{
+		$.ajax({
+            url: "__URL__/authup",
+            type: "post",
+            dataType: "json",
+            success: function(data){
+            	if(data.status == 1){
+            		layer.closeAll();
+            		$("#cash_pop3").fadeIn();
+            	}
+            }
+        });
+	}
+}); 
+</script>
+</html>

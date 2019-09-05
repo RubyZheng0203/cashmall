@@ -1,0 +1,2 @@
+<?php
+return array ( 'BANK' => array ( 0 => array ( 'bank' => '招商银行', 'payee' => '福米互联网金融信息服务（上海）有限公司', 'account' => '121916873010301', 'address' => '招商银行上海天目支行', ), ), 'BANK_INFO' => '', 'IS_OPEN' => '1', ); ?>

@@ -1,0 +1,34 @@
+<style type="text/css">
+	.x_member_form{width:750px; overflow:hidden}
+	.x_member_form .form2{height:auto; overflow:auto;}
+	.x_member_form .form2 .lineD{overflow:hidden}
+	.x_member_form .form2 .lineD dt{width:150px; color:#9CB8CC; font-weight:bold}
+	.x_member_form .form2 .lineD dd{width:200px; float:left; margin-left:0px}
+	.x_member_form .form2 .lineD dd.xwidth{width:500px;}
+	.x_member_form .form2 .lineD dt.title{color:#F00}
+</style>
+<div class="so_main x_member_form">
+	<div class="page_tit">{$user}设备信息</div>
+	<div class="form2">
+		<div id="tab_1">
+			<dl class="lineD"><dt>事件：</dt><dd>{$evented}</dd></dl>
+			<dl class="lineD"><dt>猛犸设备号：</dt><dd>{$vo.maxent_id}</dd></dl>
+			<dl class="lineD"><dt>活动ID：</dt><dd>{$vo.campaign_id}</dd></dl>
+			<dl class="lineD"><dt>SessionID：</dt><dd style="width:400px">{$vo.session_id}</dd></dl>
+			<dl class="lineD"><dt>tick：</dt><dd>{$vo.tick_id}</dd></dl>
+			<dl class="lineD"><dt>IP：</dt><dd>{$vo.ip}</dd><dt>IP地址：</dt><dd>{$ipAddress}</dd></dl>
+			<dl class="lineD"><dt>系统：</dt><dd>{$vo.os}</dd></dl>
+			<dl class="lineD"><dt>设备类型：</dt><dd>{$vo.device}</dd></dl>
+			<dl class="lineD"><dt>浏览器属性：</dt><dd style="width:400px">{$vo.agent}</dd></dl>
+		</div>
+		<div class="page_btm">
+		  <input type="submit" class="btn_b" value="关闭" onclick="closeui();" />
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+function closeui(){
+	ui.box.close();
+}
+</script>
+<script type="text/javascript" src="__ROOT__/Style/A/js/adminbase.js"></script>

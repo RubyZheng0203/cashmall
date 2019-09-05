@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content="福米金融" name="keywords" />
+	<link href="favicon.ico" type="image/x-icon"/>
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Style/cash/css/style.css">
+	<title>现金猫</title>
+	<script type="text/javascript" src="__ROOT__/Style/cash/js/jquery-1.12.0.min.js"></script>
+	<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=kuxAUkRzHD3wzlDxCPQtY4IK&s=1"></script>
+</head>
+<body>
+	<div class="pc_top">
+		<div class="top_content">
+			<div class="top_left">logo</div>
+			<div class="top_right">
+				<ul>
+					<li><a href="#pc_content2">产品介绍</a></li>
+					<li><a href="#pc_content4">快速关注</a></li>
+					<li><a href="#pc_content3">业务流程</a></li>
+					<li><a href="#pc_content5">联系我们</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="pc_content2">
+		<div class="content2_content">
+			<div>
+				<div class="content2_title">我们的优势</div>
+				<div class="content2_line"></div>
+			</div>
+			<div>
+				<ul class="content_ul1">
+					<li>
+						<div><img src="/Style/cash/images/pc_img1.png" alt=""></div>
+						<div>快速</div>
+						<div>快速审批，极速到账</div>
+					</li>
+					<li>
+						<div><img src="/Style/cash/images/pc_img1.png" alt=""></div>
+						<div>低门槛</div>
+						<div>身份证+手机号码</div>
+					</li>
+					<li>
+						<div><img src="/Style/cash/images/pc_img1.png" alt=""></div>
+						<div>无抵押</div>
+						<div>无需抵押 无需担保</div>
+					</li>
+					<li>
+						<div><img src="/Style/cash/images/pc_img1.png" alt=""></div>
+						<div>隐私保护</div>
+						<div>高级别数据安保确保安全</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="pc_content3">
+		<div class="content2_content">
+			<div>
+				<div class="content2_title" style="color:#1dacfb;">借款流程</div>
+				<div class="content2_line" style="background:#1dacfb;"></div>
+			</div>
+			<div>
+				<ul class="content_ul2">
+					<li>
+						<div><img src="/Style/cash/images/pc_img1.png" alt=""></div>
+						<div>注册绑定</div>
+					</li>
+					<li>
+						<div><img src="/Style/cash/images/pc_img1.png" alt=""></div>
+						<div>借款页</div>
+					</li>
+					<li>
+						<div><img src="/Style/cash/images/pc_img1.png" alt=""></div>
+						<div>认证页</div>
+					</li>
+					<li>
+						<div><img src="/Style/cash/images/pc_img1.png" alt=""></div>
+						<div>审核放款</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="pc_content4" style="height:490px;">
+		<div class="content2_content">
+			<div>
+				<div class="content2_title">快速关注</div>
+				<div class="content2_line"></div>
+			</div>
+			<div style="text-align:center;margin-top:40px;">
+				<div><img src="/Style/cash/images/pc_img2.png" alt=""></div>
+				<div class="content4_text1">现在微信扫一扫，即刻关注现金猫微信公众号体验吧！</div>
+			</div>
+		</div>
+	</div>
+	<div id="pc_content5" style="background:#fff;">
+		<div class="content2_content">
+			<div>
+				<div class="content2_title" style="color:#1dacfa;">联系我们</div>
+				<div class="content2_line" style="background:#1dacfa;"></div>
+			</div>
+			<div class="content5_text2" style="margin-bottom:40px;">您的每一个疑问，我们都认真对待！</div>
+			<div class="clearfix">
+				<div class="content_left" style="float:left;">
+					<ul class="content5_ul1">
+						<li>
+							<div><img src="/style/cash/images/pc_img4.png" alt=""></div>
+							<div>客服：021-50818123</div>
+						</li>
+						<li>
+							<div><img src="/style/cash/images/pc_img4.png" alt=""></div>
+							<div>邮箱：service@fumi88.com</div>
+						</li>
+						<li>
+							<div><img src="/style/cash/images/pc_img4.png" alt=""></div>
+							<div>地址：上海市浦东南路379号金穗大厦8楼H座</div>
+							<div>沪ICP备15025008号-3 </div>
+						</li>
+					</ul>
+				</div>
+				<div style="width:349px;height:252px;border:#ccc solid 1px;margin-right:70px;float:right" id="map"></div>
+			</div>
+		</div>
+	</div>
+<script>
+ //创建和初始化地图函数：
+    function initMap(){
+      createMap();//创建地图
+      setMapEvent();//设置地图事件
+      addMapControl();//向地图添加控件
+      addMapOverlay();//向地图添加覆盖物
+    }
+    function createMap(){ 
+      map = new BMap.Map("map"); 
+      map.centerAndZoom(new BMap.Point(121.517032,31.245012),16);
+    }
+    function setMapEvent(){
+      map.enableScrollWheelZoom();
+      map.enableKeyboard();
+      map.enableDragging();
+      map.enableDoubleClickZoom()
+    }
+    function addClickHandler(target,window){
+      target.addEventListener("click",function(){
+        target.openInfoWindow(window);
+      });
+    }
+    function addMapOverlay(){
+      var markers = [
+        {content:"",title:"福米金融",imageOffset: {width:-46,height:-21},position:{lat:31.245612,lng:121.517032}}
+      ];
+      for(var index = 0; index < markers.length; index++ ){
+        var point = new BMap.Point(markers[index].position.lng,markers[index].position.lat);
+        var marker = new BMap.Marker(point,{icon:new BMap.Icon("http://api.map.baidu.com/lbsapi/createmap/images/icon.png",new BMap.Size(20,25),{
+          imageOffset: new BMap.Size(markers[index].imageOffset.width,markers[index].imageOffset.height)
+        })});
+        var label = new BMap.Label(markers[index].title,{offset: new BMap.Size(25,5)});
+        var opts = {
+          width: 200,
+          title: markers[index].title,
+          enableMessage: false
+        };
+        var infoWindow = new BMap.InfoWindow(markers[index].content,opts);
+        marker.setLabel(label);
+        addClickHandler(marker,infoWindow);
+        map.addOverlay(marker);
+      };
+      var labels = [
+      ];
+      for(var index = 0; index < labels.length; index++){
+        var opt = { position: new BMap.Point(labels[index].position.lng,labels[index].position.lat )};
+        var label = new BMap.Label(labels[index].content,opt);
+        map.addOverlay(label);
+      };
+    }
+    //向地图添加控件
+    function addMapControl(){
+      var scaleControl = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+      scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
+      map.addControl(scaleControl);
+      var navControl = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:1});
+      map.addControl(navControl);
+      var overviewControl = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:false});
+      map.addControl(overviewControl);
+    }
+    var map;
+      initMap();
+</script>
+</body>
+</html>

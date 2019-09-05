@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="renderer" content="ie-comp">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=yes" />
+	<meta name="format-detection" content="email=no" />
+	<meta content="现贷猫" name="keywords" />
+
+	<script src="http://cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>
+    <script src="__ROOT__/Style/layer/mobile/layer.js"></script>
+    <!-- 引用猛犸js -->
+    <script src="http://maxent-backet1.oss-cn-beijing.aliyuncs.com/js/mjsdk-1.4.3.min.js"></script>
+    
+	<link href="favicon.ico" type="image/x-icon"/> 
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Style/cash/css/style.css">
+	<title>现贷猫|通知</title>
+	<script type="text/javascript" src="__ROOT__/Style/cash/js/common.js"></script>
+	<script type="text/javascript" src="__ROOT__/Style/cash/js/jquery-1.12.0.min.js"></script>
+	<script type="text/javascript" src="__ROOT__/Style/apprise/apprise-v2.js"></script>
+	<script type="text/javascript" src="__ROOT__/Style/cash/js/ap.js"></script>
+	<script src="__ROOT__/Style/cash/js/jquery.selector-px.js"></script>
+	<script>
+	new function (){
+        var _self = this;
+        _self.width = 640;//设置默认最大宽度
+        _self.fontSize = 100;//默认字体大小
+        _self.widthProportion = function(){var p = document.getElementsByTagName("html")[0].offsetWidth/_self.width;return p>1?1:p<0.5?0.5:p;};
+        _self.changePage = function(){
+            document.getElementsByTagName("html")[0].setAttribute("style","font-size:"+_self.widthProportion()*_self.fontSize+"px !important");
+        };
+        _self.changePage();
+        window.addEventListener("resize",function(){_self.changePage();},false);
+	};
+	</script>
+	<!-- 百度统计 Start-->
+	 {:get_baidu()}
+	<!-- 百度统计 End-->
+	<!-- 白骑士JS Start -->
+	{:get_baiqishi_fir()}{:session_id()}{:get_baiqishi_sec()}
+	<!-- 白骑士JS  End-->
+	<!-- 同盾JS Start -->
+	{:get_tongdun_fir()}{:session_id()}{:get_tongdun_sec()}
+	<!-- 同盾JS  End-->
+	<style>
+		p,dl,dt,dd{
+			margin:0;
+		}
+		.zx-top{
+			height:0.88rem;
+			line-height:0.88rem;
+			background:#3a83d0;
+			color:#fff;
+			font-weight:bold;
+			font-size:0.21rem;
+			text-align:center;
+		}
+		.zx-top-txt{
+			width:5.5rem;
+			margin:22px auto 10px;
+		}
+		.zx-top-txt p{
+			font-size:0.22rem;
+			color:#323232;
+			line-height:0.4rem;
+			text-indent:0.46rem;
+			margin-bottom:0.18rem;
+		}
+		.zx-top-txt p span{
+			color:#3a83cf;
+		}
+		.zx-top-txt .zx-top-txt1{
+			color:#3a83cf;
+			font-weight:bold;
+			text-indent:0;
+		}
+		.btm-txt{
+			font-size:0.22rem;
+			color:#323232;
+			line-height:0.4rem;
+			margin-top:0.6rem;
+		}
+		.btm-txt span{
+			float:right;
+		}
+	</style>
+</head> 
+<body style="background:#fff;">
+	<div class="zx-top">关于上报“网贷行业惩戒失信借款人名单”通知</div>
+	<div class="zx-top-txt">
+		<p class="zx-top-txt1">致借款用户：</p>
+		<p>根据国家整治办下发的《关于进一步做好网贷行业失信惩戒工作的通知》（下文简称“通知”）要求，网贷平台须将符合<span>严重逾期等</span>条件的的<span>失信人名单</span>报送至有关部门，将其个人信息纳入<span>“信用中国”</span>数据库，对失信人进行信用惩戒。</p>
+		<p>本平台将<span>严格执行</span>国家有关通知的要求，于2018年10月25日之前完成相应名单上报工作。在此郑重提醒用户，如果您处于借款逾期中，请于<span>10月25日之前</span>在工作日联系本平台客服（客服电话：021-50818123或021-50818103）确认须偿还金额并及时处理逾期借款。否则后果自负！</p>
+		<p>请各位用户务必相互转告，以免对您及他人的个人信用造成不良影响！</p>
+		<p><span>你我共同努力，建设信用中国！</span></p>
+		<div class="btm-txt"><span>现贷猫运营团队</span></div>
+	</div>
+</body>
+<div class="cash_footer" style="padding:0.1rem 0 0.05rem 0; position: fixed;bottom:0;">
+	<div class="clearfix" style="overflow:hidden">
+		<div style="width:50%;float:left;">
+			<div style="width:50%;text-align:right;float:left;height:0.5rem;line-height:0.5rem;">客服电话：</div>
+			<div style="width:40%;float:left;height:0.5rem;font-size:0.2rem"><span>021-50818103</span><br/><span>021-50818123</span></div>
+		</div>
+		<div style="width:50%;float:left;height:0.5rem;line-height:0.5rem;">工作日：09:00-18:00</div>
+	</div>
+	<div style="margin-top:0rem">&copy;&nbsp;2018&nbsp;现贷猫&nbsp;All Rights Reserved</div>
+</div>
+</html>

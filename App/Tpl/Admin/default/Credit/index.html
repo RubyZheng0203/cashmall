@@ -1,0 +1,87 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+</script>
+<div class="so_main">
+	<div class="page_tit">授信通过率</div>
+	<!--搜索/筛选会员-->
+	<include file="search" />
+	<!--搜索/筛选会员-->
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+		<htmlA:commonBtn type="jsfun" action="addList()" value="添加 "/>
+	</div>
+	<div class="list">
+		<table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			    <th style="width:30px;">
+			        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+			        <label for="checkbox"></label>
+			    </th>
+			    <th class="line_l">ID</th>
+				<th class="line_l">分值From（大于等于）</th>
+				<th class="line_l">分值To（小于）</th>
+				<th class="line_l">通过率</th>
+			    <th class="line_l">操作</th>
+			</tr>
+			<volist id="vo" name="list">
+       		<tr overstyle='on' id="list_{$vo.id}">
+		        <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+		        <td>{$vo.id}</td>
+				<td>{$vo.score_from}</td>
+				<td>{$vo.score_to}</td>
+				<td>{$vo.rate}%</td>
+		        <td>
+					<if condition="$vo.status eq 0">
+						<a href="javascript:;" onclick="edit_id({$vo.id})">[编辑]</a>&nbsp;&nbsp; 
+						<a href="javascript:;" onclick="del_id({$vo.id})">[删除]</a>
+					</if>
+        		</td>
+       		</tr>
+			</volist>
+		</table>
+	</div>
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+  		<htmlA:commonBtn type="jsfun" action="add()" value="添加 "/>
+	</div>
+</div>
+<script type="text/javascript">
+	function showurl(url,Title){
+		ui.box.load(url, {title:Title});
+	}
+	
+    function addList()
+    {
+    	location.href="/admin/credit/add";
+        return true;
+    }
+    
+    function edit_id(id){
+    	location.href="/admin/credit/edit?id="+id;
+        return true;
+    }
+    
+    function del_id(id){
+    	if(confirm("确定要删除此条授信通过率记录？")){
+    		$.ajax({
+    			url:'__URL__/del',
+    			type:'post',
+    			data:'id='+id,
+    			success:function(response){
+    				var response=$.parseJSON(response);
+    				if(!response.status){
+    					alert("删除失败");
+    				}else{
+    					alert("删除成功");
+    	                location.href="__URL__/index";
+    	                
+    				}
+    			}
+    		})
+    	}
+    }
+	
+</script>
+<include file="Public:_footer" />

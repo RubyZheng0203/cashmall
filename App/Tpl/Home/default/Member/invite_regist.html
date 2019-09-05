@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="renderer" content="ie-comp">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=yes" />
+	<meta name="format-detection" content="email=no" />
+	
+	<meta content="现贷猫" name="keywords" />
+	<script type="text/javascript" src="__ROOT__/Style/cash/js/jquery-1.12.0.min.js"></script>
+    <script src="__ROOT__/Style/layer/mobile/layer.js"></script>
+    <!-- 引用猛犸js -->
+    <script src="https://maxent-backet1.oss-cn-beijing.aliyuncs.com/js/mjsdk-1.4.3.min.js"></script>
+     
+	<link href="favicon.ico" type="image/x-icon"/> 
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Style/cash/css/style.css">
+	<title>现贷猫|注册</title>
+	<script type="text/javascript" src="__ROOT__/Style/cash/js/common.js"></script>
+	<script type="text/javascript" src="__ROOT__/Style/cash/js/comment_activity.js"></script>
+	<script type="text/javascript" src="__ROOT__/Style/cash/js/jquery-1.12.0.min.js"></script>
+	<script type="text/javascript" src="__ROOT__/Style/apprise/apprise-v2.js"></script>
+	<script type="text/javascript" src="__ROOT__/Style/cash/js/ap.js"></script>
+	<script src="__ROOT__/Style/cash/js/jquery.selector-px.js"></script>
+	<script>
+	mj('set_params',{
+		url:'https://trk.mxtrk.com/jta/event',
+		tid:'5g0hau6ige6ndtwx6fg9a9gyxbhcgjg4'
+	});
+	function requestDevice(object){
+		console.log(object);
+		mj(object.event,{
+			"event_type" : object.eventType,
+			"tick": object.tick,
+			"fields" : {
+				"user_id": object.uid,
+			}
+		},function(status,data){
+			console.log(data);
+			if(status){
+				$.ajax({
+					url:'/Member/getMaxentId',
+					type:'post',
+					data:'tick='+object.tick+"&event="+object.eventNum+"&status="+object.status,
+					success:function(response){						
+					}
+				})
+			}
+		})
+	}
+	</script>
+	<!-- 百度统计 Start-->
+	 {:get_baidu()}
+	<!-- 百度统计 End-->
+	<!-- 白骑士JS Start -->
+	{:get_baiqishi_fir()}{:session_id()}{:get_baiqishi_sec()}
+	<!-- 白骑士JS  End-->
+	<!-- 同盾JS Start -->
+	{:get_tongdun_fir()}{:session_id()}{:get_tongdun_sec()}
+	<!-- 同盾JS  End-->
+<style>
+	.deng-wrap ul{
+    	display:table;
+    	margin: 0 auto;
+    }
+    .deng-wrap ul li{
+    	width:5rem;
+    	padding-bottom:0.2rem;
+    }
+    .inputs{
+    	width:4.6rem;
+    	padding:0 0 0 0.34rem;
+    	height:0.7rem;
+    	border: 1px solid #2876c8;
+    	border-radius:5px;
+    	font-size: 0.26rem;
+    	float:left;
+    }
+    .deng-huo{
+    	display:block;
+    	width:1.1rem;
+    	line-height:0.72rem;
+    	background:#2876c8;
+    	color:#fff;
+    	text-align:center;
+    	float:right;
+    	border-radius:5px;
+    	font-size: 0.26rem;
+    }
+</style>
+<body style="background:#fff;">
+	<div class="cash_view" style="background:#fff;">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<if condition="$user neq 1">
+		<div style="background:#fff;display:table;">
+			<img src="/style/cash/img/regist_img.png" alt="" style="width:100%;">
+			<div style="height:0.6rem;line-height:0.6rem;color: #999;text-align: center;font-size: 0.28rem;" id="inform"></div>
+		</div>
+		<div class="deng-wrap">
+			<form action="#">
+				<ul>
+					<li>
+						<div style="width:100%;display:table;"><input id="phone" class="inputs" type="tel" placeholder="请输入手机号码"></div>
+					</li>
+					<li>
+						<div style="width:100%;display:table;"><input id="verifyCode" class="inputs" type="tel" placeholder="请输入短信验证码" style="width:3.35rem;"><div class="deng-huo" id="js_btn1">获取</div></div>	
+					</li>
+					<li style="padding-bottom:0.1rem;">
+						<div style="width:100%;display:table;"><input id="recoCode" class="inputs" type="tel" placeholder="请输入邀请码（选填）" value="{$invite_code}"></div>
+					</li>
+				</ul>
+				<div class="sign_d1" style="background:#fff;margin-top:0.1rem;">
+					<span><input type="checkbox" checked="checked" id="txtPhone4"></span><span>我同意<a href="/index/webServiceTerms">《网站服务与征信授权条款》</a></span>
+				</div>
+				<div class="sign_d2" id="regist" style="width:5rem;height:0.7rem;line-height:0.7rem;margin-bottom:1rem;">
+					注册
+				</div>
+			</form>
+		</div>
+		<else/>
+		<script>document.title = "现贷猫|邀请";</script>
+		<div style="background:#fff;display:table;">
+			<img src="/style/cash/img/regist_fx.png" alt="" style="width:100%;">
+		</div>
+		</if>
+		<input type="hidden" id="tick" value=""/>
+		<input type="hidden" id="uid" value=""/>
+		<input type="hidden" id="userStatus" value=""/>
+		<include file="Pub:footerNew"/>
+	</div>
+	<script>
+		$(function(){			
+			//倒计时函数
+			function time(){
+				var timeNumber = 60;
+				$("#js_btn1").css("background","#ccc");
+				var timer = null;
+				clearInterval(timer);
+				timer = setInterval(function(){
+					$("#js_btn1").html(timeNumber+"s");
+					if(!timeNumber){ 
+						clearInterval(timer);
+						$("#js_btn1").css("background","#2777c8");
+						$("#js_btn1").html("获取");
+						$("#js_btn1").click(function(){
+							verify();
+						});
+					}
+					timeNumber--;
+				},1000);	
+			};
+			//验证码按钮验证函数
+			function verify(){
+				var phone = $.trim($("#phone").val());
+				var pat = /^1[3|4|5|7|8][0-9]\d{4,8}$/;//手机号码正则
+				if(phone == ""){
+					$("#inform").html("手机号码不能为空！");
+					return false;
+				}else if(!pat.test(phone)||phone.length<11){
+					$("#inform").html("手机号码填写有误！");
+					return false;
+				}else{
+					$("#js_btn1").unbind();
+					$.ajax({
+						url:'/Member/sendPhoneCode',
+						type:'post',
+						data:'phone='+phone,
+						success:function(response){
+							var response = $.parseJSON(response);
+							console.log(response);
+							if(response.status){
+								var arr = response.message.split(',');
+								$("#userStatus").val(arr[1]);
+								$("#inform").html("验证码已发送");
+								$("#phone").val(arr[0]);
+								time();
+							}else{
+								layer.open({
+								    content: response.message
+								    ,skin: 'msg'
+								    ,time: 2 //2秒后自动关闭
+								  });
+								$("#js_btn1").click(function(){
+									verify();
+								});
+							}
+						}
+					})										
+				}
+
+			};
+			function verify2(){
+				var phone = $.trim($("#phone").val());
+				var verifyCode = $.trim($("#verifyCode").val());
+				var recoCode = $.trim($("#recoCode").val());
+				var oBtn4 = $("#txtPhone4");
+				var oBtn5 = $("#txtPhone5");
+				var verifyCode = $("#verifyCode").val();
+				var pat = /^1[3|4|5|7|8][0-9]\d{4,8}$/;//手机号码正则
+				if(phone ==""){
+					$("#inform").html("手机号码不能为空！");
+					return false;
+				}else if(!pat.test(phone)){
+					$("#inform").html("手机号码填写有误！");
+					return false;
+				}else if(verifyCode == ""){
+					$("#inform").html("手机验证码不能为空！");
+					return false;
+				}else if(oBtn4.prop("checked") == false){
+					$("#inform").html("请点击阅读服务协议！");
+					return false;
+				}else{
+					var userStatus = $("#userStatus").val();
+					if(userStatus == 0){
+						layer.open({
+						    type: 2,
+						    shadeClose: false,
+						    content: '注册中'
+						  });
+						add(phone,verifyCode,recoCode);
+					}else{
+						layer.open({
+						    type: 2,
+						    shadeClose: false,
+						    content: '登录中'
+						  });
+						add(phone,verifyCode,recoCode);
+					}
+				}
+
+			}; 
+			$("#js_btn1").click(function(){
+				verify();
+			});
+			$("#regist").click(function(){
+				verify2();
+			})
+			
+			function add(phone,verifyCode,recoCode){
+				$.ajax({
+					url:'/Member/add_yquser',
+					type:'post',
+					data:'phone='+phone+"&verifyCode="+verifyCode+"&recoCode="+recoCode,
+					success:function(response){
+						var response = $.parseJSON(response);
+						//在此加不可点击事件
+						if(response.status){
+							var arr = response.message.split(',');
+							if(arr[2] == 'regist'){
+								var object = {
+										event : "customize_event",
+										eventType : "REGIST_EVENT",
+										eventNum : 1,
+										uid	: arr[1],
+										tick : arr[0],
+										status : response.status
+									}
+									requestDevice(object);
+								var ua = navigator.userAgent.toLowerCase(); 
+						    	if (/iphone|ipad|ipod/.test(ua)) {
+						    		window.location.href="invite_ios.html";
+						    	} else if (/android/.test(ua)) {
+						    		window.location.href="invite_android.html";
+						    	} 
+							}else{
+								var object2 = {
+										event : "customize_event",
+										eventType : "LOGIN_EVENT",
+										eventNum : 2,
+										uid	: arr[1],
+										tick : arr[0],
+										status : response.status
+									}
+									requestDevice(object2);
+								var ua = navigator.userAgent.toLowerCase(); 
+						    	if (/iphone|ipad|ipod/.test(ua)) {
+						    		window.location.href="invite_ios.html";
+						    	} else if (/android/.test(ua)) {
+						    		window.location.href="invite_android.html";
+						    	} 
+							}								
+							
+						}else{
+							layer.closeAll();
+							layer.open({
+							    content: response.message
+							    ,shadeClose: false,
+							    skin: 'msg'
+							    ,time: 2 //2秒后自动关闭
+							  });							
+						}
+					}
+				})
+			}
+			
+		})
+	</script>
+	<if condition="$flg neq 1">
+		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+	<else/>
+		<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+	</if>
+
+	
+	<script type="text/javascript">
+	    wx.config({
+	        debug: false, 
+	        appId: "{$signPackage.appId}",
+	        timestamp: "{$signPackage.timestamp}", 
+	        nonceStr: "{$signPackage.nonceStr}",
+	        signature: "{$signPackage.signature}",
+	        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'] 
+	    });
+	    wx.ready(function(){
+	        var img_url = encodeURI("{$signPackage.pic_url}");
+	        var link    = encodeURI("{$signPackage.url}");
+	        wx.onMenuShareTimeline({
+	            title: "{$signPackage.title}", 
+	            link: link, 
+	            imgUrl: img_url, 
+	            success: function () { 
+	                alert('已分享');
+	            },
+	            cancel: function () { 
+	                alert('太可惜了，没有分享给朋友');
+	            }
+	        });
+	
+	        wx.onMenuShareAppMessage({
+	            title: "{$signPackage.title}", 
+	            desc: "{$signPackage.description}", 
+	            link: link, 
+	            imgUrl: img_url, 
+	            type: '', 
+	            dataUrl: '', 
+	            success: function () { 
+	                 alert('已分享');
+	            },
+	            cancel: function () { 
+	                alert('重新找个好友分享一下吧');
+	            }
+	        });
+	    });
+	</script>
+</body>
+</html>

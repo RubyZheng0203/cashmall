@@ -1,0 +1,51 @@
+  <div id="search_div" style="display:none">
+  	<div class="page_tit"><script type="text/javascript">document.write(searchName);</script> [ <a href="javascript:void(0);" onclick="dosearch();">隐藏</a> ]</div>
+	<div class="form2">
+		<form method="get" action="__URL__/due">
+
+		    <dl class="lineD">
+		      <dt>借款会员编号：</dt>
+		      <dd>
+		      
+		        <input name="uid" style="width:190px" id="title" type="text" value="{$search.uid}">
+		        <span>不填则不限制</span>
+		      </dd>
+		    </dl>
+		    <dl class="lineD">
+		      <dt>借款会员真实姓名：</dt>
+		      <dd>
+		        <input name="realname" style="width:190px" id="title" type="text" value="{$search.realname}">
+		        <span>不填则不限制</span>
+		      </dd>
+		    </dl>
+		   <dl class="lineD">
+		      <dt>借款会员手机号码：</dt>
+		      <dd>
+		        <input name="iphone" style="width:190px" id="title" type="text" value="{$search.iphone}">
+		        <span>不填则不限制</span>
+		      </dd>
+		    </dl>
+		    
+		    <dl class="lineD">
+		      <dt>借款申请编号：</dt>
+		      <dd>
+		        <input name="borrowid" style="width:190px" id="title" type="text" value="{$search.borrowid}">
+		        <span>不填则不限制</span>
+		      </dd>
+		    </dl>
+		    
+			<dl class="lineD">
+		      <dt>查询时间提示：</dt>
+		      <dd>
+		        <span style="color:red;">开始时间和结束时间均不填，则查询当天00:00往后所有</span>
+		      </dd>
+		    </dl>
+			<dl class="lineD"><dt>应还时间(开始)：</dt><dd><htmlA:timer id="start_time" tip='只选开始时间则查询从开始时间往后所有' arg="{maxDate:'#F{$dp.$D(\\\\'end_time\\\\')||\\\\'2020-10-01\\\\'}',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true}"  class="Wdate" value="{$search.start_time|mydate='Y-m-d H:i:s',###}"/></dd></dl>
+			<dl class="lineD"><dt>应还日期(结束)：</dt><dd><htmlA:timer id="end_time" tip='只选结束时间则查询从结束时间往前所有' arg="{minDate:'#F{$dp.$D(\\\\'start_time\\\\')}',maxDate:'2020-10-01',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true}" class="Wdate" value="{$search.end_time|mydate='Y-m-d H:i:s',###}"/></dd></dl>
+
+		    <div class="page_btm">
+		      <input type="submit" class="btn_b" value="确定" />
+		    </div>
+		</form>
+  	</div>
+  </div>

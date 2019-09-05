@@ -1,0 +1,9 @@
+[ 2019-03-21T10:57:15+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-21 10:57:15 Use 0.001817 s
+Cron:cron_2 Runat 2019-03-21 10:57:15 Use -0.000016 s
+
+[ 2019-03-21T10:57:19+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-21 10:57:19 Use 0.001654 s
+
+[ 2019-03-21T13:57:40+08:00 ] /Android/savePhoneApp | ERR: Cron:cron_1 Runat 2019-03-21 13:57:40 Use 0.001838 s
+
+[ 2019-03-21T13:57:40+08:00 ] /Android/savePhoneContact | ERR: Cron:cron_1 Runat 2019-03-21 13:57:40 Use 0.001651 s
+

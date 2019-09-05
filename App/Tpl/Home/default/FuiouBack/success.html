@@ -1,0 +1,98 @@
+<include file="Pub:headerNew"/>
+<style>
+.suc-img{
+	width:1.2rem;
+	display:block;
+	margin:90px auto 16px;
+}
+.suc-con{
+	width:100%;
+	text-align:center;
+	font-size:16px;
+	color:#666;
+	line-height:30px;
+}
+.suc-text{
+	width: 6rem;
+    margin: 30px auto 0;
+    font-size: 14px;
+    line-height: 22px;
+}
+.suc-btn{
+	display:block;
+	width:6rem;
+	line-height:40px;
+	text-align:center;
+	font-size:16px;
+	color:#fff;
+	background:#2777c8;
+	margin:60px auto 0;
+	border-radius:4px;
+}
+.suc-btn1{
+	border:1px solid #2777c8;
+}
+.suc-btn2{
+	margin-top:20px;
+	background:#fff;
+	border:1px solid #2777c8;
+	color:#666;
+}
+</style>
+<body style="background:#fff;">
+	<div class="cash_view" style="background:#fff;">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="uncheck_main">
+			<img src="/style/cash/img/success.png" alt="" class="suc-img">
+			<p class="suc-con">
+			<if condition = "$type eq 1">
+				<span>开户成功!</span>
+			<elseif condition = "$type eq 2" />
+				<span>授权成功!</span>
+			<elseif condition = "$type eq 3" />
+				<span>提现成功!</span><br/>
+				<span>您在现贷猫的借款已成功汇到你的银行卡，具体到账时间以银行到账时间为准，如有疑问请联系客服。</span>
+			<elseif condition = "$type eq 4" />
+				<span>解绑成功!</span>
+			<elseif condition = "$type eq 5" />
+				<span>绑卡成功!</span>
+			</if>
+			</p>
+			<if condition = "$type eq 1">
+				<a href="" class="suc-btn" id="btn">完成</a>
+			<elseif condition = "$type eq 2" />
+				<a href="/Borrow/verifyUserStatus" class="suc-btn" id="btn">完成</a>
+			<elseif condition = "$type eq 3" />
+				<p class="suc-con suc-text"><span>您在现贷猫的借款已成功汇到你的银行卡，具体到账时间以银行到账时间为准，如有疑问请联系客服。</span></p>
+				<a href="/Repayment/index" class="suc-btn" id="btn" style="margin-top:15px;">完成</a>
+			<elseif condition = "$type eq 4" />
+				<a href="{$url}" class="suc-btn" id="btn">重新绑卡</a>
+			<elseif condition = "$type eq 5" />
+				<a href="/Member/index" class="suc-btn" id="btn">完成</a>
+			</if>
+		</div>
+		<if condition = "$type eq 1">
+			<input type="hidden" id="title_name" value="开户成功"/>
+		<elseif condition = "$type eq 2" />
+			<input type="hidden" id="title_name" value="授权成功"/>
+		<elseif condition = "$type eq 3" />
+			<input type="hidden" id="title_name" value="提现成功"/>
+		<elseif condition = "$type eq 4" />
+			<input type="hidden" id="title_name" value="解绑成功"/>
+		<elseif condition = "$type eq 5" />
+			<input type="hidden" id="title_name" value="绑卡成功"/>
+		</if>
+		<!-- 网页底部 -->
+		<include file="Pub:footerNew"/>
+	</div>
+</body>
+</html>
+</body>
+<script>
+$(function(){
+	var title_name = $("#title_name").val();
+	document.title = title_name;
+});
+</script>
+</html>

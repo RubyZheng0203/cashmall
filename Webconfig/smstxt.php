@@ -1,0 +1,2 @@
+<?php
+return array ( 'verify_phone' => '尊敬的客户，你在现贷猫申请的验证码#CODE#。', 'loan_success' => '尊敬的用户，您于#DATE#在现贷猫借款#MONEY#元已成功汇到您的银行卡。', 'repayment_before' => '尊敬的用户，您于#DATE#在现贷猫借款#MONEY#元，今天是还款日。我们将从您尾号#BANK#的#BANKNAME#银行卡上扣除#AMOUNT#元，请务必保证银行卡中余额充足，如扣款失败请前往主动还款，已还请忽略。 ', 'loan_ad' => '', 'due_seven' => '#NAME#您好，您于#DATE#在现贷猫借款#MONEY#元已逾 期7天，7天逾 期利息#DUEFEE#元，7天逾 期管理费#LATEFEE#元，今天您应还款#AMOUNT#元，请您尽快还款。', ); ?>

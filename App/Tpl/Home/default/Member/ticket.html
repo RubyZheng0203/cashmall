@@ -1,0 +1,104 @@
+<include file="Pub:headerNew"/>
+<body  style="background:#fff;">
+	<div class="cash_view" style="background:#fff;">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="member_main">
+			<div style="background:#f5f5f5;padding:0.2rem 0;">
+				<ul class="member_ul1" style="margin:0 auto;">
+					<li onclick="location.href='/Member/index'">个人资料</li>
+					<li onclick="location.href='/Member/borrow'">我的借款</li>
+					<li class="active">优惠券</li>
+				</ul>
+			</div>
+			<div class="ticket_d1 clearfix">
+				<div>可用优惠券</div>				
+			</div>
+			<!-- 还款优惠券 -->
+			<volist name="info2" id="vo2">
+				<div class="ticket_all1 active2 clearfix">
+					<div class="ticket_left">
+						<ul class="ticket_ul1">
+							<li>{$vo2['title']}</li>
+							<li class="li_ticket"><span class="ticket_fl1"><img src="/style/cash/images/ticket_yuan.png" alt=""></span><span>优惠券不可叠加使用</span></li>
+							<li class="li_ticket"><span class="ticket_fl1"><img src="/style/cash/images/ticket_yuan.png" alt=""></span><span class="ticket_fl1">有效期:{$vo2['end_time']|date="Y-m-d",###}</span></li>
+						</ul>
+					</div>
+					<div class="ticket_right">
+						<div><span class="ticket_number">{$vo2['money']}</span>元</div>
+						<div>优惠券</div>
+					</div>
+					<div class="ticket_yuan"></div>
+				</div>
+			</volist>
+			<!-- 续期优惠券 -->
+			<volist name="info1" id="vo1">
+				<div class="ticket_all1 clearfix">
+					<div class="ticket_left">
+						<ul class="ticket_ul1">
+							<li>{$vo1['title']}</li>
+							<li class="li_ticket"><span class="ticket_fl1"><img src="/style/cash/images/ticket_yuan.png" alt=""></span><span>优惠券不可叠加使用</span></li>
+							<li class="li_ticket"><span class="ticket_fl1"><img src="/style/cash/images/ticket_yuan.png" alt=""></span><span class="ticket_fl1">有效期:{$vo1['end_time']|date="Y-m-d",###}</span></li>
+						</ul>
+					</div>
+					<div class="ticket_right">
+						<div><span class="ticket_number">{$vo1['money']}</span>元</div>
+						<div>优惠券</div>
+					</div>
+					<div class="ticket_yuan"></div>
+				</div>
+			</volist>
+			<!-- 未激活还款优惠券 <-->
+			<if condition ="$count eq 0"> 
+				<if condition ="$flg eq 1">
+					<gt name ="money" value="0">
+						<div class="ticket_all1 clearfix unactive">
+							<div class="ticket_left">
+								<ul class="ticket_ul1">
+									<li>还款优惠券</li>
+							
+									<li class="li_ticket"><span class="ticket_fl1"><img src="/style/cash/images/ticket_yuan.png" alt=""></span><span>优惠券不可叠加使用</span></li>
+									<li class="li_ticket"><span class="ticket_fl1"><img src="/style/cash/images/ticket_yuan.png" alt=""></span><span class="ticket_fl1">未激活</span></li>
+								</ul>
+							</div>
+							<div class="ticket_right">
+								<div><span class="ticket_number">{$money}</span>元</div>
+								<div>优惠券</div>
+							</div>
+							<div class="ticket_yuan"></div>
+						</div>
+					</gt>
+				</if>
+			</if>
+			<!-- 过期优惠券 -->
+			<volist name="info3" id="vo3">
+				<div class="ticket_all1 clearfix unactive">
+					<div class="ticket_left">
+						<ul class="ticket_ul1">
+							<li>{$vo3['title']}</li>
+					
+							<li class="li_ticket"><span class="ticket_fl1"><img src="/style/cash/images/ticket_yuan.png" alt=""></span><span>优惠券不可叠加使用</span></li>
+							<li class="li_ticket"><span class="ticket_fl1"><img src="/style/cash/images/ticket_yuan.png" alt=""></span><span class="ticket_fl1">有效期:{$vo3['end_time']|date="Y-m-d",###}</span></li>
+						</ul>
+					</div>
+					<div class="ticket_right">
+						<div><span class="ticket_number">{$vo3['money']}</span>元</div>
+						<div>优惠券</div>
+					</div>
+					<div class="ticket_yuan"></div>
+				</div>
+			</volist>
+				 
+		</div>
+		<include file="Pub:footerNew"/>
+	</div>
+</body>
+<script>
+	$(function(){
+		$(".ticket_number").each(function(){
+			var str = $(this).html().split(".")[0];
+			$(this).html(str);
+		})
+	})
+</script>
+</html>

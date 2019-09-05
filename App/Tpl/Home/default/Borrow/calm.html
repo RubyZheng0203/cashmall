@@ -1,0 +1,86 @@
+<include file="Pub:headerNew"/>
+<body style="background:#fff;">
+	<div class="cash_view" style="background:#fff;">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div style="margin-top:1rem;width:80%;margin:100px auto;text-align:justify;text-indent:2em;">
+			恭喜您已签约成功；根据相关规定，“现贷猫”为您设置了<span style="color:#2777c8;">{$chill_time}小时</span>的冷静期，如确定借款请于“冷静期”结束后点击申请放款。
+		</div>
+		<div class="check_btn active" id="time"></div>
+		<!-- 网页底部 -->
+        
+		<input type="hidden" id="start" value="{$current_time}">
+        <input type="hidden" id="end" value="{$countDownTime}">
+        <input type="hidden" id="bid" value="{$bid}">
+
+		<include file="Pub:footerNew"/>
+	</div>
+    <!-- <div class="vip_d1">
+        <div class="vip_content">
+            <div class="vip_title"></div>
+            <div class="vip_main">恭喜您获得放款资质，推荐您加入<span style="color:#4c92ce">“优福会”</span>享受更多权益。入会后请于“冷静期”结束后点击“申请放款”</div>
+            <div class="vip_btn" id="ruhui">加入会员</div>
+            <div class="vip_btn" id="vip_btn2" style="background:#ccc">我已入会</div>
+        </div>
+    </div> -->
+  <script>
+    $("#vip_btn2").click(function(){
+        $(".vip_d1").hide();
+    });
+	var start = parseInt($("#start").val());
+    var bid = $("#bid").val();
+    function daojishi(start){
+    	var end   = parseInt($("#end").val());
+    	var time = end - start;
+    	var hour = parseInt(time / 3600);
+    	var fen = parseInt(time % 3600 / 60);
+    	var miao = parseInt(time % 3600 % 60 );
+    	if(hour <= 0 && fen<=0 && miao <= 0){
+    		clearInterval(timer);
+    		$("#time").html("我已冷静，申请放款").click(function(){
+                $.ajax({
+                    url:'/borrow/doCalm',
+                    type:'post',
+                    data:"bid="+bid,
+                    success:function(response){
+                        var response = $.parseJSON(response);
+                        console.log(response );
+                        if(response.status){
+                            layer.open({
+                                content: response.message,
+                                skin   : 'msg',
+                                time   : 2
+                            })
+                            window.location.href = "msgcheck";
+                        }else{
+                            layer.open({
+                                content: response.message,
+                                skin   : 'msg',
+                                time   : 2
+                            })
+                        }
+                    }
+                });
+    		});
+    		$("#ruhui").attr("onclick","window.location.href='https://mp.weixin.qq.com/s/uL_9rhXuLy5L0tWvwtBGsQ'");
+
+    	}else{
+    		$("#time").html(add(hour) + ":" + add(fen) +":" +add(miao));
+    	}
+    	
+    }
+	var timer = setInterval(function(){
+		start++;
+		daojishi(start);
+	},1000);
+    function add(num){
+    	if(num >= 10){
+    		return num;
+    	}else{
+    		return "0"+num;
+    	}
+    }
+  </script>
+</body>
+</script>
+</html>

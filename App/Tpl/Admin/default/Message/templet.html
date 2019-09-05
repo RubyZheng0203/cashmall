@@ -1,0 +1,45 @@
+<include file="Public:_header" />
+<tagLib name="htmlA" />
+<div class="so_main">
+	<div class="page_tit">通知信息模板管理</div>
+	<div class="page_tab"><span data="tab_2">短信模板</span></div>
+	<div class="form2">
+		<form method="post" action="__URL__/templetsave" onsubmit="return subcheck();" enctype="multipart/form-data">
+			<div id="tab_1">
+				<dl class="lineD"><dt>手机发送验证码：</dt><dd><htmlA:text id="sms[verify_phone]|de_xie=###" value="{$smsTxt.verify_phone}" tip="#CODE#表示验证码"/></dd></dl>
+			</div>
+			<div id="tab_1">
+				<dl class="lineD"><dt>打款成功：</dt><dd><htmlA:text id="sms[loan_success]|de_xie=###" value="{$smsTxt.loan_success}" tip="#DATE#表示借款日期，#MONEY#表示借款金额"/></dd></dl>
+			</div>
+			<div id="tab_1">
+				<dl class="lineD"><dt>还款当日提醒：</dt><dd><htmlA:text id="sms[repayment_before]|de_xie=###" value="{$smsTxt.repayment_before}" tip="#DATE#表示借款日期，#MONEY#表示借款金额，#BANK#绑定的银行卡后4位，#AMOUNT#扣款金额"/></dd></dl>
+			</div>
+			<div id="tab_1">
+				<dl class="lineD"><dt>借款失败推送：</dt><dd><htmlA:text id="sms[loan_ad]|de_xie=###" value="{$smsTxt.loan_ad}" tip=""/></dd></dl>
+			</div>
+			<!-- <div id="tab_1">
+				<dl class="lineD"><dt>还款成功：</dt><dd><htmlA:text id="sms[repayment_success]|de_xie=###" value="{$smsTxt.repayment_success}" tip="#MONEY#表示应还金额"/></dd></dl>
+			</div>
+			<div id="tab_1">
+				<dl class="lineD"><dt>逾期短信（一天）：</dt><dd><htmlA:text id="sms[due_one]|de_xie=###" value="{$smsTxt.due_one}" tip="#NAME#表示借款会员真实姓名，#MONEY#表示应还金额"/></dd></dl>
+			</div>
+			<div id="tab_1">
+				<dl class="lineD"><dt>逾期短信（三天）：</dt><dd><htmlA:text id="sms[due_three]|de_xie=###" value="{$smsTxt.due_three}" tip="#NAME#表示借款会员真实姓名，#DATE#表示借款日期，#MONEY#表示应还金额"/></dd></dl>
+			</div>-->
+			<div id="tab_1">
+				<dl class="lineD"><dt>逾期短信（七天）：</dt><dd><htmlA:text id="sms[due_seven]|de_xie=###" value="{$smsTxt.due_seven}" tip="#NAME#表示借款会员真实姓名，#DATE#表示借款日期，#MONEY#表示应还金额，#DUEFEE#表示逾期利息，#LATEFEE#表示逾期管理费，#AMOUNT#表示应还金额"/></dd></dl>
+			</div>
+			<!-- <div id="tab_1">
+				<dl class="lineD"><dt>逾期短信（十天）：</dt><dd><htmlA:text id="sms[due_ten]|de_xie=###" value="{$smsTxt.due_ten}" tip="#NAME#表示借款会员真实姓名，#DATE#表示借款日期，#MONEY#表示应还金额，#TEL1#表示亲属联络电话，#TEL2#表示朋友联络电话"/></dd></dl>
+			</div>
+			<div id="tab_1">
+				<dl class="lineD"><dt>逾期短信（一个月）：</dt><dd><htmlA:text id="sms[due_month]|de_xie=###" value="{$smsTxt.due_month}" tip="#NAME#表示借款会员真实姓名，#TEL#表示家人/朋友电话"/></dd></dl>
+			</div>-->
+			<div class="page_btm">
+			  <input type="submit" class="btn_b" value="确定" /><span style="color:#CCCCCC">(所有方式修改提交一次即可)</span>
+			  <div>#UserName#表示接受信息用户的用户名，是一个动态参数,如" #UserName#你好，恭喜您注册成功",那么用户'test'收到的信息就是 "test你好，恭喜您注册成功"</div>
+			</div>
+		</form>
+	</div>
+</div>
+<include file="Public:_footer" />

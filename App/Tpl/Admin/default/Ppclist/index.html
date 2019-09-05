@@ -1,0 +1,51 @@
+<include file="Public:_header" />
+<tagLib name="htmlA" />
+<style type="text/css">
+	.sel_fs{width:110px}
+</style>
+<link href="__ROOT__/Style/Swfupload/swfupload.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/handlers.js"></script>
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/swfupload.js"></script>
+
+<div class="so_main">
+	<div class="page_tit">拍拍信查询</div>
+	<div class="form2">
+		<div id="tab_5" >
+	        <dl class="lineD">
+	        	<dt>手机号码：</dt>
+	        	<dd>
+		        	<htmlA:input id="mobile" style="width:150px;"/>
+	        	</dd>
+	    
+	        	<dt>身份证号：</dt>
+	        	<dd>
+		        	<htmlA:input id="id_card" style="width:150px;"/>
+	        	</dd>
+	        	<dd>
+		        	<input type="button" onclick="dolist()" id="submit" value="查询" />&nbsp;&nbsp;&nbsp;
+	        	</dd>
+	        </dl>
+	    </div>
+		<div class="list">
+			<div id="searchList"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	function dolist(id){
+		$("#searchList").html("");
+		var mobile  = $("#mobile").val();
+		var id_card = $("#id_card").val();
+		if (mobile == "" && id_card == "") {
+			alert("请输入查询条件");
+			return false;
+		}
+		var data = {'mobile':mobile,'id_card':id_card};
+		$.post("__URL__/doppc", data, function(res){
+			console.log(res.message);
+			$("#searchList").html(res.message);
+		}, 'json');
+		
+	}
+</script>
+<include file="Public:_footer" />

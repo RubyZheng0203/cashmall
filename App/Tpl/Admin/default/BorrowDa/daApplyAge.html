@@ -1,0 +1,141 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+	var isSearchHidden = 1;
+	var searchName = "搜索/筛选会员";
+</script>
+<div class="so_main">
+	<div class="page_tit">申请金额统计</div>
+	<table id="area_list" width="100%" border="1" cellspacing="1" cellpadding="10" style="margin:0 auto;border-collapse: collapse;" class="new_table">
+		<thead>
+			<tr>
+			    <th class="line_l">&nbsp;</th>
+			    <th class="line_l">年龄</th>
+			    <th class="line_l">金额</th>
+			</tr>
+		</thead>
+		
+		<volist id="vm" name="countm">
+			<tr>
+				<td>当日申请金额</td>
+		        <td>{$vm.age}</td>
+		        <td>{$vm.money}</td>
+			</tr>
+		</volist>
+	 	<volist id="vm7" name="countm7">
+			<tr>
+				<td>7天累计申请金额</td>
+		        <td>{$vm7.age}</td>
+		        <td>{$vm7.money}</td>
+			</tr>
+		</volist>
+		<volist id="avgm7" name="avgm7">
+			<tr>
+				<td>7天日均申请金额</td>
+		        <td>{$avgm7.age}</td>
+		        <td>{$avgm7.money|getMoneyFormt=###}</td>
+			</tr>
+		</volist>
+		<volist id="vm30" name="countm30">
+			<tr>
+				<td>30天累计申请金额</td>
+		        <td>{$vm30.age}</td>
+		        <td>{$vm30.money}</td>
+			</tr>
+		</volist>
+		<volist id="avgm30" name="avgm30">
+			<tr>
+				<td>30天日均申请金额</td>
+		        <td>{$avgm30.age}</td>
+		        <td>{$avgm30.money|getMoneyFormt=###}</td>
+			</tr>
+		</volist>
+		<thead>
+			<tr>
+			    <th class="line_l">&nbsp;</th>
+			    <th class="line_l">年龄</th>
+			    <th class="line_l">次数</th>
+			</tr>
+		</thead>
+		<volist id="vc" name="countc">
+			<tr>
+				<td>当日申请笔数</td>
+		        <td>{$vc.age}</td>
+		        <td>{$vc.count}</td>
+			</tr>
+		</volist>
+	 	<volist id="vc7" name="countc7">
+			<tr>
+				<td>7天累计申请笔数</td>
+		        <td>{$vc7.age}</td>
+		        <td>{$vc7.count}</td>
+			</tr>
+		</volist>
+		<volist id="avgc7" name="avgc7">
+			<tr>
+				<td>7天日均申请笔数</td>
+		        <td>{$avgc7.age}</td>
+		        <td>{$avgc7.count|getMoneyFormt=###}</td>
+			</tr>
+		</volist>
+		<volist id="vc30" name="countc30">
+			<tr>
+				<td>30天累计申请笔数</td>
+		        <td>{$vc30.age}</td>
+		        <td>{$vc30.count}</td>
+			</tr>
+		</volist>
+		<volist id="avgc30" name="avgc30">
+			<tr>
+				<td>30天日均申请笔数</td>
+		        <td>{$avgc30.age}</td>
+		        <td>{$avgc30.count|getMoneyFormt=###}</td>
+			</tr>
+		</volist>
+		
+		<thead>
+			<tr>
+			    <th class="line_l">&nbsp;</th>
+			    <th class="line_l">年龄</th>
+			    <th class="line_l">金额</th>
+			</tr>
+		</thead>
+		<volist id="avgt" name="avgt">
+			<tr>
+				<td>当日平均每单金额</td>
+		        <td>{$avgt.age}</td>
+		        <td>{$avgt.money|getMoneyFormt=###}</td>
+			</tr>
+		</volist>
+	 	<volist id="avgt7" name="avgt7">
+			<tr>
+				<td>7天累计日均平均每单金额</td>
+		        <td>{$avgt7.age}</td>
+		        <td>{$avgt7.money|getMoneyFormt=###}</td>
+			</tr>
+		</volist>
+		<volist id="avga7" name="avga7">
+			<tr>
+				<td>7天日均平均每单金额</td>
+		        <td>{$avga7.age}<td>
+		        <td>{$avga7.money|getMoneyFormt=###}</td>
+			</tr>
+		</volist>
+		<volist id="avgt30" name="avgt30">
+			<tr>
+				<td>30天累计日均平均每单金额</td>
+		        <td>{$avgt30.age}</td>
+		        <td>{$avgt30.money|getMoneyFormt=###}</td>
+			</tr>
+		</volist>
+		<volist id="avga30" name="avga30">
+			<tr>
+				<td>30天日均平均每单金额</td>
+		        <td>{$avga30.age}</td>
+		        <td>{$avga30.money|getMoneyFormt=###}</td>
+			</tr>
+		</volist>
+	</table>
+</div>
+<include file="Public:_footer" />

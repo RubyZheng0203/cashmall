@@ -1,0 +1,41 @@
+<include file="Pub:headerNew"/>
+<body style="background:#fff;">
+	<div class="cash_view" style="background:#fff;">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="uncheck_main">
+			<div class="uncheck_d1"><img src="/style/cash/images/uncheckimg1.png" alt=""></div>
+			<div class="uncheck_d2 clearfix">
+				<div style="float:left;background:#fff;"><img src="/style/cash/images/gou_cha.png" alt="" style="display:block;width:0.4rem;"></div>
+				<div style="font-weight:bold;float:left;">您的审核未通过，原因：</div>
+			</div>
+			<div class="uncheck_d3" style="background: #fafafa;line-height: 0.9rem;color: #efa900;padding:0;text-align:center;">
+				评分不足
+			</div>
+			<a href="/member/currborrow" class="sign_d2" style="display:block;margin:0.4rem auto;">
+				<div><span id="time">5</span>s后自动返回首页</div>
+			</a>
+		</div>
+		<!-- 网页底部 -->
+		<include file="Pub:footerNew"/>
+	</div>
+</body>
+</html>
+</body>
+<script>
+function Url(){
+	window.location.href="/member/currborrow"; 
+}
+window.onload = function() {
+	var t = 5;
+	var timer = setInterval(function(){
+		t--;
+		$("#time").html(t);
+		if(t == 0){
+			clearInterval(timer);
+		}
+	},1000);
+	setTimeout('Url()',5000);
+}; 
+</script>
+</html>

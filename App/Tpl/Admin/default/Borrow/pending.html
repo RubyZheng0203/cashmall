@@ -1,0 +1,84 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+	var editUrl 		= '__URL__/appPending';
+	var editTitle 		= '处理放款结果';
+	var isSearchHidden  = 1;
+	var searchName 	    = "搜索/筛选会员";
+</script>
+<div class="so_main">
+	<div class="page_tit">待放款</div>
+	<!--搜索/筛选会员-->
+	<include file="searchp" />
+	<!--搜索/筛选会员-->
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选会员" style="search_action" />
+	</div>
+	<div class="list">
+		<table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			    <th style="width:30px;">
+			        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+			        <label for="checkbox"></label>
+			    </th>
+			    <th class="line_l">借款申请ID</th>
+				<th class="line_l">借款人手机</th>
+			    <th class="line_l">真实姓名</th>
+				<th class="line_l">借款金额（元）</th>
+				<th class="line_l">借款利息（元）</th>
+				<th class="line_l">借款期限</th>
+				<th class="line_l">申请日期</th>
+				<th class="line_l">状态</th>
+				<th class="line_l">失败原因</th>
+				<th class="line_l">发送福米推送</th>
+			    <th class="line_l">操作</th>
+			</tr>
+			<volist id="vo" name="list">
+       		<tr overstyle='on' id="list_{$vo.id}">
+		        <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+		        <td>{$vo.id}</td>
+		        <td><htmlA:user id="vo.uid" uname="vo.iphone" /></td>
+		        <td>{$vo.real_name|default="&nbsp;"}</td>
+				<td>{$vo.money}</td>
+				<td>{$vo.interest}</td>
+				<td>{$vo.duration}{$vo.type}</td>
+		        <td><if condition="$vo.add_time neq 0">{$vo.add_time|date="Y-m-d H:i",###}</if></td>
+		        <td>{$vo.sina}</td>
+		        <td>{$vo.loan_error}</td>
+				<td><input type="checkbox" class="checked1"></td>
+		        <td>
+					<a href="javascript:" class="btn" data-id="{$vo.id}" >[放款审核]</a>&nbsp;&nbsp;
+					<!-- <a href="javascript:;" onclick="showurl('__URL__/cancle?id={$vo['id']}&type=1','取消');">[取消]</a>&nbsp;&nbsp; -->
+        		</td>
+       		</tr>
+			</volist>
+		</table>
+	</div>
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+  		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选会员" style="search_action" />
+	</div>
+</div>
+<script type="text/javascript">
+	function showurl(url,Title){
+		ui.box.load(url, {title:Title});
+	}
+	$(".btn").each(function(index){
+
+		$(this).click(function(){
+
+			var id = $(this).data("id");
+			var checkbox = $(".checked1").eq(index).attr("checked");
+			if(checkbox){
+				var url = "?id="+id+"&status=1";
+				edit(url);
+			}else{
+				var url = "?id="+id+"&status=0";
+				edit(url);
+			}
+		});
+	});
+</script>
+<include file="Public:_footer" />

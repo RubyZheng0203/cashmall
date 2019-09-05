@@ -1,0 +1,103 @@
+<include file="Public:_header"/>
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA"/>
+<div class="so_main">
+    <div class="page_tit">芝麻分列表</div>
+    <br/>
+    <!--搜索/筛选-->
+    <div class="form2">
+        <form method="post" action="__URL__/index">
+            <!--<if condition="$search.customer_id gt 0"><input type="hidden" name="customer_id" value="{$search.customer_id}" /></if>-->
+            <dl class="lineD">
+                <dd>
+                    请选择查询类别:
+                    <td><input type="radio" name="type1" value="1"
+                        <if condition="$search.type1 eq 1">checked</if>
+                        >会员UID
+                    </td>
+                    <td><input type="radio" name="type1" value="2"
+                        <if condition="$search.type1 eq 2">checked</if>
+                        >手机号
+                    </td>
+                    <td><input type="radio" name="type1" value="3"
+                        <if condition="$search.type1 eq 3">checked</if>
+                        >身份证号
+                    </td>
+                </dd>
+                </dd>
+
+            </dl>
+            <dl class="lineD">
+                <dt style="margin-left:83px;">请输入内容：</dt>
+                <dd>
+                    <input name="uid_card" id="uid_card" type="text" value="{$search.uid_card}">
+                </dd>
+            </dl>
+            <div class="page_btm">
+                <input type="submit" class="faminform_btn1" id="submit" value="查询">
+                <!-- <div id = "submit">确定</div>-->
+            </div>
+        </form>
+    </div>
+    <!--搜索/筛选-->
+    <!--<div class="Toolbar_inbox">
+        <div class="page right">{$pagebar}</div>
+    </div>-->
+
+        <div class="list">
+        <table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th class="line_l">ID</th>
+                <th class="line_l">会员UID</th>
+                <th class="line_l">芝麻分分数</th>
+                <th class="line_l">芝麻分时间</th>
+            </tr>
+            <volist id="vo" name="list">
+            <tr overstyle='on' id="list_{$vo.id}">
+                <td><input type="checkbox" value="{$vo.id}" id="checkbox_{$vo.id}" name="checkbox"
+                           onclick="checkon(this)"></td>
+                <td>{$vo.id}</td>
+                <td>
+                    <htmlA:user id="vo.uid" uname="vo.uid"/>
+                </td>
+                <td>{$vo.score}</td>
+                <td>
+                    <if condition="$vo.score_time eq 0">
+                        空
+                        <else/>
+                        {$vo.score_time|date="Y-m-d H:i:s",###}
+                    </if>
+
+                </td>
+            </tr>
+            </volist>
+        </table>
+    </div>
+    <!--<div class="Toolbar_inbox">
+        <div class="page right">{$pagebar}</div>
+    </div>-->
+
+</div>
+<script type="text/javascript">
+    function showurl(url, Title) {
+        ui.box.load(url, {title: Title});
+    }
+    $("#submit").click(function(){
+        var uid = $('input:radio[name="type1"]:checked').val();
+        var uid_card = $("#uid_card").val();
+        if(uid == undefined){
+           alert("请选择查询类别");
+            return false;
+        }
+        if(uid_card == ''){
+            alert("请输入内容");
+            return false;
+        }
+    })
+</script>
+
+<include file="Public:_footer"/>

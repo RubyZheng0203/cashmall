@@ -1,0 +1,21 @@
+[ 2019-04-02T17:27:14+08:00 ] / | ERR: Cron:cron_1 Runat 2019-04-02 17:27:14 Use 0.002056 s
+Cron:cron_2 Runat 2019-04-02 17:27:14 Use -0.000017 s
+
+[ 2019-04-02T17:27:24+08:00 ] /test/kkk | ERR: Cron:cron_1 Runat 2019-04-02 17:27:24 Use 0.000979 s
+
+[ 2019-04-02T17:27:53+08:00 ] /test/kkk | ERR: Cron:cron_1 Runat 2019-04-02 17:27:53 Use 0.000942 s
+
+[ 2019-04-02T17:28:27+08:00 ] /test/kkk | ERR: Cron:cron_1 Runat 2019-04-02 17:28:27 Use 0.001078 s
+
+[ 2019-04-02T17:29:01+08:00 ] /test/kkk | ERR: Cron:cron_1 Runat 2019-04-02 17:29:01 Use 0.000923 s
+
+[ 2019-04-02T17:30:51+08:00 ] /test/kkk | ERR: Cron:cron_1 Runat 2019-04-02 17:30:51 Use 0.001029 s
+
+[ 2019-04-02T17:31:28+08:00 ] /test/kkk | ERR: Cron:cron_1 Runat 2019-04-02 17:31:28 Use 0.000972 s
+
+[ 2019-04-02T17:32:11+08:00 ] /test/kkk | ERR: Cron:cron_1 Runat 2019-04-02 17:32:11 Use 0.000919 s
+
+[ 2019-04-02T17:32:15+08:00 ] /test/kkk | ERR: Cron:cron_1 Runat 2019-04-02 17:32:15 Use 0.000961 s
+
+[ 2019-04-02T17:34:53+08:00 ] /test/kkk | ERR: Cron:cron_1 Runat 2019-04-02 17:34:53 Use 0.000910 s
+

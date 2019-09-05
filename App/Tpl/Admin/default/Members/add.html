@@ -1,0 +1,88 @@
+<include file="../Public/_header" />
+<div class="so_main">
+    <div class="page_tit">添加会员</div>
+    <div id="searchUser_div" style="">
+        <div class="form2">
+                <dl class="lineD">
+                    <dt>手机号：</dt>
+                    <dd>
+                        <input name="mobile" class="input" id="mobile" type="text" value="">
+                        <span></span>
+                    </dd>
+                </dl>
+
+            <dl class="lineD">
+                <dt>密码：</dt>
+                <dd>
+                    <input name="password" class="input" id="password" type="password" value="">
+                    <span></span>
+                </dd>
+            </dl>
+
+                <dl class="lineD">
+                    <dt>会员类型：</dt>
+                    <dd>
+	<input name="select-type" type="radio" value="1"> 个人会员
+	<input name="select-type" type="radio" value="2"> 企业会员
+                    </dd>
+                </dl>
+
+                <div class="page_btm">
+                    <input type="button" class="btn_b" id="showwait" onclick="addMember();" value="添加" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<script>
+    function validataDate()
+    {
+        if ( $("#mobile").val() == "" ) {
+            alert("请输入手机号");
+            return false;
+        }
+
+        if ($("#password").val() == "") {
+            alert("请输入密码");
+            return false;
+        }
+
+        var val=$('input:radio[name="select-type"]:checked').val();
+        if ( val == null ) {
+            alert("请选择会员类型");
+            return false;
+        }
+        return true;
+    }
+
+    function addMember()
+    {
+        if ( !validataDate() ) {
+            return false;
+        }
+
+        var mobile =  $("#mobile").val();
+        var type = $('input:radio[name="select-type"]:checked').val();
+        var password = $("#password").val();
+
+        var data = {
+            mobile : mobile,
+            type:type,
+            password:password
+        };
+
+        $.post("__URL__/doAdd", data, function(res){
+            if ( res.status !=1 ) {
+                alert(res.message);
+                return false;
+            }
+            alert("添加成功");
+            location.href="/admin/members/index";
+            return false;
+        }, 'json');
+        return true;
+    }
+</script>
+
+<include file="Public:_footer" />

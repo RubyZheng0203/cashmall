@@ -1,0 +1,84 @@
+<include file="Public:_header" />
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA" />
+<script type="text/javascript">
+	var isSearchHidden = 1;
+	var searchName = "搜索/筛选";
+</script>
+<div class="so_main">
+	<div class="page_tit">已上标的</div>
+	<!--搜索/筛选会员-->
+	<include file="searchup" />
+	<!--搜索/筛选会员-->
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />
+	</div>
+	<div class="list">
+		<table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			    <th style="width:30px;">
+			        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+			        <label for="checkbox"></label>
+			    </th>
+			    <th class="line_l">借款申请ID</th>
+				<th class="line_l">借款人编号</th>
+				<th class="line_l">借款人手机号</th>
+				<th class="line_l">借款人姓名</th>
+				<th class="line_l">借款金额（元）</th>
+				<th class="line_l">借款利息（元）</th>
+				<th class="line_l">借款期限</th>
+				<th class="line_l">福米上标ID</th>
+				<th class="line_l">是否满标</th>
+				<th class="line_l">是否续期</th>
+				<th class="line_l">放款日期</th>
+			</tr>
+			<volist id="vo" name="list">
+       		<tr overstyle='on' id="list_{$vo.id}">
+		        <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+		        <td>{$vo.id}</td>
+		        <td><htmlA:user id="vo.uid" uname="vo.uid" /></td>
+		        <td>{$vo.iphone}</td>
+			    <td>{$vo.real_name}</td>
+				<td>{$vo.money}</td>
+				<td>{$vo.interest}</td>
+				<td>{$vo.duration}{$vo.type}</td>
+				<td>{$vo.up_bid}</td>
+				<td><if condition="$vo.is_full eq 1 ">是<else/>否</if></td>
+				<td><if condition="$vo.renewal_id gt 0 ">是<else/>否</if></td></td>
+				<td>
+					<if condition="$vo.len_time gt 0">{$vo.len_time|date="Y-m-d H:i",###}
+					<else/>等待放款 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" onclick="loan({$vo.up_bid})">[放款]</a>
+					</if>
+				</td>
+       		</tr>
+			</volist>
+		</table>
+	</div>
+	<div class="Toolbar_inbox">
+		<div class="page right">{$pagebar}</div>
+  		<htmlA:commonBtn type="jsfun" action="dosearch();" value="搜索/筛选" style="search_action" />
+	</div>
+</div>
+<script type="text/javascript">
+	function showurl(url,Title){
+		ui.box.load(url, {title:Title});
+	}
+	
+	function loan(bid){
+		$.ajax({
+			url: "https://www.cashmall.com.cn/fumibid/bidLine",
+			data: {"bid":bid},
+			type: "post",
+			dataType: "json",
+			success: function (d, s, r) {
+				alert("处理中，请稍等！！！！");
+				setTimeout(function(){
+					location.href="__URL__/upList";
+  			   	},2000);
+			}
+		});
+		
+	}
+</script>
+<include file="Public:_footer" />

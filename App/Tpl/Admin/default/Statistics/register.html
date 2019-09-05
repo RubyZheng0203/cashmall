@@ -1,0 +1,112 @@
+<include file="Public:_header"/>
+<script type="text/javascript" src="__ROOT__/Style/My97DatePicker/WdatePicker.js" language="javascript"></script>
+<tagLib name="htmlA"/>
+<script type="text/javascript">
+    var delUrl = '__URL__/doDel';
+    var addUrl = '__URL__/add';
+    var editUrl = '__URL__/edit';
+    var editTitle = '修改会员类型';
+    var isSearchHidden = 1;
+    var searchName = "搜索/筛选会员";
+</script>
+<div class="so_main">
+    <div class="page_tit">统计</div>
+    <!--搜索/筛选会员-->
+    <div id="search_div" style="display:block">
+        <div class="form2">
+            <form method="get" action="__URL__/register">
+                <!--<if condition="$search.customer_id gt 0"><input type="hidden" name="customer_id" value="{$search.customer_id}" /></if>-->
+                <dl class="lineD">
+                    <dt>注册时间(开始)：</dt>
+                    <dd>
+                        <htmlA:timer id="start_time" tip='只选开始时间则查询从开始时间往后所有'
+                                     arg="{maxDate:'#F{$dp.$D(\\\\'end_time\\\\')||\\\\'2020-10-01\\\\'}',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true}"
+                                     class="Wdate" value="{$search.start_time|mydate='Y-m-d H:i:s',###}"/>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>注册时间(结束)：</dt>
+                    <dd>
+                        <htmlA:timer id="end_time" tip='只选结束时间则查询从结束时间往前所有'
+                                     arg="{minDate:'#F{$dp.$D(\\\\'start_time\\\\')}',maxDate:'2020-10-01',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true}"
+                                     class="Wdate" value="{$search.end_time|mydate='Y-m-d H:i:s',###}"/>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dd>
+                        请勾选类别:
+                        <td><input type="radio" name="category1" id="register" value="1">注册人数</td>
+                        <td><input type="radio" name="category1" id="sex" value="2">性别</td>
+                        <td><input type="radio" name="category1" id="age" value="3">年龄</td>
+                        <td><input type="radio" name="category1" id="register_address" value="4">注册地</td>
+                        <td><input type="radio" name="category1" id="education" value="5">学历</td>
+                        <td><input type="radio" name="category1" id="year_income" value="6">年收入</td>
+                        <td><input type="radio" name="category1" id="bank_bing" value="7">银行卡绑定</td>
+                        <td><input type="radio" name="category1" id="id_verify" value="8">实名认证</td> 
+                    </dd>
+
+                </dl>
+                <div class="page_btm">
+                    <input type="button" class="faminform_btn1" id="submit" value="确定">
+                    <!-- <div id = "submit">确定</div>-->
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--搜索/筛选会员-->
+    <div class="list">
+        <div class="-list">
+            <table id="area_list" width="100%" border="1" cellspacing="1" cellpadding="10"
+                   style="border-collapse: collapse;" class="new_table2">
+                
+                
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    /*function showurl(url,Title){
+     ui.box.load(url, {title:Title});
+     }*/
+    var arr3 = ["", "注册人数", "性别", "年龄", "注册地", "学历", "收入", "银行卡绑定", "实名认证"];
+    $("#submit").click(function () {
+        var start_time = $("#start_time").val();
+        var end_time = $("#end_time").val();
+        var category1 = $("input[type='radio']:checked").val();
+        var str = "<tr><th>" + arr3[category1] + "</th><th>人数</th></tr>";
+        if (start_time == '' && end_time == '') {
+            alert('请选择一个时间');
+            return false;
+        }
+        if (category1 == undefined) {
+            alert('请选择一种类别');
+            return false;
+        }
+        $.ajax({
+            url: '/Admin/Statistics/register',
+            type: 'post',
+            data: "category1=" + category1 + "&start_time=" + start_time + "&end_time=" + end_time,
+            success: function (response) {
+                var response = eval('(' + response + ')');
+                $("#area_list").html(str);
+                // return false;
+                var arr = eval('(' + response.message + ')');
+                for(var i = 0 ; i < arr.length ; i++){
+                    var str1 = "<tr>";
+                    var str2 = "</tr>";
+                    var str3 = "";
+                    for(var key in arr[i]){
+                        var name = arr[i][key];
+                        name == null ? name = "未知" : name;
+                        str3 ="<td>"+name+"</td>" +  str3;
+                    }
+                    var str4 = str1 + str3 +str2;
+                    $("#area_list").append(str4);
+
+                }
+
+            }
+        });
+    })
+</script>
+<include file="Public:_footer"/>

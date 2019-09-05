@@ -1,0 +1,332 @@
+<include file="Pub:headerNew"/>
+<link rel="stylesheet" href="/Style/cash/css/animate.min.css">
+<script>
+	//banner
+	$(function(){
+		var ban_con = "";
+		$.ajax({
+			url:'/member/banner',
+			data: "",
+			timeout: 5000,
+			cache: false,
+			type: "get",
+			dataType: "json",
+			success: function (json) { 
+				if(json.code == 200){
+					var da = json.result.content;
+					if(da){
+						for(var i in da){
+						    if(da[i].url == ""){
+						    	ban_con = `<div class="swiper-slide"><img  width="100%" src="${da[i].img}" /></div>`;
+						    }else{
+						    	ban_con = `<div class="swiper-slide"><a href="${da[i].url}"><img  width="100%" src="${da[i].img}" /></a></div>`;
+						    }
+							$("#ban-con").append(ban_con);
+						}
+					}
+				}
+				var mySwiper = new Swiper('#banner', {
+					pagination : '.swiper-pagination',
+					autoplay: 5000,
+					loop : true,
+					autoplayDisableOnInteraction : false,
+					//observer:true,//修改swiper自己或子元素时，自动初始化swiper
+			    	//observeParents:true//修改swiper的父元素时，自动初始化swiper
+				});
+			}
+		});
+		
+	});
+	
+</script>
+<body>
+	<div class="cash_view">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="cash_borrow">
+			<div class="swiper-container" id="banner">
+			  <div class="swiper-wrapper" id="ban-con">
+			  
+			  </div>
+			  <div class="swiper-pagination" style="bottom:0"></div>
+			</div>
+			<div class="borrow_d2">
+				<p>请选择借款金额/时间</p>
+			</div>
+			<div class="borrow_d3">
+				<div class="borrow_d3_content"> 
+					<ul class="borrow_ul2 clearfix">
+					<volist name="moneyInfo" id="vo" key='i'>
+						<li class="money1 <if condition='$i eq 1'>active</if>" data-money="{$vo['money']}">{$vo['money']}元</li>
+					</volist>	
+					
+					<volist name="dateInfo" id="vo">
+						<li class="day1 <if condition='$i eq 1'>active</if>" data-day="{$vo['duration']}">{$vo['duration']}天</li>
+					</volist>	
+					</ul>
+					<!-- <div>
+						有可用优惠券
+						<div>
+							<div class="borrow_d3_title ticket_btn">
+								<span><img src="/style/cash/images/borrow3.png" alt=""></span>
+								<span>选择可用优惠券</span>
+								<span><img id="borrow_d10" src="/style/cash/images/borrow21.png" alt=""></span>
+							</div>
+							<ul class="borrow_ul5" style="display:none">
+							<volist name="ticket" id="vo">
+								<li data-money="{$vo['money']}" data-id="{$vo['id']}">
+									<span><img class="gou" src="/style/cash/images/borrow10.png" alt=""></span>
+									<span>减去{$vo['money']}元&nbsp;&nbsp;{$vo['end_time']|date='Y-m-d',###}到期</span>
+								</li>
+							</volist>								
+							</ul>
+						</div>
+						无可用优惠券
+						<div>
+							<span>无可用优惠券</span>
+						</div>
+					</div> -->
+					
+					<div class="shuzi">
+						<ul class="borrow_ul3 clearfix">
+							<li id="createAccount">认证费：<span id="createMoney"></span>元</li>
+							<li>账户管理费：<span id="usedMoney"></span>元</li>
+							<li>贷后管理费：<span id="checkCost"></span>元</li>
+							<li>利息：<span id="interest">0</span>元</li>
+							<li>支付服务费：<span id="technology">0</span>元</li>
+							<!-- <li>优惠券：<span id="useTicket">0</span>元</li> -->
+						</ul>
+						<div class="borrow_ul3_num clearfix">
+							<div style="width:70%;text-align:left;">
+								<span>到期应还：</span>
+								<span class="color_ff6633"><span id="total"></span>元</span>
+							</div>
+							<div style="width:30%;"><span class="borrow_f1">费用说明</span></div>
+							
+							<input type="hidden" id="countTotal" value=""/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="sign_d1" style="background:#f5f5f5;">
+				<span><input type="checkbox"  id="txtPhone4"></span><span >我已阅读<span style="text-decoration:underline" id='borrow_d3_btn2'>《重要提示》</span></span>
+			</div>
+			<div class="borrow_d3_btn" onclick="next();">下一步</div>
+			<input type="hidden" id="str" value=""/>
+			<input type="hidden" id="tick" value="{$tick}"/>
+			<input type="hidden" id="tickIn" value="{$tickIn}"/>
+			<input type="hidden" id="uid" value="{$_SESSION['uid']}"/>
+			<input type="hidden" id="type" value="{$type}"/>
+		</div>
+		<!-- 网页底部 -->
+		<include file="Pub:footerNew"/>
+		<div class="cash_pop" id="cash_pop2" style="display:none">
+			<div class="cash_bg"></div>
+			<div class="sign_pop_content7 animated bounceInUp" style="height:4.5rem;">
+				<div class="delay_bank_title">费用说明</div>
+				<div class="delay_bank_c1">账户管理费由平台收取；利息由投资人收取；支付服务费由平台代收代付。</div>
+				<div class="pop_sign_btn">我知道了</div>
+			</div>
+		</div>
+		<div class="cash_pop" id="cash_pop3" style="display:none;"> 
+			<div class="cash_bg"></div>
+			<div class="sign_pop_content7" style="height:3rem;">
+				<div class="delay_bank_title">
+					<div>您的借款已被拒绝</div>
+					<div style="margin-top:0.08rem;">请于<span id="day"></span>天后再试</div>
+				</div>
+				<!-- <div class="delay_bank_c1">根据您的申请条件为您推荐现贷猫认证的借款平台</div> -->
+				<div class="pop_sign_btn" id="cashpop3_close" style="width: 2rem;color: #fff;text-align: center;margin-top:0.45rem;">确定</div>
+			</div>
+		</div>
+		<div class="cash_pop" id="cash_pop4" style="display:none">
+			<div class="cash_bg"></div>
+			<div class="sign_pop_content7 animated bounceInUp" style="height:6.4rem;top:40%;">
+				<div class="delay_bank_title">重要提示</div>
+				<div class="delay_bank_c1">1、禁止学生申请借款<br/>2、禁止无还款来源或不具备还款能力的借款<br/>3、禁止多头借贷、以贷养贷、过度借贷<br/>4、借款不得用于 “首付贷”、房地产场外配资等<br/>5、借款不得用于股票、期货等投机经营<br/>6、理性借款 不要过度负债</div>
+				<div class="pop_sign_btn">我知道了</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(function(){
+			$(".cash_bg").click(function(){
+				$(".cash_pop").hide();
+			});
+			$("#cashpop3_close").click(function(){
+				$("#cash_pop3").hide();
+			});
+			var url = location.href;
+			$.ajax({
+				url:'/Member/saveUserOperation',
+				type:'post',
+				data:'url='+url,
+				success:function(response){
+					
+				}
+			});
+			$("#borrow_d3_btn2").click(function(){
+				$("#cash_pop4").show();
+			});
+			$(".borrow_f1").click(function(){
+				$("#cash_pop2").show();
+			});
+			var tickIn = $("#tickIn").val();
+			var uid = $("#uid").val();
+			var object = {
+					event : "customize_event",
+					eventType : "LOANSIN_EVENT",
+					eventNum : 4,
+					uid	: uid,
+					tick : tickIn,
+					status : 1
+				}
+			requestDevice(object);
+			var money = $(".active.money1").attr('data-money');
+			var day = $(".active.day1").attr('data-day');
+			var tempStr = "";
+			$(".money1").click(function(){
+				$(".money1").removeClass("active");
+				$(this).addClass("active");
+				money = $(".active.money1").attr('data-money');
+				proId = $(".active.money1").attr('data-id');
+				countMoney(money,day);
+			});
+			$(".day1").click(function(){
+				$(".day1").removeClass("active");
+				$(this).addClass("active");
+				day = $(".active.day1").attr('data-day');
+				proId = $(".active.money1").attr('data-id');
+				countMoney(money,day);
+			});
+			$(".ticket_btn").click(function(){	
+				if($(".borrow_ul5").css("display") == "none"){
+					$(".borrow_ul5").show(200);
+					$("#borrow_d10").attr("src","/style/cash/images/borrow22.png");
+				}else{
+					$(".borrow_ul5").hide(200);
+					$("#borrow_d10").attr("src","/style/cash/images/borrow21.png");
+				}
+			});
+			$(".borrow_ul5 > li").each(function(index){
+				$(this).click(function(){
+					var a = $(".gou:eq("+index+")").attr("src");
+					var str = $("#str").val();
+					if(a == "/style/cash/images/borrow10.png"){
+						$(".gou").attr("src","/style/cash/images/borrow10.png");
+						$(".gou:eq("+index+")").attr("src","/style/cash/images/borrow1.png");
+						var tickMoney = $(this).attr("data-money");
+						var tickId	  = $(this).attr("data-id");
+						var temp = str+"&tickId="+tickId+"&tickMoney="+tickMoney;
+						$("#useTicket").html(tickMoney);
+						tempStr = str;
+						$("#str").val(temp);
+					}else{
+						$(".gou").attr("src","/style/cash/images/borrow10.png");
+						$("#useTicket").html(0);
+						$("#str").val(tempStr);
+					}
+				})
+			});
+			countMoney(money,day);
+		})
+		function countMoney(moneys,days){
+			layer.open({type: 2,shadeClose: false,content:'加载中'});
+			var type = $("#type").val();
+			$.ajax({
+				url:'/Borrow/countMoney',
+				type:'post',
+				data:"money="+moneys+"&day="+days+"&type="+type,
+				success:function(response){
+					var response = $.parseJSON(response);
+					var arr = response.message.split(",");
+					var str = "money="+moneys+"&day="+days;
+					if(response.status == 5){
+						$("#technology").html(arr[4]);
+						$("#createMoney").html(arr[5]);
+						$("#usedMoney").html(arr[1]);
+						$("#checkCost").html(arr[0]);
+						$("#interest").html(arr[2]);
+						$("#total").html(arr[3]);
+						$("#countTotal").val(arr[3]);
+					}else if (response.status == 4){
+						$("#createMoney").html(0);
+						$("#usedMoney").html(arr[1]);
+						$("#checkCost").html(arr[0]);
+						$("#interest").html(arr[2]);
+						$("#technology").html(arr[4]);
+						$("#total").html(arr[3]);
+						$("#countTotal").val(arr[3]);
+					}
+					$("#str").val(str);
+					layer.closeAll('loading');
+				}
+			})
+			
+			$("#useTicket").html();
+		} 
+		function next(){
+			addBorrow();
+		}
+		
+		function addBorrow(){
+			var str = $("#str").val();
+			var type = $("#type").val();
+			var check = $("#txtPhone4").is(":checked");
+			if(check){
+				layer.open({type: 2,shadeClose: false,content:'提交中'});
+				$.ajax({
+					url:'/Borrow/addBorrowInfo',
+					type:'post',
+					data: str+"&type="+type,
+					success:function(response){
+						var response = $.parseJSON(response);
+						var ticks = $("#tick").val();
+						var uid = $("#uid").val();
+						var object = {
+								event : "customize_event",
+								eventType : "LOANS_EVENT",
+								eventNum : 5,
+								uid	: uid,
+								tick : ticks,
+								status : response.status
+							}
+						requestDevice(object);	
+						if(response.status == 1){
+							layer.closeAll();
+							layer.open({
+							    content: response.message
+							    ,shadeClose: false,skin: 'msg'
+							    ,time: 2 //2秒后自动关闭
+							  });						
+							setTimeout("window.location.href='/Borrow/userBaseInfo'",1000);						
+						}else if(response.status == 2){
+							layer.closeAll();
+							$("#day").html(response.message);
+							$("#cash_pop3").show();
+
+						}else{
+							layer.closeAll();
+							layer.open({
+							    content: response.message
+							    ,shadeClose: false,skin: 'msg'
+							    ,time: 2 //2秒后自动关闭
+							  });
+							
+						}
+					}
+				})
+			}else{
+				layer.open({
+				    content: "请阅读重要提示"
+				    ,shadeClose: false,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+				  });
+			}		
+		}
+	</script>
+
+</body>
+
+</script>
+</html>

@@ -1,0 +1,79 @@
+<include file="Public:_header"/>
+<tagLib name="htmlA"/>
+<link href="__ROOT__/Style/Swfupload/swfupload.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/handlers.js"></script>
+<script type="text/javascript" src="__ROOT__/Style/Swfupload/swfupload.js"></script>
+<style>
+    #tab_1 .lineD dt{
+        width: 30%;
+
+    }
+    #tab_1 .lineD dd{
+        width: 70%;
+        margin-left: 100px;
+        text-align: left;
+    }
+</style>
+<div class="so_main">
+    <div class="page_tit">添加黑白灰名单</div>
+    <div class="form2">
+        <form method="post" action="__URL__/doAdd" onsubmit="return subcheck();">
+            <div id="tab_1">
+                <dl class="lineD">
+                    <dt>手机号：</dt>
+                    <dd>
+                        <htmlA:input id="iphone" value="" style="width:160px;"/>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>类型：</dt>
+                    <dd>
+                        <select name="type" id="type">
+                            <option value="0">请选择</option>
+                            <option value="1"
+                            >黑名单</option>
+                            <option value="2"
+                            >白名单</option>
+                            <option value="3"
+                            >灰名单</option>
+                        </select>
+                    </dd>
+                </dl>
+                <div class="page_btm">
+                    <input type="submit" class="btn_b" value="提交"/>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        var cansub = true;
+        function subcheck() {
+            if (!cansub) {
+                alert("请不要重复提交，如网速慢，请耐心等待！");
+                return false;
+            }
+
+            var iphone = $('#iphone').val();
+            var pat = /^1[3|4|5|7|8][0-9]\d{4,8}$/;//手机号码正则
+            var type = $('#type').val();
+
+            if (iphone == "") {
+                alert("手机号码不能为空！");
+                return false;
+            } else if (!pat.test(iphone) || iphone.length < 11) {
+                alert("手机号码填写有误！");
+                return false;
+            }
+            if (type == undefined || type == 0) {
+                alert("请选择类型");
+                return false;
+            }
+
+            cansub = false;
+            return true;
+
+        }
+
+    </script>
+</div>
+<include file="Public:_footer"/>

@@ -1,0 +1,98 @@
+<include file="Pub:headerNew"/>
+<body>
+	<div class="cash_view">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<if condition="$info['card_no']">
+		<div class="bank_main">
+			<div class="bank_d1">
+				<ul class="mess_ul1">
+					<li>
+						<div>开户银行</div>
+						<div>
+							<input id="area1" type="text" value="{$info['bank_name']}" readonly="readonly" style="width:4rem;height:0.4rem;">
+						</div>
+						<input type="hidden" id="bank_name" value="{$info['bank_name']}"/>
+					</li>
+					<li>
+						<div>开户省份</div>
+						<div>
+							<input id="area1" type="text" value="{$info['province']}" readonly="readonly" style="width:4rem;height:0.4rem;">
+						</div>
+					</li>
+					<li>
+						<div>开户地区</div>
+						<div>
+							<input id="area2" type="text" value="{$info['city']}" readonly="readonly"  style="width:4rem;height:0.4rem;">
+						</div>
+					</li>
+					<li>
+						<div>银行卡号</div>
+						<div>
+							<input style="width:100%;" class="job" id="bankCard" value="{$info['card_no']}" readonly="readonly">
+						</div>
+					</li>
+				</ul>
+			</div>
+			<input type="hidden" id="bindTick" value=""/>
+			<div class="bank_d4" onclick="checkBankCard();">提交</div>
+		</div>
+		<else/>
+		<div id="addCard" style="width:5rem;height:3rem;line-height:3rem;color:#2777c8;background:#fff;margin:1rem auto;text-align:center;border-radius:5px;border:2px dashed #666;">添加银行卡</div>
+		</if>
+ 		<input type="hidden" id="orSetPwd" value="{$orSetPwd}"/>
+ 		<input type="hidden" id="tick" value="{$tick}"/>
+ 		<input type="hidden" id="tickIn" value="{$tickIn}"/>
+		<input type="hidden" id="uid" value="{$_SESSION['uid']}"/>
+		<!-- 网页底部 -->
+		<include file="Pub:footerNew"/>
+	</div>
+	<script>
+		$(function(){
+			var tickIn = $("#tickIn").val();
+			var uid = $("#uid").val();
+			var object = {
+					event : "customize_event",
+					eventType : "BINDBANKIN_EVENT",
+					eventNum : 12,
+					uid	: uid,
+					tick : tickIn,
+					status : 1
+				}
+			requestDevice(object);
+			//绑定银行卡
+	    	$("#addCard").click(function(){
+	    		window.location.href='/fuiouBack/Card';
+    		});
+		});
+		
+		//确认银行卡
+		function checkBankCard(){
+			var bankCode = $("#bankCode").val();
+			$.ajax({
+				url:'/Borrow/checkBankCard',
+				type:'post',
+				success:function(response){
+					var response = $.parseJSON(response);
+					if(response.status == 1){
+						layer.open({
+	 					    content: response.message
+	 					    ,skin: 'msg'
+	 					    ,time: 2 //2秒后自动关闭 
+	 					  });
+						setTimeout("window.location.href='/Borrow/msgCheck'",2000);
+					}else if(response.status == 2){
+						window.location.href='/Borrow/refuse';				
+					}else{
+						layer.open({
+	 					    content: response.message
+	 					    ,skin: 'msg'
+	 					    ,time: 2 //2秒后自动关闭 
+	 					  });
+					}
+				}
+			});
+		}
+	</script>
+</body>
+</html>

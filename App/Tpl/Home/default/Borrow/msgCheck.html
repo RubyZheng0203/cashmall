@@ -1,0 +1,404 @@
+<include file="Pub:headerNew"/>
+<style>
+.cash_pop{display:none;} .huiyuan{display:none;}
+</style>
+<body>
+	<div class="cash_view">
+		<!-- 网页的头部 -->
+		<include file="Pub:footer"/>
+		<div class="check_main">
+			<ul class="check_ul1">
+			    <!-- 初审状态开始 -->
+				<li class="clearfix">
+					<div class="check_d1">
+						<div>
+							<if condition="$info['first_trial'] eq '1'">
+								<img src="/style/cash/images/check02.png" alt="">
+								<div class="line_active"></div>
+							<else/>
+								<img src="/style/cash/images/check01.png" alt="">
+								<div class="line"></div>
+							</if>
+						</div>						
+					</div> 
+					<div class="check_d4">		
+						<if condition="$info['first_trial'] eq '1'">
+							<p class="active">初审通过</p>
+							<p>恭喜你，初审通过！</p>
+						<else/>
+							<p>审核中</p>
+						</if>
+						 
+						<!-- <p>预计十分钟告诉您结果</p> -->
+						<div class="check_d3 clearfix">
+						
+							<if condition="empty($info['first_trial_time'])">
+							<else/>
+								<div><img src="/style/cash/images/check5.png" alt=""></div>
+								<div>{$info['first_trial_time']|date='Y-m-d H:i:s',###}</div>
+							</if>
+						</div>
+					</div>
+				</li>
+				<!-- 初审状态开始 -->
+				<!-- 确定银行卡开始 -->
+				<li class="clearfix">
+					<div class="check_d1">
+						<div>
+						<if condition="$info['bank_bing'] eq '0'">
+							<img src="/style/cash/images/check11.png" alt="">
+						<else/>
+							<img src="/style/cash/images/check12.png" alt="">
+						</if>
+						</div>
+						<div class="line"></div>
+					</div>
+					<div class="check_d4">
+					
+						<if condition="$info['bank_bing'] eq '0'">
+							<if condition="$info['first_trial'] eq '1'">
+								<p data-link="/Borrow/bindBankCard">确认银行卡</p>
+							<else/>
+								<p>确认银行卡</p>
+							</if>
+						<else/>
+							<p class="active" data-link="/Borrow/bindBankCard">确认银行卡</p>
+						</if>
+						
+						<p>请确认收款银行卡</p>
+						<div class="check_d3 clearfix">
+						<if condition="empty($info['bank_bing_time'])"><else/>
+							<div><img src="/style/cash/images/check5.png" alt=""></div>
+							<div>{$info['bank_bing_time']|date='Y-m-d H:i:s',###}</div>
+						</if>
+						</div>
+					</div>
+				</li>
+				<!-- 确认银行卡结束 -->
+				<!-- 签约及冷静开始 -->
+				<li class="clearfix">
+					<div class="check_d1">
+						<div>
+						<if condition="$info['signed'] eq '0'">
+							<img src="/style/cash/images/check31.png" alt="">
+						<else/>
+							<img src="/style/cash/images/check32.png" alt="">
+						</if>
+						</div>
+						<div class="line"></div>
+					</div>
+					<div class="check_d4">
+					<if condition="$info['signed'] eq '0'">
+						<if condition="$info['bank_bing'] eq '1'">
+							<p onclick="location.href='/Borrow/sign'" data-link="/Borrow/sign">签约及冷静</p>
+						<else/>
+							<p>签约及冷静</p>
+						</if>
+					<else/>
+						<p class="active">签约及冷静</p>
+					</if>
+							<p>完成签约，保护你的权益</p>
+						<if condition="empty($info['signed_time'])"><else/>
+							<div class="check_d3 clearfix">
+								<div><img src="/style/cash/images/check5.png" alt=""></div>
+								<div>{$info['signed_time']|date='Y-m-d H:i:s',###}</div>
+							</div>
+						</if>
+					
+					</div>
+				</li>
+				<!-- 签约及冷静结束 -->
+				<!-- 身份确认开始 -->
+				<if condition="$isIdVerify eq '0' ">
+					<li class="clearfix">
+						<div class="check_d1">
+							<div>
+							<if condition="$info['id_verify'] eq '0'">
+								<img src="/style/cash/images/check21.png" alt="">
+							<else/>
+								<img src="/style/cash/images/check22.png" alt="">
+							</if>
+							</div>
+							<div class="line"></div>
+						</div>
+						<div class="check_d4">
+							<if condition="($info['id_verify'] eq '0') OR ($info['id_verify'] eq '2')">
+								<p><a href="/Borrow/face" id="url" class="J-btn-submit">身份确认</a></p>
+							<else/>
+								<p class="active">身份确认</p>
+							</if>
+							<p>确认本人借款，确保资金安全</p>
+							<div class="check_d3 clearfix">
+							<if condition="empty($info['id_verify_time'])"><else/>
+								<div><img src="/style/cash/images/check5.png" alt=""></div>
+								<div>{$info['id_verify_time']|date='Y-m-d H:i:s',###}</div>
+							</if>
+							</div>
+						</div>
+					</li>
+				</if>
+				<!-- 身份确认开始 -->
+				<!-- 放款开始 -->
+				<li class="clearfix">
+					<div class="check_d1">
+					<if condition="$info['pending'] eq '0'">
+						<div><img src="/style/cash/images/check41.png" alt=""></div>
+					<else/>
+						<div><img src="/style/cash/images/check42.png" alt=""></div>
+					</if>
+						
+					</div>
+					<div class="check_d4">
+					<if condition="$info['pending'] eq '1'">
+						<p class="active">放款</p>
+					<else/>
+						<p>放款</p>
+					</if>						
+						<p>审核通过，申请放款</p>
+						<if condition="empty($info['pending_time'])"><else/>
+							<div class="check_d3 clearfix">
+								<div><img src="/style/cash/images/check5.png" alt=""></div>
+								<div>{$info['pending_time']|date='Y-m-d H:i:s',###}</div>
+							</div>
+						</if>
+					</div>
+				</li>
+				<!-- 放款结束 -->
+				
+				<!-- <li class="clearfix">
+						<div class="check_d1">
+							<div>
+							<if condition="$info['zhima_auth'] eq '0'">
+								<img src="/style/cash/images/check81.png" alt="">
+							<else/>
+								<img src="/style/cash/images/check82.png" alt="">
+							</if>
+							</div>
+							<div class="line"></div>
+						</div>
+						<div class="check_d4">
+						<if condition="$info['zhima_auth'] eq '0'">
+							<if condition="$info['bank_bing'] eq '1'">
+								<p><a id="url1" href="{$realurl}" class="J-btn-submit">芝麻认证</a></p>
+							<else/>
+								<p>芝麻认证</p>
+							</if>
+						<else/>
+							<p class="active">芝麻认证</p>
+						</if>
+							<p>授权芝麻信用，助您快速通过审核</p>
+							<div class="check_d3 clearfix">
+						<if condition="empty($info['zhima_time'])"><else/>
+								<div><img src="/style/cash/images/check5.png" alt=""></div>
+								<div>{$info['zhima_time']|date='Y-m-d H:i:s',###}</div>
+						</if>
+							</div>
+						</div>
+				</li>-->
+				
+				<li class="li_f5">
+					<div style="width:0.6rem;color:#2777c8;" id="f5">刷新</div>
+				</li>
+			</ul>
+			<if condition="$is_recheck eq 1">
+				<div style="color:#2777c8;width:90%;margin:0 auto;"><a href="/Borrow/shouxinReport">查看授信诊断咨询报告</a></div>
+			</if>
+			<div class="check_btn active" id="true_btn">
+				<a id="check_btn" style="display:block;width:100%;height:100%;" href="{$realurl}" class="<if condition="$out eq '1'">J-btn-submit</if>">{$msg}</a>
+			</div>
+			<if condition="($info['signed'] eq '1') AND ($info['calm'] eq '0') AND ($msg eq '需要冷静')">
+				<style> #true_btn{display:none;} #cash_pop_calm{display:block;} #huiyuan{display:block;}</style>
+				<div class="check_btn active" id="time" style="background:#ccc;"></div>
+			</if>
+		</div>
+		<div class="cash_pop5" style="display:none">
+			<div class="pop5_bg"></div>
+			<div class="pop5_content">
+				<div class="pop5_hand"><img src="/style/cash/images/cash_hand.png" alt=""></div>
+				<div class="pop5_text1">
+					<div class="check_content">
+						<div>提示</div>
+						<div>身份确认成功后，请重新进入现贷猫微信公众号，签约放款！</div>
+					</div>
+				</div>
+			</div>
+		<input type="hidden" id="zmTick" value="{$zmTick}"/>
+		<input type="hidden" id="alTick" value="{$alTick}"/>
+		<input type="hidden" id="uid" value="{$_SESSION['uid']}"/>	
+		</div>
+		<div class="cash_pop" id="cash_pop_calm">
+			<div class="cash_bg"></div>
+			<div class="sign_pop_content7" style="height:2.8rem;">
+				<div class="delay_bank_title">
+					<div></div>
+					<div style="line-height:0.45rem;font-size:0.3rem;">根据相关规定，如确定借款请于“冷静期”后点击“我已冷静，申请放款”</div>
+				</div>
+				<div class="pop_sign_btn" style="width: 2rem;color: #fff;text-align: center;margin-top:0.35rem;">确定</div>
+			</div>
+		</div>
+		<div class="cash_pop cash_bg_close" id="cash_pop_wait" style="display:none;">
+			<div class="cash_bg" style="background:#fff;"></div>
+			<div style="width:100%;display:table;position:absolute;">
+				<img src="/style/cash/img/cash_wait.gif" alt="" style="display:block;width:1rem;margin:50% auto 0.5rem;"/>
+				<div style="width:100%;line-height:30px;text-align:center;color:#333;">支付信息确认中，请耐心等待！</div>
+			</div>
+		</div>
+		<!-- <div class="cash_pop" id="cash_pop_dianhua">
+			<div class="cash_bg"></div>
+			<div class="sign_pop_content7" style="height:3.5rem;margin-top: -1.95rem;">
+				<div class="delay_bank_title">
+					<div></div>
+					<div style="line-height:0.45rem;font-size:0.3rem;text-align: justify;">您申请的订单已经确认，部分用户会收到区号为021的上海固话或手机尾号2768的电话回访，请注意接听。</div>
+				</div>
+				<div class="pop_sign_btn" style="width: 2rem;color: #fff;text-align: center;margin-top:0.35rem;">我知道了</div>
+			</div>
+		</div> -->
+		<input type="hidden" id="start" value="{:time()}">
+        <input type="hidden" id="end" value="{$countDownTime}">
+        <input type="hidden" id="bid" value="{$info['borrow_id']}">
+        <input type="hidden" id="calm" value="{$info['calm']}">
+        <input type="hidden" id="signed" value="{$info['signed']}">
+        <input type="hidden" id="realurl" value="{$realurl}">
+		<script>
+		//var dianhua = 1;
+		$(document).ready(function(){
+			var url = location.href;
+			$("#f5").click(function(){
+				window.location.reload();
+			});
+			$(".pop_sign_btn").click(function(){
+	    		$("#cash_pop_calm").hide();
+	    	});
+			$(".cash_bg_close").click(function(){
+	    		$("#cash_pop_wait").hide();
+	    	});
+			var html = $("#check_btn").html();
+			if(html == "放款审核" || html == "复审中" || html == "资金筹集中" || html == "已放款" || html == "待复审"){
+				$(".check_btn").removeClass("active");
+			}
+			if(html == "身份确认"){
+				var bid = $("#bid").val();
+				$("#check_btn").removeAttr("href"); 
+				$("#check_btn").click(function(){
+					$.ajax({
+						url:'/Borrow/checkUserShouxin',
+						type:'post',
+						data:'bid='+bid,
+						success:function(response){
+							layer.closeAll();
+							var response = $.parseJSON(response);
+							if(response.status == 1){
+								$("#cash_pop_wait").fadeIn();
+							}else if(response.status == 2){
+								window.location.href = response.message;
+							}
+						}
+					});
+				});
+			}
+			var realurl = $("#realurl").val();
+			/* if(html == "我已冷静，申请放款"){
+				if(dianhua == 1){
+					$("#check_btn").removeAttr("href"); 
+				}else{
+					$("#check_btn").attr("href",realurl);
+				}
+				$("#check_btn").click(function(){
+					if(dianhua == 1){
+						$("#cash_pop_dianhua").show();
+						dianhua = 0;
+					}else{
+						$("#check_btn").attr("href",realurl);
+					}
+				});
+				
+			} */
+			$(".check_ul1 li").each(function(index){
+				$(this).click(function(){
+					if(index == 0 || index==6){
+						return false;
+					}else{
+						var a = $(".check_ul1 li:eq("+index+") p").hasClass("active");
+						if(!a){
+							if(index == 3){
+								var url = $("#url").attr("href");
+								if(url){
+									if(url.indexOf('borrow') != -1){
+										window.location.href = url;
+									}else{
+										_AP.pay(url);
+									}
+									
+								}
+								
+								// $("#z_btn").attr("href",url);
+							}
+							if(index == 2){
+								var url1 = $("#url1").attr("href");
+								if(url1){
+									if(url1.indexOf('borrow') != -1){
+										window.location.href = url1;
+									}else{
+										_AP.pay(url1);
+									}
+								}
+								
+								// $("#z_btn").attr("href",url);
+							}
+							var link = $(".check_ul1 li:eq("+index+") p").attr("data-link");
+							if(link){
+								location.href = link;
+							}
+							
+						}
+					}
+					
+				});
+			});
+			
+		})
+		</script>
+<script>
+var start = parseInt($("#start").val());
+var bid = $("#bid").val();
+function daojishi(start){
+	var end   = parseInt($("#end").val());
+	var time = end - start;
+	var hour = parseInt(time / 3600);
+	var fen = parseInt(time % 3600 / 60);
+	var miao = parseInt(time % 3600 % 60 );
+	if(hour <= 0 && fen<=0 && miao <= 0){
+		clearInterval(timer);
+		window.location.reload();
+	}else{
+		$("#time").html(add(hour) + ":" + add(fen) +":" +add(miao));
+	}
+	
+}
+var calm = $("#calm").val();
+var signed = $("#signed").val();
+var html = $("#check_btn").html();
+if(html == "我已冷静，申请放款"){
+	
+}else if(signed == 1 && calm == 0){
+	var timer = setInterval(function(){
+		start++;
+		daojishi(start);
+	},1000);
+}
+function add(num){
+	if(num >= 10){
+		return num;
+	}else{
+		return "0"+num;
+	}
+}
+</script>
+		<!-- 网页底部 -->
+		<include file="Pub:footerNew"/>
+	</div>
+</body>
+</html>
+</body>
+
+</html>
